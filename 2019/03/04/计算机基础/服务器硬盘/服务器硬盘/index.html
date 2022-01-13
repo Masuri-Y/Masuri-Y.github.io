@@ -1,0 +1,174 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>服务器硬盘 | MyLinuxOps</title><meta name="keywords" content="计算机基础"><meta name="author" content="Masuri"><meta name="copyright" content="Masuri"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="服务器硬盘硬盘分为机械硬盘和固态硬盘 机械硬盘机械硬盘结构存储介质（Media）——盘片 盘片的基板是金属或玻璃材质制成，为达到高密度高稳定的质量，基板要求表面光滑平整，不可有任何暇疵。 读写头（Read Write Head）——磁头 磁头是硬盘读取数据的关键部件，它的主要作用就是将存储在硬盘盘片上的磁信息转化为电信号向外传输。 马达（ Spindle Motor &amp; Voice Coi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务器硬盘">
+<meta property="og:url" content="http://www.mylinuxops.com/2019/03/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A1%AC%E7%9B%98/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A1%AC%E7%9B%98/index.html">
+<meta property="og:site_name" content="MyLinuxOps">
+<meta property="og:description" content="服务器硬盘硬盘分为机械硬盘和固态硬盘 机械硬盘机械硬盘结构存储介质（Media）——盘片 盘片的基板是金属或玻璃材质制成，为达到高密度高稳定的质量，基板要求表面光滑平整，不可有任何暇疵。 读写头（Read Write Head）——磁头 磁头是硬盘读取数据的关键部件，它的主要作用就是将存储在硬盘盘片上的磁信息转化为电信号向外传输。 马达（ Spindle Motor &amp; Voice Coi">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.mylinuxops.com/images/server.jpg">
+<meta property="article:published_time" content="2019-03-04T12:23:49.000Z">
+<meta property="article:modified_time" content="2020-11-20T04:15:55.000Z">
+<meta property="article:author" content="Masuri">
+<meta property="article:tag" content="计算机基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.mylinuxops.com/images/server.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://www.mylinuxops.com/2019/03/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A1%AC%E7%9B%98/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A1%AC%E7%9B%98/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '服务器硬盘',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-11-20 04:15:55'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">116</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/server.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">MyLinuxOps</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">服务器硬盘</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-03-04T12:23:49.000Z" title="发表于 2019-03-04 12:23:49">2019-03-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-11-20T04:15:55.000Z" title="更新于 2020-11-20 04:15:55">2020-11-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="服务器硬盘"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="服务器硬盘"><a href="#服务器硬盘" class="headerlink" title="服务器硬盘"></a>服务器硬盘</h2><p>硬盘分为机械硬盘和固态硬盘</p>
+<h3 id="机械硬盘"><a href="#机械硬盘" class="headerlink" title="机械硬盘"></a>机械硬盘</h3><h4 id="机械硬盘结构"><a href="#机械硬盘结构" class="headerlink" title="机械硬盘结构"></a>机械硬盘结构</h4><p><strong>存储介质（Media）——盘片</strong></p>
+<p>盘片的基板是金属或玻璃材质制成，为达到高密度高稳定的质量，基板要求表面光滑平整，不可有任何暇疵。</p>
+<p><strong>读写头（Read Write Head）——磁头</strong></p>
+<p>磁头是硬盘读取数据的关键部件，它的主要作用就是将存储在硬盘盘片上的磁信息转化为电信号向外传输。</p>
+<p><strong>马达（ Spindle Motor &amp; Voice Coil Motor ）</strong></p>
+<p>马达上装有一至多片盘片，以7200，10000，15000 RPM等定速旋转，为保持其平衡不可抖动，所以其质量要求严谨，不产生高温躁音。</p>
+<p><img src="clip_image002.jpg" alt="机械硬盘"></p>
+<h4 id="硬盘基本参数"><a href="#硬盘基本参数" class="headerlink" title="硬盘基本参数"></a>硬盘基本参数</h4><p><strong>容量</strong>：容量是硬盘最主要的参数。单位有MB、GB、TB</p>
+<p><strong>转速</strong>：转速是指硬盘盘片每分钟转动的圈数，单位为rpm。现在硬盘的转速已经达到10000rpm，15000rpm</p>
+<p><strong>传输速率</strong>：传输速率(Data Transfer Rate) 。硬盘的数据传输率是指硬盘读写数据的速度，单位为兆字节每秒（MB/s）</p>
+<p><strong>缓存</strong>：硬盘缓存的目的是为了解决系统前后级读写速度不匹配的问题，以提高硬盘的读写速度</p>
+<h4 id="硬盘接口类型"><a href="#硬盘接口类型" class="headerlink" title="硬盘接口类型"></a>硬盘接口类型</h4><p><strong>IDE接口</strong>：硬盘接口规范，采用ATA技术规范</p>
+<p><strong>SCSI接口</strong>：应用于小型机上的高速数据传输技术</p>
+<p><strong>SATA接口</strong>： Serial ATA，提高传输速率，支持热插拔</p>
+<p><strong>SAS接口</strong>： Serial Attached SCSI，兼容SATA</p>
+<p>目前主流的硬盘接口为<code>SATA</code>和<code>SAS</code>接口</p>
+<h3 id="固态硬盘"><a href="#固态硬盘" class="headerlink" title="固态硬盘"></a>固态硬盘</h3><p>SSD(Solid State Disk)泛指使用NAND Flash组成的固态硬盘。其特别之处在于没有机械结构，以区块写入和抹除的方式作读写的功能，因此在读写的效率上，非常依赖读写技术上的设计SSD读写存取速度快，性能稳定，防震性高，发热低，耐低温，电耗低，无噪音。因为没有机械部分，所以长时间使用也出现故障几率也较小。</p>
+<p>缺点：价格高，容量小，在普通硬盘前毫无性价比优势</p>
+<p> <img src="clip_image005.jpg" alt="普通固态"></p>
+<p> <img src="clip_image006.jpg" alt="pci接口固态"></p>
+<h3 id="服务器的性能短板"><a href="#服务器的性能短板" class="headerlink" title="服务器的性能短板"></a>服务器的性能短板</h3><p>如果CPU有每秒处理1000个服务请求的能力，各种总线的负载能力能达到500个， 但网卡只能接受200个请求，而硬盘只能负担150个的话，那这台服务器得处理能力只能是150个请求/秒，有85%的处理器计算能力浪费了。在计算机系统当中，硬盘的读写速率已经成为影响系统性能进一步提高的瓶颈。</p>
+<p><strong>各硬件的处理速度</strong></p>
+<p> <img src="clip_image013.jpg" alt="硬件处理速度对比"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Masuri</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.mylinuxops.com/2019/03/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A1%AC%E7%9B%98/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A1%AC%E7%9B%98/">http://www.mylinuxops.com/2019/03/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A1%AC%E7%9B%98/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A1%AC%E7%9B%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.mylinuxops.com" target="_blank">MyLinuxOps</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a></div><div class="post_share"><div class="social-share" data-image="/images/server.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/03/04/Linux%E5%9F%BA%E7%A1%80/Linux%E5%B8%AE%E5%8A%A9%E8%8E%B7%E5%8F%96/Linux%E5%B8%AE%E5%8A%A9%E8%8E%B7%E5%8F%96/"><img class="prev-cover" src="/images/Linux.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Linux帮助获取</div></div></a></div><div class="next-post pull-right"><a href="/2019/03/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%84%E6%88%90/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%84%E6%88%90/"><img class="next-cover" src="/images/server.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">计算机系统组成</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/03/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%9C%8D%E5%8A%A1%E5%99%A8/%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="服务器"><img class="cover" src="/images/server.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-04</div><div class="title">服务器</div></div></a></div><div><a href="/2019/03/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%9C%8D%E5%8A%A1%E5%99%A8CPU/%E6%9C%8D%E5%8A%A1%E5%99%A8CPU/" title="服务器cpu"><img class="cover" src="/images/server.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-04</div><div class="title">服务器cpu</div></div></a></div><div><a href="/2019/03/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%BB%E6%9D%BF/%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%BB%E6%9D%BF/" title="服务器主板"><img class="cover" src="/images/server.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-04</div><div class="title">服务器主板</div></div></a></div><div><a href="/2019/03/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%86%85%E5%AD%98/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%86%85%E5%AD%98/" title="服务器内存"><img class="cover" src="/images/server.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-04</div><div class="title">服务器内存</div></div></a></div><div><a href="/2019/03/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%84%E6%88%90/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%84%E6%88%90/" title="计算机系统组成"><img class="cover" src="/images/server.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-04</div><div class="title">计算机系统组成</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Masuri</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">116</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A1%AC%E7%9B%98"><span class="toc-number">1.</span> <span class="toc-text">服务器硬盘</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%BA%E6%A2%B0%E7%A1%AC%E7%9B%98"><span class="toc-number">1.1.</span> <span class="toc-text">机械硬盘</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%BA%E6%A2%B0%E7%A1%AC%E7%9B%98%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.1.</span> <span class="toc-text">机械硬盘结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AC%E7%9B%98%E5%9F%BA%E6%9C%AC%E5%8F%82%E6%95%B0"><span class="toc-number">1.1.2.</span> <span class="toc-text">硬盘基本参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AC%E7%9B%98%E6%8E%A5%E5%8F%A3%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.1.3.</span> <span class="toc-text">硬盘接口类型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BA%E6%80%81%E7%A1%AC%E7%9B%98"><span class="toc-number">1.2.</span> <span class="toc-text">固态硬盘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E6%80%A7%E8%83%BD%E7%9F%AD%E6%9D%BF"><span class="toc-number">1.3.</span> <span class="toc-text">服务器的性能短板</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/01/12/hello-world/" title="Hello World"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/2022/01/12/hello-world/" title="Hello World">Hello World</a><time datetime="2022-01-12T12:50:44.471Z" title="发表于 2022-01-12 12:50:44">2022-01-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/" title="Jenkins代码质量检测"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins代码质量检测"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/" title="Jenkins代码质量检测">Jenkins代码质量检测</a><time datetime="2019-05-05T10:40:00.000Z" title="发表于 2019-05-05 10:40:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/" title="Jenkins给脚本传递参数"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins给脚本传递参数"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/" title="Jenkins给脚本传递参数">Jenkins给脚本传递参数</a><time datetime="2019-05-05T10:10:00.000Z" title="发表于 2019-05-05 10:10:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E8%A7%86%E5%9B%BE/jenkins%E8%A7%86%E5%9B%BE/" title="Jenkins视图"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins视图"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E8%A7%86%E5%9B%BE/jenkins%E8%A7%86%E5%9B%BE/" title="Jenkins视图">Jenkins视图</a><time datetime="2019-05-05T10:00:00.000Z" title="发表于 2019-05-05 10:00:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/Jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/" title="Jenkins构建后关联操作"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins构建后关联操作"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/Jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/" title="Jenkins构建后关联操作">Jenkins构建后关联操作</a><time datetime="2019-05-05T09:50:00.000Z" title="发表于 2019-05-05 09:50:00">2019-05-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Masuri</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

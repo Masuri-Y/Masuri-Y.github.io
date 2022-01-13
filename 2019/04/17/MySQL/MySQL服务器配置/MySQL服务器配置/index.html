@@ -1,0 +1,204 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MySQL服务器配置 | MyLinuxOps</title><meta name="keywords" content="MySQL"><meta name="author" content="Masuri"><meta name="copyright" content="Masuri"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在MySQL数据库运行时，它本质上是跑了一个mysqld的进程，是由mysqld_safe来调用的。mysql_safe是一个脚本，脚本内调用了mysqld二进制程序，所以数据库真正运行时，是靠mysqld对外进行服务的，而mysqld是一个服务器软件，在其背后还支持一些参数和选项。 mysqld选项，服务器系统变量和服务器状态变量的区别mysqld选项mysqld选项就是在进程中mysqld后面">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL服务器配置">
+<meta property="og:url" content="http://www.mylinuxops.com/2019/04/17/MySQL/MySQL%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/MySQL%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="MyLinuxOps">
+<meta property="og:description" content="在MySQL数据库运行时，它本质上是跑了一个mysqld的进程，是由mysqld_safe来调用的。mysql_safe是一个脚本，脚本内调用了mysqld二进制程序，所以数据库真正运行时，是靠mysqld对外进行服务的，而mysqld是一个服务器软件，在其背后还支持一些参数和选项。 mysqld选项，服务器系统变量和服务器状态变量的区别mysqld选项mysqld选项就是在进程中mysqld后面">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.mylinuxops.com/images/Mysql.jpg">
+<meta property="article:published_time" content="2019-04-17T07:20:02.000Z">
+<meta property="article:modified_time" content="2020-11-21T08:34:38.000Z">
+<meta property="article:author" content="Masuri">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.mylinuxops.com/images/Mysql.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://www.mylinuxops.com/2019/04/17/MySQL/MySQL%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/MySQL%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MySQL服务器配置',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-11-21 08:34:38'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">116</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/Mysql.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">MyLinuxOps</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MySQL服务器配置</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-04-17T07:20:02.000Z" title="发表于 2019-04-17 07:20:02">2019-04-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-11-21T08:34:38.000Z" title="更新于 2020-11-21 08:34:38">2020-11-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/MySQL/">MySQL</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="MySQL服务器配置"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>在MySQL数据库运行时，它本质上是跑了一个mysqld的进程，是由mysqld_safe来调用的。mysql_safe是一个脚本，脚本内调用了mysqld二进制程序，所以数据库真正运行时，是靠mysqld对外进行服务的，而mysqld是一个服务器软件，在其背后还支持一些参数和选项。</p>
+<h2 id="mysqld选项，服务器系统变量和服务器状态变量的区别"><a href="#mysqld选项，服务器系统变量和服务器状态变量的区别" class="headerlink" title="mysqld选项，服务器系统变量和服务器状态变量的区别"></a>mysqld选项，服务器系统变量和服务器状态变量的区别</h2><h3 id="mysqld选项"><a href="#mysqld选项" class="headerlink" title="mysqld选项"></a>mysqld选项</h3><p>mysqld选项就是在进程中mysqld后面所跟的各种参数，这些选项都能存放在服务器的配置文件/etc/my.cnf中。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost Packages]<span class="comment"># ps -aux | grep mysqld</span></span><br><span class="line">mysql      9206  0.1  3.5 2275296 144752 ?      Sl   16:09   0:01 /app/mysql/bin/mysqld --basedir=/app/mysql --datadir=/data/mysql --plugin-dir=/app/mysql/lib/plugin --user=mysql --log-error=/var/<span class="built_in">log</span>/mariadb/mariadb.log --pid-file=/data/mysql/localhost.localdomain.pid --socket=/data/mysql/mysql.sock --port=3306  </span><br><span class="line"><span class="comment">#mysqld后面所跟的各种参数为选项</span></span><br></pre></td></tr></table></figure>
+
+<p>msyqld的选项可以通过命令查询，所列出的为mysqld所支持的选项的默认值</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqld --<span class="built_in">help</span> -v</span><br></pre></td></tr></table></figure>
+
+<h3 id="MySQL的服务器系统变量"><a href="#MySQL的服务器系统变量" class="headerlink" title="MySQL的服务器系统变量"></a>MySQL的服务器系统变量</h3><p>变量可以在MySQL中使用show variables来进行查看，有些变量即时选项又是变量，变量又分为全局性变量和会话级变量，全局性变量影响了所有登陆的用户，会话级只影响当前的登陆的用户。</p>
+<p>详细可以参考mariadb的官方文档。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://mariadb.com/kb/en/library/full-list-of-mariadb-options-system-and-status-variables/</span><br></pre></td></tr></table></figure>
+
+<p>获取系统变量的方法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; SHOW GLOBAL VARIABLES;   <span class="comment">#获取全局性的变量</span></span><br><span class="line">MariaDB [(none)]&gt; SHOW VARIABLES;          <span class="comment">#获取会话级的变量</span></span><br></pre></td></tr></table></figure>
+
+<p>变量的设置方法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; SET GLOBAL system_var_name=value;     <span class="comment">#设置全局性的变量</span></span><br><span class="line">MariaDB [(none)]&gt; SET system_var_name=value;            <span class="comment">#设置会话级的变量</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="系统的状态变量"><a href="#系统的状态变量" class="headerlink" title="系统的状态变量"></a>系统的状态变量</h3><p>系统的状态变量又称为系统的只读变量，里面存放的是系统当前的状态信息</p>
+<p>查看方法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; SHOW STATUS LIKE <span class="string">&#x27;value_name&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>查看系统的启动时间</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; SHOW STATUS LIKE <span class="string">&#x27;uptime&#x27;</span>;</span><br><span class="line">+---------------+-------+</span><br><span class="line">| Variable_name | Value |</span><br><span class="line">+---------------+-------+</span><br><span class="line">| Uptime        | 2602  |</span><br><span class="line">+---------------+-------+</span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br></pre></td></tr></table></figure>
+
+<p>服务器相关的一些常用选项、变量和状态变量<br>选项：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">skip_name_resolve:禁止把ip地址反向解析成名称建议添加</span><br></pre></td></tr></table></figure>
+<p>变量：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">max_connections:最大连接数</span><br><span class="line">SQL_MODE:</span><br><span class="line">    NO_AUTO_CREATE_USER:禁止授权创建密码为空的用户</span><br><span class="line">    NO_ZERO_DATA:在严格模式，不允许使用<span class="string">&#x27;0000-00-00&#x27;</span>的时间</span><br><span class="line">    ONLY_RULL_GROUP_BY:对于GROUP BY聚合操作，如果在SELECT中的列，没有在GROUP BY中出现，那么将任务这个SQL是不合法的</span><br><span class="line">    NO_BACKSLASH_ESCAPES:反斜杠<span class="string">&quot;\&quot;作为普通字符而不是转义字符</span></span><br><span class="line"><span class="string">    PIPES_AS_CONCAT:将&quot;</span>||<span class="string">&quot;视为连接操作符而非“或运算符”</span></span><br><span class="line"><span class="string">    TRADITIONAL:当插入表的数据长度超长时不是截断，而是报错</span></span><br></pre></td></tr></table></figure>
+<p>状态变量：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Threads_connected:多少线程被连接</span><br><span class="line">Threads_created:多少线程被创建</span><br><span class="line">Threads_running:多少线程正在运行</span><br><span class="line">com_select:当前数据库的查询次数</span><br><span class="line">com_insert:表的添加次数</span><br></pre></td></tr></table></figure>
+
+<p>MySQL的查询缓存<br>查询缓存是基于hash算法的，要求命令和查询的参数大小写必须完全一致，当有新的查询语句或预处理查询请求，先去查询缓存，判断是否存在纪录集，若存在则直接返回结果。<br>查询缓存的优缺点<br>优点是sql语句不需要做任何解析和执行，直接从缓存中获得查询结合，提高了查询性能<br>缺点是不够智能，提高了缓存使用门槛，增加了缓存记录集检查和清理的开销。<br>有些查询是无法被缓存的比如：<br>1.查询的语句中带了SQL_NO_CACHE参数<br>2.查询语句中含有获取值的函数。如：NOW(),CURDATE(),GET_LOCK(),RAND()、CONVERT_TZ()等<br>3.对系统数据库查询时使用会话级别的变量或存储过程中的局部变量。<br>4.查询语句中加了锁不会使用缓存<br>5.对临时表的查询，存在警告信息的查询，只有列级别权限的查询。<br>6.事务隔离级别为serializable的不能缓存<br>缓存的相关变量：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">query_cache_limit</span><br><span class="line"><span class="comment">#单个查询结果能缓存的最大值，默认为1M。过大的值将无法缓存</span></span><br><span class="line">query_cache_min_res_unit</span><br><span class="line"><span class="comment">#在内存中给缓存分配的最小单位，默认为4K，较小值会减少浪费，但会产生频繁的内存分配，如果设置较大，则会造成浪费。     </span></span><br><span class="line">query_cache_size             </span><br><span class="line"><span class="comment">#总的用来放查询缓存的内存空间，最小为40K，必须为1024的整数倍。要长期有效需要写入配置文件。</span></span><br><span class="line">query_cache_strip_comments   </span><br><span class="line">query_cache_type             </span><br><span class="line"><span class="comment">#是否启用缓存默认为开启</span></span><br><span class="line">query_cache_wlock_invalidate </span><br><span class="line"><span class="comment">#如果表被其他的会话锁定，是否仍然可以从查询缓存中返回结果，默认为off,表示可以在表被其他会话锁定的场景中继续从缓存返回数据；ON则表示不允许</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>查询缓存相关的状态变量，可以使用SHOW GLOBAL STATUS LIKE ‘Qcache%’;查询</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Qcache_free_blocks      <span class="comment">#处于空闲状态缓存中内存块数</span></span><br><span class="line">Qcache_total_blocks     <span class="comment">#缓存中总块，当Qcache_free_blocks相对此值较大时，可能用内存碎片，执行FLUSH QUERY CACHE清理碎片</span></span><br><span class="line">Qcache_free_memory      <span class="comment">#处于空闲状态的缓存内存总量</span></span><br><span class="line">Qcache_hits：Query Cache    <span class="comment">#命中次数</span></span><br><span class="line">Qcache_inserts：向 Query Cache  <span class="comment">#中插入新的缓存的次数，即没有命中的次数</span></span><br><span class="line">Qcache_lowmem_prunes    <span class="comment">#记录因为内存不足而被移除出查询缓存的查询数</span></span><br><span class="line">Qcache_not_cached       <span class="comment">#没有被缓存的记录数，包括无法被缓存的记录以及由于query_cache_type设置的不会被缓存的SQL语句</span></span><br><span class="line">Qcache_queries_in_cache <span class="comment">#在缓存中的SQL数量</span></span><br></pre></td></tr></table></figure>
+<p>缓存的优化方法：<br>缓存的优化方法可以根据缓存优化表来进行查询和修改<br><img src="%E7%BC%93%E5%AD%98%E4%BC%98%E5%8C%96%E8%A1%A8.png" alt="缓存优化表.png"></p>
+<p>MySQL的索引<br>索引是特殊的数据结构，定义在查找时作为查找条件的字段，在MySQL又称为建可以，索引通过存储引擎实现。<br>索引的类型：<br>B+tree索引：<br>B+tree的所有非叶子节点上只有索引没有有数据，真正的数据都存放在叶子节点上，叶子节点上不仅有索引还有数据。相邻叶子节点的数据块之间有指向性，所以在查找范围时也能使用索引</p>
+<p>复合索引<br>复合索引就是把多个字段组合设置为索引，当第一个字段相同时，比对第二个字段。复合索引可以将排在前面的字段作为搜索条件， 但不能将排在后面的字段作为搜索条件。若跳过前一个搜索条件直接搜索第二个字段将导致索引失效。</p>
+<p>聚簇索引和非聚簇索引<br>聚簇索引：索引和数据是捆在一起的，所以一张表中只能有一个主键。如果对非主键的字段设立的索引，那么其索引的叶子节点的信息为索引和主键索引的对应关系，通过主键索引的信息找到相对应的数据。（InnoDB就是聚簇分布）<br>非聚簇索引：索引和数据是分开的（MyISAM为非聚簇表分布）</p>
+<p>创建索引：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">CREATE [ONLINE|OFFLINE] [UNIQUE|FULLTEXT|SPATIAL] INDEX index_name</span><br><span class="line">    [index_type]</span><br><span class="line">    ON tbl_name (index_col_name,...)</span><br><span class="line">    [index_option] ...</span><br><span class="line"></span><br><span class="line">index_col_name:</span><br><span class="line">    col_name [(length)] [ASC | DESC]</span><br><span class="line"></span><br><span class="line">index_type:</span><br><span class="line">    USING &#123;BTREE | HASH&#125;</span><br><span class="line"></span><br><span class="line">index_option:</span><br><span class="line">    KEY_BLOCK_SIZE [=] value</span><br><span class="line">  | index_type</span><br><span class="line">  | WITH PARSER parser_name</span><br><span class="line">  | COMMENT <span class="string">&#x27;string&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>删除索引：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP INDEX index_name ON tbl_name;</span><br></pre></td></tr></table></figure>
+<p>查看索引：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW INDEXES FORM tlb_name;</span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<p>MySQL的并发控制：<br>在数据库中经常设计到并发访问，此时就涉及到不同用户同时修改同一个资源的问题。此时就涉及到一个冲突的问题。为了防止这种冲突的发生，确保数据的安全，就需要对数据加锁的机制，MyISAM使用的是表级锁，InnoDB使用的是行级锁。锁又分为读锁和写锁，读锁也叫共享锁，只可读不可写，多个读互不阻塞，写锁又称为独占锁，写锁会阻碍其他事务的读和写。锁又有隐式锁和显式锁的分别，隐式锁是由存储引擎自动施加的，显式锁式用户自己手动添加的</p>
+<p>手动添加锁的方法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LOCK TABLES tbl_name lock_type;   <span class="comment">#lock_type可以为read,write也就是读锁和写锁</span></span><br></pre></td></tr></table></figure>
+<p>解锁：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UNLOCK TABLES;</span><br></pre></td></tr></table></figure>
+<p>第二种加锁方法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FLUSH TABLES [tbl_name[,...]][WITH READ LOCK]</span><br><span class="line"><span class="comment">#tbl_name如果不添加则对整个数据库加锁，通常在备份前加全局读锁</span></span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Masuri</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.mylinuxops.com/2019/04/17/MySQL/MySQL%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/MySQL%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/">http://www.mylinuxops.com/2019/04/17/MySQL/MySQL%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/MySQL%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.mylinuxops.com" target="_blank">MyLinuxOps</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/MySQL/">MySQL</a></div><div class="post_share"><div class="social-share" data-image="/images/Mysql.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/04/17/MySQL/MySQL%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E5%AE%B9%E9%87%8F%E5%A4%A7%E5%B0%8F/MySQL%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E5%AE%B9%E9%87%8F%E5%A4%A7%E5%B0%8F/"><img class="prev-cover" src="/images/Mysql.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">MySQL查看数据库表容量大小</div></div></a></div><div class="next-post pull-right"><a href="/2019/04/17/MySQL/MySQL%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93/"><img class="next-cover" src="/images/Mysql.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">MySQL系统数据库</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/04/10/MySQL/MySQL%E4%B8%BB%E4%B8%BB%E5%A4%8D%E5%88%B6/MySQL%E4%B8%BB%E4%B8%BB%E5%A4%8D%E5%88%B6%E5%8F%8A%E6%8E%92%E5%9D%91/" title="MySQL主主复制及相关的排坑"><img class="cover" src="/images/Mysql.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-10</div><div class="title">MySQL主主复制及相关的排坑</div></div></a></div><div><a href="/2019/04/10/MySQL/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" title="MySQL主从复制"><img class="cover" src="/images/Mysql.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-10</div><div class="title">MySQL主从复制</div></div></a></div><div><a href="/2019/04/10/MySQL/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%87%BA%E9%94%99%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%87%BA%E9%94%99%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="MySQL主从复制出错的解决方法"><img class="cover" src="/images/Mysql.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-10</div><div class="title">MySQL主从复制出错的解决方法</div></div></a></div><div><a href="/2019/04/17/MySQL/MySQL%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E8%A3%85/MySQL%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E8%A3%85/" title="Mariadb二进制安装"><img class="cover" src="/images/Mysql.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-17</div><div class="title">Mariadb二进制安装</div></div></a></div><div><a href="/2019/04/10/MySQL/MySQL%E5%8D%8A%E5%90%8C%E6%AD%A5%E5%A4%8D%E5%88%B6/MySQL%E5%8D%8A%E5%90%8C%E6%AD%A5%E5%A4%8D%E5%88%B6/" title="MySQL半同步复制"><img class="cover" src="/images/Mysql.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-10</div><div class="title">MySQL半同步复制</div></div></a></div><div><a href="/2019/04/17/MySQL/MySQL%E5%8F%98%E9%87%8F%E5%92%8C%E9%80%89%E9%A1%B9/MySQL%E5%8F%98%E9%87%8F%E5%92%8C%E9%80%89%E9%A1%B9/" title="MySQL的变量和选项"><img class="cover" src="/images/Mysql.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-17</div><div class="title">MySQL的变量和选项</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Masuri</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">116</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#mysqld%E9%80%89%E9%A1%B9%EF%BC%8C%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%B3%BB%E7%BB%9F%E5%8F%98%E9%87%8F%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8A%B6%E6%80%81%E5%8F%98%E9%87%8F%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.</span> <span class="toc-text">mysqld选项，服务器系统变量和服务器状态变量的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mysqld%E9%80%89%E9%A1%B9"><span class="toc-number">1.1.</span> <span class="toc-text">mysqld选项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%B3%BB%E7%BB%9F%E5%8F%98%E9%87%8F"><span class="toc-number">1.2.</span> <span class="toc-text">MySQL的服务器系统变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%8A%B6%E6%80%81%E5%8F%98%E9%87%8F"><span class="toc-number">1.3.</span> <span class="toc-text">系统的状态变量</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/01/12/hello-world/" title="Hello World"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/2022/01/12/hello-world/" title="Hello World">Hello World</a><time datetime="2022-01-12T12:50:44.471Z" title="发表于 2022-01-12 12:50:44">2022-01-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/" title="Jenkins代码质量检测"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins代码质量检测"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/" title="Jenkins代码质量检测">Jenkins代码质量检测</a><time datetime="2019-05-05T10:40:00.000Z" title="发表于 2019-05-05 10:40:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/" title="Jenkins给脚本传递参数"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins给脚本传递参数"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/" title="Jenkins给脚本传递参数">Jenkins给脚本传递参数</a><time datetime="2019-05-05T10:10:00.000Z" title="发表于 2019-05-05 10:10:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E8%A7%86%E5%9B%BE/jenkins%E8%A7%86%E5%9B%BE/" title="Jenkins视图"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins视图"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E8%A7%86%E5%9B%BE/jenkins%E8%A7%86%E5%9B%BE/" title="Jenkins视图">Jenkins视图</a><time datetime="2019-05-05T10:00:00.000Z" title="发表于 2019-05-05 10:00:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/Jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/" title="Jenkins构建后关联操作"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins构建后关联操作"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/Jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/" title="Jenkins构建后关联操作">Jenkins构建后关联操作</a><time datetime="2019-05-05T09:50:00.000Z" title="发表于 2019-05-05 09:50:00">2019-05-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Masuri</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

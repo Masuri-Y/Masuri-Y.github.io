@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MySQL的存储引擎 | MyLinuxOps</title><meta name="keywords" content="MySQL"><meta name="author" content="Masuri"><meta name="copyright" content="Masuri"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="存储引擎决定了如何把数据库内的信息最终以某种方式转存在磁盘的数据库文件中，存储引擎用来管理磁盘上的各种不同文件。存储引擎在MySQL中是其特有的一种技术，在其他数据库中不提这个东西，Oracle、DB2、SQLserver这些商业级的数据库只有一种存储引擎，所以都不提存储引擎，而MySQL是个开源产品，所以很多的开发人员觉得某些存储引擎不好自己就开发一个，从而造成了MySQL的存储引擎特别的多。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL的存储引擎">
+<meta property="og:url" content="http://www.mylinuxops.com/2019/04/17/MySQL/MySQL%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/MySQL%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/index.html">
+<meta property="og:site_name" content="MyLinuxOps">
+<meta property="og:description" content="存储引擎决定了如何把数据库内的信息最终以某种方式转存在磁盘的数据库文件中，存储引擎用来管理磁盘上的各种不同文件。存储引擎在MySQL中是其特有的一种技术，在其他数据库中不提这个东西，Oracle、DB2、SQLserver这些商业级的数据库只有一种存储引擎，所以都不提存储引擎，而MySQL是个开源产品，所以很多的开发人员觉得某些存储引擎不好自己就开发一个，从而造成了MySQL的存储引擎特别的多。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.mylinuxops.com/images/Mysql.jpg">
+<meta property="article:published_time" content="2019-04-17T07:00:02.000Z">
+<meta property="article:modified_time" content="2020-11-21T13:46:33.000Z">
+<meta property="article:author" content="Masuri">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.mylinuxops.com/images/Mysql.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://www.mylinuxops.com/2019/04/17/MySQL/MySQL%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/MySQL%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MySQL的存储引擎',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-11-21 13:46:33'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">116</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/Mysql.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">MyLinuxOps</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MySQL的存储引擎</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-04-17T07:00:02.000Z" title="发表于 2019-04-17 07:00:02">2019-04-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-11-21T13:46:33.000Z" title="更新于 2020-11-21 13:46:33">2020-11-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/MySQL/">MySQL</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="MySQL的存储引擎"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>存储引擎决定了如何把数据库内的信息最终以某种方式转存在磁盘的数据库文件中，存储引擎用来管理磁盘上的各种不同文件。存储引擎在MySQL中是其特有的一种技术，在其他数据库中不提这个东西，Oracle、DB2、SQLserver这些商业级的数据库只有一种存储引擎，所以都不提存储引擎，而MySQL是个开源产品，所以很多的开发人员觉得某些存储引擎不好自己就开发一个，从而造成了MySQL的存储引擎特别的多。</p>
+<span id="more"></span>
+
+<p>MyISAM:MyISAM在5.5之前的版本中默认使用</p>
+<p>MyISAM的存储引擎具有更好的性能</p>
+<p>InnoDB:InnoDB在5.5之后的版本中默认使用</p>
+<p>InnoDB的存储引擎具有很好的稳定性，支持事务和低级别的锁和外键</p>
+<h3 id="默认存储引擎的查看方法"><a href="#默认存储引擎的查看方法" class="headerlink" title="默认存储引擎的查看方法"></a>默认存储引擎的查看方法</h3><p>存储引擎可以在MySQL中使用SHOW ENGINES;命令进行查看，所列出来的都是系统所支持的存储引擎，带有default的表示系统默认使用的存储引擎。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看所支持的所有存储引擎</span></span><br><span class="line">MariaDB [(none)]&gt; SHOW ENGINES;</span><br><span class="line">+--------------------+---------+----------------------------------------------------------------------------------+--------------+------+------------+</span><br><span class="line">| Engine             | Support | Comment                                                                          | Transactions | XA   | Savepoints |</span><br><span class="line">+--------------------+---------+----------------------------------------------------------------------------------+--------------+------+------------+</span><br><span class="line">| MRG_MyISAM         | YES     | Collection of identical MyISAM tables                                            | NO           | NO   | NO         |</span><br><span class="line">| MyISAM             | YES     | Non-transactional engine with good performance and small data footprint          | NO           | NO   | NO         |</span><br><span class="line">| BLACKHOLE          | YES     | /dev/null storage engine (anything you write to it disappears)                   | NO           | NO   | NO         |</span><br><span class="line">| CSV                | YES     | Stores tables as CSV files                                                       | NO           | NO   | NO         |</span><br><span class="line">| Aria               | YES     | Crash-safe tables with MyISAM heritage                                           | NO           | NO   | NO         |</span><br><span class="line">| ARCHIVE            | YES     | gzip-compresses tables <span class="keyword">for</span> a low storage footprint                               | NO           | NO   | NO         |</span><br><span class="line">| MEMORY             | YES     | Hash based, stored <span class="keyword">in</span> memory, useful <span class="keyword">for</span> temporary tables                        | NO           | NO   | NO         |</span><br><span class="line">| PERFORMANCE_SCHEMA | YES     | Performance Schema                                                               | NO           | NO   | NO         |</span><br><span class="line">| InnoDB             | DEFAULT | Supports transactions, row-level locking, foreign keys and encryption <span class="keyword">for</span> tables | YES          | YES  | YES        |</span><br><span class="line">| SEQUENCE           | YES     | Generated tables filled with sequential values                                   | YES          | NO   | YES        |</span><br><span class="line">+--------------------+---------+----------------------------------------------------------------------------------+--------------+------+------------+</span><br><span class="line">10 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<h3 id="InnoDB和MyISAM的区别"><a href="#InnoDB和MyISAM的区别" class="headerlink" title="InnoDB和MyISAM的区别"></a>InnoDB和MyISAM的区别</h3><p>InnoDB和MyISAM主要有以下这些区别</p>
+<table>
+<thead>
+<tr>
+<th align="left">区别</th>
+<th align="left">InnoDB</th>
+<th align="left">MyISAM</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">聚集索引(Clustered indexex)</td>
+<td align="left">支持</td>
+<td align="left">不支持</td>
+</tr>
+<tr>
+<td align="left">压缩数据(compressed data)</td>
+<td align="left">支持</td>
+<td align="left">支持，仅在压缩行的格式情况下支持</td>
+</tr>
+<tr>
+<td align="left">数据的缓存(data caches)</td>
+<td align="left">支持</td>
+<td align="left">不支持</td>
+</tr>
+<tr>
+<td align="left">外键</td>
+<td align="left">支持</td>
+<td align="left">不支持</td>
+</tr>
+<tr>
+<td align="left">全文缩影</td>
+<td align="left">支持需要5.6以后版本</td>
+<td align="left">支持</td>
+</tr>
+<tr>
+<td align="left">锁的并发性(locking granularity)</td>
+<td align="left">行级锁</td>
+<td align="left">表级锁</td>
+</tr>
+<tr>
+<td align="left">多版本的并发控制(mvcc)</td>
+<td align="left">支持</td>
+<td align="left">不支持</td>
+</tr>
+<tr>
+<td align="left">事务</td>
+<td align="left">支持</td>
+<td align="left">不支持(崩溃恢复性较差)</td>
+</tr>
+<tr>
+<td align="left">存储大小</td>
+<td align="left">64T</td>
+<td align="left">256T</td>
+</tr>
+</tbody></table>
+<h3 id="MyISAM和InnoDB的引擎文件"><a href="#MyISAM和InnoDB的引擎文件" class="headerlink" title="MyISAM和InnoDB的引擎文件"></a>MyISAM和InnoDB的引擎文件</h3><p>1.MyISAM引擎文件默认有3个，每个表有三个文件</p>
+<table>
+<thead>
+<tr>
+<th align="left">引擎文件</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">tbl_name.frm</td>
+<td align="left">表格式定义</td>
+</tr>
+<tr>
+<td align="left">tbl_name.MYD</td>
+<td align="left">数据文件</td>
+</tr>
+<tr>
+<td align="left">tbl_name.MYI</td>
+<td align="left">索引文件</td>
+</tr>
+</tbody></table>
+<p>2.InnoDB引擎文件在早期的版本中默认只有2个</p>
+<table>
+<thead>
+<tr>
+<th align="left">引擎文件</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">tbl_name.frm</td>
+<td align="left">表格式定义</td>
+</tr>
+<tr>
+<td align="left">../ibdata1</td>
+<td align="left">所有的表的数据文件</td>
+</tr>
+</tbody></table>
+<p>由于所有的表的数据内容都存放在数据库的ibdata1中非常不安全，所以innodb也有相关的参数可以让其进行每个表的数据分开存放。此参数的名字为innodb_file_per_table</p>
+<p>查询innodb_file_per_table参数是否开启的方法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># mysqladmin -uroot -p123456 variables | grep &#x27;innodb_file_per_table&#x27;</span></span><br><span class="line">| innodb_file_per_table                                  | ON           <span class="comment">#参数已经开启</span></span><br></pre></td></tr></table></figure>
+
+<p>若为off则需要在MySQL的配置文件中加入此选项，然后重启服务器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># vim /etc/my.cnf</span></span><br><span class="line">[mysqld]</span><br><span class="line">innodb_file_per_table</span><br></pre></td></tr></table></figure>
+
+<p>3.修改默认的存储引擎<br>在早期的MySQL版本中默认的存储引擎为MyISAM若要使用InnoDB作为默认存储引擎，组需要对MySQL的配置文件进行修改，添加一个相关的参数，default_storage_engine=innodb，修改完毕后重启服务。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># vim /etc/my.cnf</span></span><br><span class="line">[mysqld]</span><br><span class="line">default_storage_engine=innodb</span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Masuri</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.mylinuxops.com/2019/04/17/MySQL/MySQL%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/MySQL%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/">http://www.mylinuxops.com/2019/04/17/MySQL/MySQL%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/MySQL%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.mylinuxops.com" target="_blank">MyLinuxOps</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/MySQL/">MySQL</a></div><div class="post_share"><div class="social-share" data-image="/images/Mysql.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/04/17/MySQL/MySQL%E7%9A%84%E4%BA%8B%E5%8A%A1/MySQL%E7%9A%84%E4%BA%8B%E5%8A%A1/"><img class="prev-cover" src="/images/Mysql.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">MySQL的事务</div></div></a></div><div class="next-post pull-right"><a href="/2019/04/17/MySQL/MySQL%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%9F%A5%E6%9D%80/MySQL%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%9F%A5%E6%9D%80/"><img class="next-cover" src="/images/Mysql.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">MySQL进程的查杀</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/04/10/MySQL/MySQL%E4%B8%BB%E4%B8%BB%E5%A4%8D%E5%88%B6/MySQL%E4%B8%BB%E4%B8%BB%E5%A4%8D%E5%88%B6%E5%8F%8A%E6%8E%92%E5%9D%91/" title="MySQL主主复制及相关的排坑"><img class="cover" src="/images/Mysql.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-10</div><div class="title">MySQL主主复制及相关的排坑</div></div></a></div><div><a href="/2019/04/10/MySQL/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" title="MySQL主从复制"><img class="cover" src="/images/Mysql.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-10</div><div class="title">MySQL主从复制</div></div></a></div><div><a href="/2019/04/10/MySQL/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%87%BA%E9%94%99%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%87%BA%E9%94%99%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="MySQL主从复制出错的解决方法"><img class="cover" src="/images/Mysql.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-10</div><div class="title">MySQL主从复制出错的解决方法</div></div></a></div><div><a href="/2019/04/17/MySQL/MySQL%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E8%A3%85/MySQL%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E8%A3%85/" title="Mariadb二进制安装"><img class="cover" src="/images/Mysql.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-17</div><div class="title">Mariadb二进制安装</div></div></a></div><div><a href="/2019/04/10/MySQL/MySQL%E5%8D%8A%E5%90%8C%E6%AD%A5%E5%A4%8D%E5%88%B6/MySQL%E5%8D%8A%E5%90%8C%E6%AD%A5%E5%A4%8D%E5%88%B6/" title="MySQL半同步复制"><img class="cover" src="/images/Mysql.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-10</div><div class="title">MySQL半同步复制</div></div></a></div><div><a href="/2019/04/17/MySQL/MySQL%E5%8F%98%E9%87%8F%E5%92%8C%E9%80%89%E9%A1%B9/MySQL%E5%8F%98%E9%87%8F%E5%92%8C%E9%80%89%E9%A1%B9/" title="MySQL的变量和选项"><img class="cover" src="/images/Mysql.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-17</div><div class="title">MySQL的变量和选项</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Masuri</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">116</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E7%9A%84%E6%9F%A5%E7%9C%8B%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">默认存储引擎的查看方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#InnoDB%E5%92%8CMyISAM%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">2.</span> <span class="toc-text">InnoDB和MyISAM的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MyISAM%E5%92%8CInnoDB%E7%9A%84%E5%BC%95%E6%93%8E%E6%96%87%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">MyISAM和InnoDB的引擎文件</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/01/12/hello-world/" title="Hello World"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/2022/01/12/hello-world/" title="Hello World">Hello World</a><time datetime="2022-01-12T12:50:44.471Z" title="发表于 2022-01-12 12:50:44">2022-01-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/" title="Jenkins代码质量检测"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins代码质量检测"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/" title="Jenkins代码质量检测">Jenkins代码质量检测</a><time datetime="2019-05-05T10:40:00.000Z" title="发表于 2019-05-05 10:40:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/" title="Jenkins给脚本传递参数"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins给脚本传递参数"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/" title="Jenkins给脚本传递参数">Jenkins给脚本传递参数</a><time datetime="2019-05-05T10:10:00.000Z" title="发表于 2019-05-05 10:10:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E8%A7%86%E5%9B%BE/jenkins%E8%A7%86%E5%9B%BE/" title="Jenkins视图"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins视图"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E8%A7%86%E5%9B%BE/jenkins%E8%A7%86%E5%9B%BE/" title="Jenkins视图">Jenkins视图</a><time datetime="2019-05-05T10:00:00.000Z" title="发表于 2019-05-05 10:00:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/Jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/" title="Jenkins构建后关联操作"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins构建后关联操作"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/Jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/" title="Jenkins构建后关联操作">Jenkins构建后关联操作</a><time datetime="2019-05-05T09:50:00.000Z" title="发表于 2019-05-05 09:50:00">2019-05-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Masuri</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

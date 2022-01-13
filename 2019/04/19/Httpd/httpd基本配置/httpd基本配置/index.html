@@ -1,0 +1,521 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>httpd基本配置和参数 | MyLinuxOps</title><meta name="keywords" content="Apache"><meta name="author" content="Masuri"><meta name="copyright" content="Masuri"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本节将讲述httpd的相关配置文件以及一些常见配置的使用方法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="httpd基本配置和参数">
+<meta property="og:url" content="http://www.mylinuxops.com/2019/04/19/Httpd/httpd%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/httpd%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="MyLinuxOps">
+<meta property="og:description" content="本节将讲述httpd的相关配置文件以及一些常见配置的使用方法">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.mylinuxops.com/images/httpd.jpg">
+<meta property="article:published_time" content="2019-04-19T06:25:02.000Z">
+<meta property="article:modified_time" content="2020-11-23T05:11:38.000Z">
+<meta property="article:author" content="Masuri">
+<meta property="article:tag" content="Apache">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.mylinuxops.com/images/httpd.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://www.mylinuxops.com/2019/04/19/Httpd/httpd%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/httpd%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'httpd基本配置和参数',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-11-23 05:11:38'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">116</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/httpd.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">MyLinuxOps</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">httpd基本配置和参数</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-04-19T06:25:02.000Z" title="发表于 2019-04-19 06:25:02">2019-04-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-11-23T05:11:38.000Z" title="更新于 2020-11-23 05:11:38">2020-11-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Apache/">Apache</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="httpd基本配置和参数"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>本节将讲述httpd的相关配置文件以及一些常见配置的使用方法</p>
+<span id="more"></span>
+
+<h2 id="一、httpd相关的文件和目录"><a href="#一、httpd相关的文件和目录" class="headerlink" title="一、httpd相关的文件和目录"></a>一、httpd相关的文件和目录</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/etc/httpd/conf.modules.d   <span class="comment">#此目录存放了模块的配置文件，模块是否启用</span></span><br><span class="line">/etc/httpd/conf/httpd.conf  <span class="comment">#httpd的主配置文件</span></span><br><span class="line">/etc/httpd/conf.d           <span class="comment">#httpd配置文件存放目录此目录下以.conf结尾的都为httpd配置文件</span></span><br><span class="line">/usr/lib64/httpd/modules    <span class="comment">#httpd模块相关的文件</span></span><br><span class="line">/usr/sbin/apachectl         <span class="comment">#httpd启动程序，和systemctl start|stop|... httpd相同</span></span><br><span class="line">/usr/sbin/httpd</span><br><span class="line">/var/<span class="built_in">log</span>/httpd              <span class="comment">#存放了httpd的日志，access_log访问日志，error_log错误日志</span></span><br><span class="line">/var/www/html               <span class="comment">#httpd站点网页存放目录</span></span><br><span class="line">/etc/httpd/run/httpd.pid    <span class="comment">#httpd的主进程文件，里面存放了httpd的进程编号</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="二、httpd的帮助文档包"><a href="#二、httpd的帮助文档包" class="headerlink" title="二、httpd的帮助文档包"></a>二、httpd的帮助文档包</h2><p>安装httpd-manual，启动httpd服务口可以在本地查看httpd相关的帮助</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># yum install httpd-manual -y</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="三、httpd常见配置"><a href="#三、httpd常见配置" class="headerlink" title="三、httpd常见配置"></a>三、httpd常见配置</h2><p>httpd安装后启动服务，并配置为开机自动启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># systemctl enable httpd</span></span><br><span class="line">[root@localhost ~]<span class="comment"># systemctl start httpd</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-ServerTokens"><a href="#1-ServerTokens" class="headerlink" title="1.ServerTokens"></a>1.ServerTokens</h3><p>配置服务器响应报文头部中显示服务器类型和版本号</p>
+<table>
+<thead>
+<tr>
+<th align="left">可用选项</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Full</td>
+<td align="left">显示所有信息</td>
+</tr>
+<tr>
+<td align="left">Prod</td>
+<td align="left">显示类型</td>
+</tr>
+<tr>
+<td align="left">Major</td>
+<td align="left">显示类型，主版本号</td>
+</tr>
+<tr>
+<td align="left">Minor</td>
+<td align="left">显示类型，主版本号，次版本号，跟新次数</td>
+</tr>
+<tr>
+<td align="left">OS</td>
+<td align="left">显示类型，主版本号，次版本号，跟新次数，系统类型</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<p>Prod在实际生产环境中显示的越少越好，如果要不显示需要对代码修改</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># vim /etc/httpd/conf/httpd.conf</span></span><br><span class="line">ServerTokens Prod</span><br><span class="line">[root@localhost ~]<span class="comment"># systemctl reload httpd</span></span><br><span class="line">[root@localhost ~]<span class="comment"># curl -I 192.168.73.110</span></span><br><span class="line">Server: Apache</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-Listen"><a href="#2-Listen" class="headerlink" title="2.Listen"></a>2.Listen</h3><p>监听的端口和地址，可以监听在多各端口和地址上，需要写多行</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Listen PORT</td>
+<td align="left">监听所有地址的某端口</td>
+</tr>
+<tr>
+<td align="left">Listen IP:PORT</td>
+<td align="left">监听所有地址的ip和端口</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># vim /etc/httpd/conf/httpd.conf</span></span><br><span class="line">Listen 192.168.73.110:80</span><br><span class="line">Listen 172.22.144.83:8080</span><br><span class="line">[root@localhost ~]<span class="comment"># systemctl restart httpd                 #端口修改后需要重启服务</span></span><br><span class="line">[root@localhost ~]<span class="comment"># ss -tnl | grep 80</span></span><br><span class="line">LISTEN     0      128    172.22.144.83:8080                     *:*  </span><br><span class="line">LISTEN     0      128    192.168.73.110:80                       *:*  </span><br></pre></td></tr></table></figure>
+
+<h3 id="3-KeepAlive"><a href="#3-KeepAlive" class="headerlink" title="3.KeepAlive"></a>3.KeepAlive</h3><p>持久连接，此选项默认开启，需要和KeepAliveTimeout结合使用</p>
+<p>KeepAlive选项</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">On</td>
+<td align="left">开启</td>
+</tr>
+<tr>
+<td align="left">Off</td>
+<td align="left">关闭</td>
+</tr>
+</tbody></table>
+<p>KeepAliveTimeout num[ms]超时时长默认为5秒  </p>
+<p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># vim /etc/httpd/conf/httpd.conf</span></span><br><span class="line">KeepAlive On</span><br><span class="line">KeepAliveTimeout 10</span><br><span class="line">[root@localhost ~]<span class="comment"># systemctl reload httpd</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-DocumentRoot-“-path”"><a href="#4-DocumentRoot-“-path”" class="headerlink" title="4.DocumentRoot “/path”"></a>4.DocumentRoot “/path”</h3><p>定义网页文档存放路径</p>
+<p>文档路径映射，指向的路径为URL路径的起始位置，默认路径为”/var/www/html”在http2.2上只需修改此项就能访问，2.4以上修改后还需要对目录授权。</p>
+<p>示例：将映射路径指向别处</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># vim /etc/httpd/conf/httpd.conf</span></span><br><span class="line">DocumentRoot <span class="string">&quot;/data/html&quot;</span></span><br><span class="line">&lt;Directory <span class="string">&quot;/data/html&quot;</span>&gt;       定义对目录授权</span><br><span class="line">    Require all granted</span><br><span class="line">&lt;/Directory&gt;</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># mkdir /data/html</span></span><br><span class="line">[root@localhost ~]<span class="comment"># chmod 755 /data/html/</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;&lt;h1&gt;welcome to www.mylinuxops.com&lt;/h1&gt;&quot; &gt; /data/html/index.html</span></span><br><span class="line">[root@localhost ~]<span class="comment"># systemctl restart httpd</span></span><br><span class="line">[root@localhost ~]<span class="comment"># curl 192.168.73.110</span></span><br><span class="line">&lt;h1&gt;welcome to www.mylinuxops.com&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-DirectoryIndex-定义站点主页面"><a href="#5-DirectoryIndex-定义站点主页面" class="headerlink" title="5.DirectoryIndex 定义站点主页面"></a>5.DirectoryIndex 定义站点主页面</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DirectoryIndex index.html   <span class="comment">#当访问某网站时不需要指定文件，默认找index.html</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-站点的访问控制机制"><a href="#6-站点的访问控制机制" class="headerlink" title="6.站点的访问控制机制"></a>6.站点的访问控制机制</h3><p>可以基于两种机制指明对哪些资源进行何种访问控制。  </p>
+<p>访问控制机制有两种，可以基于客户端来源地址和用户账号。  </p>
+<p>可以进行访问控制的资源：  </p>
+<p>文件系统路径：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;Directory <span class="string">&quot;/path&quot;</span>&gt;</span><br><span class="line">...</span><br><span class="line">&lt;/Directory&gt;</span><br><span class="line"></span><br><span class="line">&lt;File <span class="string">&quot;/path/file&quot;</span>&gt;</span><br><span class="line">...</span><br><span class="line">&lt;/File&gt;</span><br><span class="line"></span><br><span class="line">&lt;FileMatch <span class="string">&quot;PATTERN&quot;</span>&gt;</span><br><span class="line">...</span><br><span class="line">&lt;/FileMatch&gt;</span><br></pre></td></tr></table></figure>
+
+<p>URL路径</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;Location <span class="string">&quot;&quot;</span>&gt;</span><br><span class="line">...</span><br><span class="line">&lt;/Location&gt;</span><br><span class="line"></span><br><span class="line">&lt;LocationMatch <span class="string">&quot;&quot;</span>&gt;</span><br><span class="line">...</span><br><span class="line">&lt;LocationMatch&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-对资源的访问控制"><a href="#7-对资源的访问控制" class="headerlink" title="7.对资源的访问控制"></a>7.对资源的访问控制</h3><h4 id="7-1-Options"><a href="#7-1-Options" class="headerlink" title="7.1 Options"></a>7.1 Options</h4><p>options后面跟了1个或多个以空白字符分割的选项列表在选项前+，—表示增加或删除指定选项，该选项会应用在目录下的所有子目录，若子目录中有AllowOverRide选项则会由AllowOverRide中定义的选项来覆盖当前的选项。</p>
+<table>
+<thead>
+<tr>
+<th align="left">options</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">all</td>
+<td align="left">全部允许</td>
+</tr>
+<tr>
+<td align="left">none</td>
+<td align="left">全部禁用</td>
+</tr>
+<tr>
+<td align="left">indexes</td>
+<td align="left">要访问的URL路径下不存在与定义的主页面资源相符的资源文件时，返回索引列表给用户</td>
+</tr>
+<tr>
+<td align="left">FollowSymlinks</td>
+<td align="left">允许访问符号连接文件所指向的源文件</td>
+</tr>
+</tbody></table>
+<p>生产中不建议将indexes启用有安全风险  </p>
+<p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;Directory <span class="string">&quot;/data/html&quot;</span>&gt;</span><br><span class="line">    options all     <span class="comment">#启用所有选项</span></span><br><span class="line">    Require all grant</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;Directory <span class="string">&quot;/data/html&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">    options all -indexes    <span class="comment">#启用所有选项，除了indexes</span></span><br><span class="line">    Require all grant</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;Directory <span class="string">&quot;/data/html&quot;</span>&gt;</span><br><span class="line">    options indexes followsymlinks    <span class="comment">#启用indexes和followSymlinks</span></span><br><span class="line">    Require all grant</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-2-AllowOverRide"><a href="#7-2-AllowOverRide" class="headerlink" title="7.2 AllowOverRide"></a>7.2 AllowOverRide</h4><p>这个功能需要在目录下创建一个.htaccess的文件，在文件中定义启用哪些访问控制选项，然后使用allowoverride来启用这些选项或禁用这些选项，.htaccess中的选项启用之后会覆盖之前的配置指令</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">all</td>
+<td align="left">.htaccess中所有指令都有效</td>
+</tr>
+<tr>
+<td align="left">none</td>
+<td align="left">.htaccess中所有中指令都无效</td>
+</tr>
+<tr>
+<td align="left">AuthConfig</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost html]<span class="comment"># cat /data/html/.htaccess</span></span><br><span class="line">options indexes followsymLinks</span><br><span class="line">&lt;Directory <span class="string">&quot;/data/html&quot;</span>&gt;</span><br><span class="line">    AllowOverride all</span><br><span class="line">    Require all granted</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-3-基于ip的访问控制"><a href="#7-3-基于ip的访问控制" class="headerlink" title="7.3 基于ip的访问控制"></a>7.3 基于ip的访问控制</h4><p>无明确授权的目录，默认拒绝  </p>
+<p>Require all granted:允许所有访问  </p>
+<p>Require all denied:拒绝所有访问</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;Directory <span class="string">&quot;/data/html&quot;</span>&gt;</span><br><span class="line">options indexes followsymlinks</span><br><span class="line">Require all granted</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="控制特定的IP访问"><a href="#控制特定的IP访问" class="headerlink" title="控制特定的IP访问"></a>控制特定的IP访问</h5><p>Require ip IPADDR:授权指定的IP访问  </p>
+<p><em><strong>需要将其嵌套在&lt;requireany&gt;…&lt;\requireany&gt;之内定义，先将所有访问拒绝，再允许某ip访问</strong></em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;Directory <span class="string">&quot;/data/html&quot;</span>&gt;</span><br><span class="line">options indexes followsymlinks</span><br><span class="line">&lt;requireany&gt;</span><br><span class="line">Require all denied</span><br><span class="line">Require ip 192.168.73.111</span><br><span class="line">&lt;/requireany&gt;</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Require not ip IPADDR:授权特定ip拒绝访问  </p>
+<p><em><strong>需要将其嵌套再&lt;requireall&gt;…&lt;\requireall&gt;之内定义，允许所有访问，然后拒绝某ip访问</strong></em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;Directory <span class="string">&quot;/data/html&quot;</span>&gt;</span><br><span class="line">options indexes followsymlinks</span><br><span class="line">&lt;requireall&gt;</span><br><span class="line">Require all granted</span><br><span class="line">Require not ip  192.168.73.111</span><br><span class="line">&lt;/requireall&gt;</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="控制特定的主机访问"><a href="#控制特定的主机访问" class="headerlink" title="控制特定的主机访问"></a>控制特定的主机访问</h5><p>用法与控制ip相同</p>
+<p>Require host HOSTNAME:授权特定主机访问</p>
+<p>Require not host HOSTNAME:拒绝特定主机访问</p>
+<p>HOSTNAME可以时特定的主机（FQDN），或指定域名下的所有主机（domin.tld）</p>
+<h3 id="8-日志设定"><a href="#8-日志设定" class="headerlink" title="8.日志设定"></a>8.日志设定</h3><p>日志分为访问日志和错误日志</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/var/<span class="built_in">log</span>/httpd/error_log        <span class="comment">#错误日志</span></span><br><span class="line">/var/<span class="built_in">log</span>/httpd/access_log       <span class="comment">#访问日志</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="8-1错误日志"><a href="#8-1错误日志" class="headerlink" title="8.1错误日志"></a>8.1错误日志</h4><p>错误日志的默认级别为 warn</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># vim /etc/httpd/conf/httpd.conf</span></span><br><span class="line">ErrorLog <span class="string">&quot;logs/error_log&quot;</span>       <span class="comment">#此行定义了错误日志的位置</span></span><br><span class="line"><span class="comment"># LogLevel: Control the number of messages logged to the error_log.</span></span><br><span class="line"><span class="comment"># Possible values include: debug, info, notice, warn, error, crit,</span></span><br><span class="line"><span class="comment"># alert, emerg.                 #注释行说明了错误日志由低到高的级别，级别越低记录的内容越多。</span></span><br><span class="line">LogLevel warn                   <span class="comment">#此行定义了错误日志的级别</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="8-2访问日志"><a href="#8-2访问日志" class="headerlink" title="8.2访问日志"></a>8.2访问日志</h4><p>在配置文件中定义了可选的各种访问日志格式，可以以选用配置文件中定义的格式也可以自定义访问日志格式。</p>
+<p>访问日志需要定义2行</p>
+<p>1.Logformat 日志格式 定义名</p>
+<p>2.Customlog 定义名</p>
+<p>其中格式有多各字段组成</p>
+<table>
+<thead>
+<tr>
+<th align="left">字段</th>
+<th align="left">定义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">%h</td>
+<td align="left">客户端的IP地址</td>
+</tr>
+<tr>
+<td align="left">%l</td>
+<td align="left">远程用户，启用mod_ident才有效，通常为”-“</td>
+</tr>
+<tr>
+<td align="left">%u</td>
+<td align="left">验证远程用户，登陆访问时显示，非登录访问时显示”-“</td>
+</tr>
+<tr>
+<td align="left">%t</td>
+<td align="left">访问的时间，为GMT时间</td>
+</tr>
+<tr>
+<td align="left">%r</td>
+<td align="left">请求的方法，url及版本号</td>
+</tr>
+<tr>
+<td align="left">%&gt;s</td>
+<td align="left">相应状态码</td>
+</tr>
+<tr>
+<td align="left">%b</td>
+<td align="left">相应报文大小</td>
+</tr>
+<tr>
+<td align="left">%{Referer}i</td>
+<td align="left">从哪个连接跳转来</td>
+</tr>
+<tr>
+<td align="left">%{User-Agent}i</td>
+<td align="left">使用的什么浏览器</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#配置文件中定义格式</span></span><br><span class="line">[root@localhost ~]<span class="comment"># vim /etc/httpd/conf/httpd.conf</span></span><br><span class="line">LogFormat <span class="string">&quot;%h %l %u %t \&quot;%r\&quot; %&gt;s %b \&quot;%&#123;Referer&#125;i\&quot; \&quot;%&#123;User-Agent&#125;i\&quot;&quot;</span> combined</span><br><span class="line">Customlog combined</span><br><span class="line"><span class="comment">#访问日志中查看格式</span></span><br><span class="line">[root@localhost ~]<span class="comment"># tail -1 /var/log/httpd/access_log</span></span><br><span class="line">192.168.73.1 - - [10/May/2019:15:18:50 +0800] <span class="string">&quot;GET /doc/ HTTP/1.1&quot;</span> 200 884 <span class="string">&quot;http://192.168.73.110/&quot;</span> <span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="9-AddDefaultCharset"><a href="#9-AddDefaultCharset" class="headerlink" title="9.AddDefaultCharset"></a>9.AddDefaultCharset</h3><p>设定默认字符集</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@CentOS6 ~]<span class="comment"># vim /app/httpd24/conf/httpd.conf</span></span><br><span class="line">AddDefaultCharset utf8mb4                       <span class="comment">#设定默认字符集为utf8mb4</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@CentOS6 ~]<span class="comment"># curl -I 192.168.73.100</span></span><br><span class="line">...</span><br><span class="line">Content-Type: text/html; charset=utf8mb4        <span class="comment">#显示头部信息为utf8mb4</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-alias"><a href="#10-alias" class="headerlink" title="10.alias"></a>10.alias</h3><p>定义路径别名</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@CentOS6 ~]<span class="comment"># vim /app/httpd24/conf/httpd.conf</span></span><br><span class="line"><span class="built_in">alias</span> /bbs /data/bbsdir         <span class="comment">#定义/bbs 为/data/bbsdir的别名</span></span><br><span class="line">&lt;directory /data/bbsdir&gt;        <span class="comment">#</span></span><br><span class="line">require all granted</span><br><span class="line">&lt;/directory&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建相应目录及站点文件</span></span><br><span class="line">[root@CentOS6 ~]<span class="comment"># mkdir /data/bbsdir</span></span><br><span class="line">[root@CentOS6 ~]<span class="comment"># echo &quot;welcome to mylinuxops.com&quot; &gt; /data/bbsdir/index.html</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#重启服务测试</span></span><br><span class="line">[root@CentOS6 ~]<span class="comment"># apachectl restart</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#测试</span></span><br><span class="line">[root@CentOS6 ~]<span class="comment"># curl 192.168.73.100/bbs</span></span><br><span class="line">&lt;!DOCTYPE HTML PUBLIC <span class="string">&quot;-//IETF//DTD HTML 2.0//EN&quot;</span>&gt;</span><br><span class="line">&lt;html&gt;&lt;head&gt;</span><br><span class="line">&lt;title&gt;301 Moved Permanently&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Moved Permanently&lt;/h1&gt;</span><br><span class="line">&lt;p&gt;The document has moved &lt;a href=<span class="string">&quot;http://192.168.73.100/bbs/&quot;</span>&gt;here&lt;/a&gt;.&lt;/p&gt;    <span class="comment">#访问/bbs时跳转到/bbs/</span></span><br><span class="line">&lt;/body&gt;&lt;/html&gt;</span><br><span class="line">[root@CentOS6 ~]<span class="comment"># curl 192.168.73.100/bbs/                                      #访问/bbs/时直接显示</span></span><br><span class="line">welcome to mylinuxops.com</span><br></pre></td></tr></table></figure>
+
+<h3 id="11-用户的访问控制"><a href="#11-用户的访问控制" class="headerlink" title="11.用户的访问控制"></a>11.用户的访问控制</h3><p>用户的访问控制分为两步</p>
+<h4 id="11-1认证质询"><a href="#11-1认证质询" class="headerlink" title="11.1认证质询"></a>11.1认证质询</h4><p>认证质询：WWW-Authenticate</p>
+<p>响应码：401</p>
+<p>先拒绝客户端请求，说明需要客户端提供账号和密码。</p>
+<h4 id="11-2认证"><a href="#11-2认证" class="headerlink" title="11.2认证"></a>11.2认证</h4><p>认证Authorization</p>
+<p>客户端将账号和密码填入后再次发送请求报文，通过认证，则服务器发送相应的资源</p>
+<p>认证的方式分为两种：</p>
+<p>basic:明文</p>
+<p>digest:消息摘要</p>
+<h4 id="11-3安全域"><a href="#11-3安全域" class="headerlink" title="11.3安全域"></a>11.3安全域</h4><p>需要用户认证后方能访问的路径；应该托管过名称对其进行表示，以便于报纸用户认证的原因</p>
+<h4 id="11-4用户的账号和密码"><a href="#11-4用户的账号和密码" class="headerlink" title="11.4用户的账号和密码"></a>11.4用户的账号和密码</h4><p>用户的账号用来访问某服务时用到的认证标识</p>
+<p>账号和密码可以存放在文本中，sql数据库中，ldap目录，nis等存储中</p>
+<p>用户和账号使用htpasswd命令生成</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">htpasswd [OPTIONS] /PATH/TO/HTPASSWD_FILE username</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">options</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-c</td>
+<td align="left">自动创建文件，在第一次创建用户时使用，反复使用会覆盖之前的用户</td>
+</tr>
+<tr>
+<td align="left">-p</td>
+<td align="left">使用明文密码</td>
+</tr>
+<tr>
+<td align="left">-m</td>
+<td align="left">使用md5加密格式</td>
+</tr>
+<tr>
+<td align="left">-d</td>
+<td align="left">CRYPT格式加密（默认）</td>
+</tr>
+<tr>
+<td align="left">-s</td>
+<td align="left">sha格式加密</td>
+</tr>
+<tr>
+<td align="left">-D</td>
+<td align="left">删除指定用户</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<p>基于用户的验证</p>
+<p>一、指定哪些用户可以访问</p>
+<p>1.创建4个用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># htpasswd -c /etc/httpd/conf.d/.htpasswd tom</span></span><br><span class="line">New password:</span><br><span class="line">Re-type new password:</span><br><span class="line">Adding password <span class="keyword">for</span> user tom</span><br><span class="line">[root@localhost ~]<span class="comment"># htpasswd  /etc/httpd/conf.d/.htpasswd alice</span></span><br><span class="line">New password:</span><br><span class="line">Re-type new password:</span><br><span class="line">Adding password <span class="keyword">for</span> user alice</span><br><span class="line">[root@localhost ~]<span class="comment"># htpasswd  /etc/httpd/conf.d/.htpasswd jack</span></span><br><span class="line">New password:</span><br><span class="line">Re-type new password:</span><br><span class="line">Adding password <span class="keyword">for</span> user jack</span><br><span class="line">[root@localhost ~]<span class="comment"># htpasswd  /etc/httpd/conf.d/.htpasswd masuri</span></span><br><span class="line">New password:</span><br><span class="line">Re-type new password:</span><br><span class="line">Adding password <span class="keyword">for</span> user masuri</span><br></pre></td></tr></table></figure>
+
+<p>2.修改.htpasswd的权限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># chmod 600 /etc/httpd/conf.d/.htpasswd</span></span><br><span class="line">[root@localhost ~]<span class="comment"># setfacl -m u:apache:r /etc/httpd/conf.d/.htpasswd</span></span><br></pre></td></tr></table></figure>
+
+<p>3.修改配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># vim /etc/httpd/conf.d/test.conf</span></span><br><span class="line">&lt;Directory <span class="string">&quot;/www/html&quot;</span>&gt;</span><br><span class="line">Authtype basic</span><br><span class="line">AuthName <span class="string">&quot;login&quot;</span></span><br><span class="line">AuthUserFile /etc/httpd/conf.d/.htpasswd</span><br><span class="line">AuthGroupFile /etc/httpd/conf.d/group</span><br><span class="line">Require user tom alice              <span class="comment">#授权tom 和 alice可以通过认证访问</span></span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+
+<p>4.重启服务测试</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># systemctl restart httpd</span></span><br><span class="line">[root@localhost ~]<span class="comment"># curl -u tom:111111 192.168.73.111</span></span><br><span class="line">this is admin page</span><br><span class="line">[root@localhost ~]<span class="comment"># curl -u alice:111111 192.168.73.111</span></span><br><span class="line">this is admin page</span><br><span class="line">[root@localhost ~]<span class="comment"># curl -u masuri:111111 192.168.73.111        #masuri用户没有授权无法访问</span></span><br><span class="line">&lt;!DOCTYPE HTML PUBLIC <span class="string">&quot;-//IETF//DTD HTML 2.0//EN&quot;</span>&gt;</span><br><span class="line">&lt;html&gt;&lt;head&gt;</span><br><span class="line">&lt;title&gt;401 Unauthorized&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Unauthorized&lt;/h1&gt;</span><br><span class="line">&lt;p&gt;This server could not verify that you</span><br><span class="line">are authorized to access the document</span><br><span class="line">requested.  Either you supplied the wrong</span><br><span class="line">credentials (e.g., bad password), or your</span><br><span class="line">browser doesn<span class="string">&#x27;t understand how to supply</span></span><br><span class="line"><span class="string">the credentials required.&lt;/p&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;&lt;/html&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>二、指定列表内的所用用户都可以访问</p>
+<p>1.修改配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># vim /etc/httpd/conf.d/test.conf</span></span><br><span class="line">&lt;Directory <span class="string">&quot;/www/html&quot;</span>&gt;</span><br><span class="line">Authtype basic</span><br><span class="line">AuthName <span class="string">&quot;login&quot;</span></span><br><span class="line">AuthUserFile /etc/httpd/conf.d/.htpasswd</span><br><span class="line">AuthGroupFile /etc/httpd/conf.d/group</span><br><span class="line">Require valid-user                                  <span class="comment">#修改为Require valid-user</span></span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+
+<p>2.重启读配置文件测试</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># systemctl reload httpd</span></span><br><span class="line">[root@localhost ~]<span class="comment"># curl -u masuri:111111 192.168.73.111</span></span><br><span class="line">this is admin page</span><br><span class="line">[root@localhost ~]<span class="comment"># curl -u alice:111111 192.168.73.111</span></span><br><span class="line">this is admin page</span><br><span class="line">[root@localhost ~]<span class="comment"># curl -u tom:111111 192.168.73.111</span></span><br><span class="line">this is admin page</span><br><span class="line">[root@localhost ~]<span class="comment"># curl -u jack:111111 192.168.73.111</span></span><br><span class="line">this is admin page</span><br></pre></td></tr></table></figure>
+
+<p>基于组的访问控制</p>
+<p>在基于用户的访问控制基础上，还能进行基于组的访问，将用户进行分组，让某些组内的成员可以访问。首先需要定义一个组名和组成员相对应的文件，然后在配置文件中授权。</p>
+<p>示例：</p>
+<p>1.创建组成员对应关系的文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># vim /etc/httpd/conf.d/group</span></span><br><span class="line">g1:alice tom</span><br><span class="line">g2:jack masuri</span><br></pre></td></tr></table></figure>
+
+<p>2.修改配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># vim /etc/httpd/conf.d/test.conf</span></span><br><span class="line">&lt;Directory <span class="string">&quot;/www/html&quot;</span>&gt;</span><br><span class="line">Authtype basic</span><br><span class="line">AuthName <span class="string">&quot;login&quot;</span></span><br><span class="line">AuthUserFile /etc/httpd/conf.d/.htpasswd</span><br><span class="line">AuthGroupFile /etc/httpd/conf.d/group                   <span class="comment">#指定组文件对应关系</span></span><br><span class="line">Require group g2                                        <span class="comment">#定义g2组成员可以访问</span></span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+
+<p>3.重读配置文件测试</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># systemctl reload httpd</span></span><br><span class="line">[root@localhost ~]<span class="comment"># curl -u tom:111111 192.168.73.111</span></span><br><span class="line">&lt;!DOCTYPE HTML PUBLIC <span class="string">&quot;-//IETF//DTD HTML 2.0//EN&quot;</span>&gt;          <span class="comment">#组1的tom无法访问</span></span><br><span class="line">&lt;html&gt;&lt;head&gt;</span><br><span class="line">&lt;title&gt;401 Unauthorized&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Unauthorized&lt;/h1&gt;</span><br><span class="line">&lt;p&gt;This server could not verify that you</span><br><span class="line">are authorized to access the document</span><br><span class="line">requested.  Either you supplied the wrong</span><br><span class="line">credentials (e.g., bad password), or your</span><br><span class="line">browser doesn<span class="string">&#x27;t understand how to supply</span></span><br><span class="line"><span class="string">the credentials required.&lt;/p&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;&lt;/html&gt;</span></span><br><span class="line"><span class="string">[root@localhost ~]# curl -u jack:111111 192.168.73.111</span></span><br><span class="line"><span class="string">this is admin page                                          #组2的jack可以访问</span></span><br></pre></td></tr></table></figure>
+
+<p>其他认证</p>
+<p>远程客户端和用户验证的控制</p>
+<p>satisfy ALL|ANY</p>
+<p>|参数|说明|<br>|all|客户端的IP和用户验证都通过才能访问|<br>|any|客户端的IP和用户验证有一个通过就能访问|</p>
+<p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># vim /etc/httpd/conf.d/test.conf</span></span><br><span class="line">&lt;Directory <span class="string">&quot;/www/html&quot;</span>&gt;</span><br><span class="line">Authtype basic</span><br><span class="line">AuthName <span class="string">&quot;login&quot;</span></span><br><span class="line">AuthUserFile /etc/httpd/conf.d/.htpasswd</span><br><span class="line">Require valid-user</span><br><span class="line">&lt;Requireall&gt;</span><br><span class="line">Require all granted</span><br><span class="line">Require not ip 192.168.73.111</span><br><span class="line">&lt;/Requireall&gt;</span><br><span class="line">satisfy any</span><br><span class="line">&lt;/Directory&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="12-共享家目录"><a href="#12-共享家目录" class="headerlink" title="12.共享家目录"></a>12.共享家目录</h3><p>要共享家目录需要开启模块mod_userdir.so</p>
+<p>1.查看模块是否开启</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@mylinuxops ~]<span class="comment"># httpd -M | grep userdir</span></span><br><span class="line"> userdir_module (shared)</span><br></pre></td></tr></table></figure>
+
+<p>2.修改与家目录相关的配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@mylinuxops ~]<span class="comment"># vim /etc/httpd/conf.d/userdir.conf</span></span><br><span class="line">&lt;IfModule mod_userdir.c&gt;</span><br><span class="line">    UserDir public_html</span><br><span class="line">&lt;/IfModule&gt;</span><br><span class="line"></span><br><span class="line">&lt;Directory <span class="string">&quot;/home/masuri/public_html&quot;</span>&gt;</span><br><span class="line">require all granted</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+
+<p>3.创建public_html目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@mylinuxops ~]<span class="comment"># mkdir /home/masuri/public_html</span></span><br><span class="line">[root@mylinuxops ~]<span class="comment"># echo &quot;this is masuri&#x27;s home&quot; &gt; /home/masuri/public_html/index.html</span></span><br><span class="line">[root@mylinuxops ~]<span class="comment"># setfacl -m u:apache:x /home/masuri</span></span><br></pre></td></tr></table></figure>
+
+<p>4.重读配置文件测试</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@mylinuxops ~]<span class="comment"># curl -L 192.168.73.111/~masuri</span></span><br><span class="line">this is masuri<span class="string">&#x27;s home</span></span><br></pre></td></tr></table></figure>
+
+<p>安全相关</p>
+<p>共享家目录时需要认证登陆，否则谁都能够登陆不够安全</p>
+<p>1.在家目录下创建.htaccess文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@mylinuxops ~]<span class="comment"># vim /home/masuri/public_html/.htaccess</span></span><br><span class="line">AuthType basic</span><br><span class="line">AuthName <span class="string">&quot;login home&quot;</span></span><br><span class="line">AuthUserFile <span class="string">&quot;/home/masuri/public_html/.htpasswd&quot;</span></span><br><span class="line">Require user masuri</span><br><span class="line">~</span><br></pre></td></tr></table></figure>
+
+<p>2.创建可以用于认证的用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@mylinuxops ~]<span class="comment"># htpasswd -c /home/masuri/public_html/.htpasswd masuri</span></span><br><span class="line">New password:</span><br><span class="line">Re-type new password:</span><br><span class="line">Adding password <span class="keyword">for</span> user masuri</span><br></pre></td></tr></table></figure>
+
+<p>3.修改userdir的配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@mylinuxops ~]<span class="comment"># vim /etc/httpd/conf.d/userdir.conf</span></span><br><span class="line">&lt;Directory <span class="string">&quot;/home/masuri/public_html&quot;</span>&gt;</span><br><span class="line">AllowOverRide authconfig</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+
+<p>3.重读配置文件测试</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@mylinuxops ~]<span class="comment"># curl -L 192.168.73.111/~masuri         #不使用账户名和密码登陆</span></span><br><span class="line">&lt;!DOCTYPE HTML PUBLIC <span class="string">&quot;-//IETF//DTD HTML 2.0//EN&quot;</span>&gt;</span><br><span class="line">&lt;html&gt;&lt;head&gt;</span><br><span class="line">&lt;title&gt;401 Unauthorized&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Unauthorized&lt;/h1&gt;</span><br><span class="line">&lt;p&gt;This server could not verify that you</span><br><span class="line">are authorized to access the document</span><br><span class="line">requested.  Either you supplied the wrong</span><br><span class="line">credentials (e.g., bad password), or your</span><br><span class="line">browser doesn<span class="string">&#x27;t understand how to supply</span></span><br><span class="line"><span class="string">the credentials required.&lt;/p&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;&lt;/html&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[root@mylinuxops ~]# curl -u masuri:111111 -L 192.168.73.111/~masuri        #使用账户名和密码登陆</span></span><br><span class="line"><span class="string">this is masuri&#x27;</span>s home</span><br></pre></td></tr></table></figure>
+
+<h3 id="13-ServerSignature"><a href="#13-ServerSignature" class="headerlink" title="13.ServerSignature"></a>13.ServerSignature</h3><p>当客户请求的网页不存在时，服务器将产生错误文档，如果打开了ServerSignature选项，错误文档的最后一行将包含服务器的名字、Apache的版本等信息，如果不对为显示这些信息，就可以将这些参数设置为off，设置为Email，将显示ServerAdmin的Email提示</p>
+<h3 id="14-status页面"><a href="#14-status页面" class="headerlink" title="14.status页面"></a>14.status页面</h3><p>要查看服务器的状态页面，需要加载mod_status.so模块</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@mylinuxops ~]<span class="comment"># httpd -M | grep status</span></span><br><span class="line"> status_module (shared)</span><br></pre></td></tr></table></figure>
+
+<p>修改配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@mylinuxops ~]<span class="comment"># vim /etc/httpd/conf/httpd.conf</span></span><br><span class="line">&lt;Location <span class="string">&quot;/status&quot;</span>&gt;</span><br><span class="line">SetHandler server-status</span><br><span class="line">&lt;/Location&gt;</span><br></pre></td></tr></table></figure>
+
+<p>重启服务访问</p>
+<p><img src="httpstatus.png" alt="httpstatus.png"></p>
+<p>注意：此页面最好也进行认证登陆</p>
+<h3 id="15-httpd的压缩"><a href="#15-httpd的压缩" class="headerlink" title="15.httpd的压缩"></a>15.httpd的压缩</h3><p>网络上的CDN是根据流量来收费的，所以数据需要进行压缩，从而来节省成本</p>
+<p>压缩需要mod_deflate模块</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@mylinuxops ~]<span class="comment"># httpd -M | grep deflate</span></span><br><span class="line"> deflate_module (shared)</span><br></pre></td></tr></table></figure>
+
+<p>适用场景：<br>(1)节约带宽，额外消耗CPU；同时，可能有些较老浏览器不支持</p>
+<p>(2) 压缩适于压缩的资源，例如文本文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">LoadModule deflate_module modules/mod_deflate.so</span><br><span class="line">SetOutputFilter DEFLATE SetOutputFilter DEFLATE</span><br><span class="line"><span class="comment"># Restrict compression to these MIME</span></span><br><span class="line">types AddOutputFilterByType DEFLATE text/plain  </span><br><span class="line">AddOutputFilterByType DEFLATE text/html</span><br><span class="line">AddOutputFilterByType DEFLATE application/xhtml+xml</span><br><span class="line">AddOutputFilterByType DEFLATE text/xml</span><br><span class="line">AddOutputFilterByType DEFLATE application/xml</span><br><span class="line">AddOutputFilterByType DEFLATE application/x-javascript</span><br><span class="line">AddOutputFilterByType DEFLATE text/javascript</span><br><span class="line">AddOutputFilterByType DEFLATE text/css</span><br><span class="line">DeflateCompressionLevel 9   <span class="comment">#设定默认压缩级别1-9，9级别最高</span></span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Masuri</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.mylinuxops.com/2019/04/19/Httpd/httpd%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/httpd%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/">http://www.mylinuxops.com/2019/04/19/Httpd/httpd%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/httpd%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.mylinuxops.com" target="_blank">MyLinuxOps</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Apache/">Apache</a></div><div class="post_share"><div class="social-share" data-image="/images/httpd.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/04/20/Httpd/%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85LAMP(php-fpm)/%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85LAMP(php-fpm)/"><img class="prev-cover" src="/images/httpd.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">编译安装LAMP(php-fpm)</div></div></a></div><div class="next-post pull-right"><a href="/2019/04/19/Httpd/%E5%9F%BA%E4%BA%8EUDS%E7%9A%84LAMP/%E5%9F%BA%E4%BA%8EUDS%E7%9A%84LAMP/"><img class="next-cover" src="/images/httpd.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">基于UDS的LAMP</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/04/20/Httpd/Apache%20%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E6%8A%80%E6%9C%AF/Apache%20%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E6%8A%80%E6%9C%AF/" title="apache虚拟主机"><img class="cover" src="/images/httpd.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-20</div><div class="title">apache虚拟主机</div></div></a></div><div><a href="/2019/04/15/Httpd/Http%E5%90%84%E7%89%88%E6%9C%AC%E5%8D%8F%E8%AE%AE%E5%8C%BA%E5%88%AB/Http%E5%90%84%E7%89%88%E6%9C%AC%E5%8D%8F%E8%AE%AE%E5%8C%BA%E5%88%AB/" title="http各版本协议区别"><img class="cover" src="/images/httpd.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-15</div><div class="title">http各版本协议区别</div></div></a></div><div><a href="/2019/04/21/Httpd/LAMP%E9%AB%98%E7%BA%A7%E6%9E%B6%E6%9E%84/LAMP%E9%AB%98%E7%BA%A7%E6%9E%B6%E6%9E%84/" title="互联网LAMP架构实现（一）"><img class="cover" src="/images/httpd.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-21</div><div class="title">互联网LAMP架构实现（一）</div></div></a></div><div><a href="/2019/04/20/Httpd/https%E5%8F%8A%E9%87%8D%E5%AE%9A%E5%90%91/https%E5%8F%8A%E9%87%8D%E5%AE%9A%E5%90%91/" title="https及http重定向https"><img class="cover" src="/images/httpd.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-20</div><div class="title">https及http重定向https</div></div></a></div><div><a href="/2019/04/20/Httpd/%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85LAMP(php-fpm)/%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85LAMP(php-fpm)/" title="编译安装LAMP(php-fpm)"><img class="cover" src="/images/httpd.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-20</div><div class="title">编译安装LAMP(php-fpm)</div></div></a></div><div><a href="/2019/04/19/Httpd/%E5%9F%BA%E4%BA%8EUDS%E7%9A%84LAMP/%E5%9F%BA%E4%BA%8EUDS%E7%9A%84LAMP/" title="基于UDS的LAMP"><img class="cover" src="/images/httpd.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-19</div><div class="title">基于UDS的LAMP</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Masuri</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">116</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81httpd%E7%9B%B8%E5%85%B3%E7%9A%84%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">一、httpd相关的文件和目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81httpd%E7%9A%84%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E5%8C%85"><span class="toc-number">2.</span> <span class="toc-text">二、httpd的帮助文档包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81httpd%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">三、httpd常见配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-ServerTokens"><span class="toc-number">3.1.</span> <span class="toc-text">1.ServerTokens</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Listen"><span class="toc-number">3.2.</span> <span class="toc-text">2.Listen</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-KeepAlive"><span class="toc-number">3.3.</span> <span class="toc-text">3.KeepAlive</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-DocumentRoot-%E2%80%9C-path%E2%80%9D"><span class="toc-number">3.4.</span> <span class="toc-text">4.DocumentRoot “&#x2F;path”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-DirectoryIndex-%E5%AE%9A%E4%B9%89%E7%AB%99%E7%82%B9%E4%B8%BB%E9%A1%B5%E9%9D%A2"><span class="toc-number">3.5.</span> <span class="toc-text">5.DirectoryIndex 定义站点主页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E7%AB%99%E7%82%B9%E7%9A%84%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E6%9C%BA%E5%88%B6"><span class="toc-number">3.6.</span> <span class="toc-text">6.站点的访问控制机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E5%AF%B9%E8%B5%84%E6%BA%90%E7%9A%84%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-number">3.7.</span> <span class="toc-text">7.对资源的访问控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#7-1-Options"><span class="toc-number">3.7.1.</span> <span class="toc-text">7.1 Options</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-2-AllowOverRide"><span class="toc-number">3.7.2.</span> <span class="toc-text">7.2 AllowOverRide</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-3-%E5%9F%BA%E4%BA%8Eip%E7%9A%84%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-number">3.7.3.</span> <span class="toc-text">7.3 基于ip的访问控制</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E7%89%B9%E5%AE%9A%E7%9A%84IP%E8%AE%BF%E9%97%AE"><span class="toc-number">3.7.3.1.</span> <span class="toc-text">控制特定的IP访问</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E7%89%B9%E5%AE%9A%E7%9A%84%E4%B8%BB%E6%9C%BA%E8%AE%BF%E9%97%AE"><span class="toc-number">3.7.3.2.</span> <span class="toc-text">控制特定的主机访问</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E6%97%A5%E5%BF%97%E8%AE%BE%E5%AE%9A"><span class="toc-number">3.8.</span> <span class="toc-text">8.日志设定</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#8-1%E9%94%99%E8%AF%AF%E6%97%A5%E5%BF%97"><span class="toc-number">3.8.1.</span> <span class="toc-text">8.1错误日志</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-2%E8%AE%BF%E9%97%AE%E6%97%A5%E5%BF%97"><span class="toc-number">3.8.2.</span> <span class="toc-text">8.2访问日志</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-AddDefaultCharset"><span class="toc-number">3.9.</span> <span class="toc-text">9.AddDefaultCharset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-alias"><span class="toc-number">3.10.</span> <span class="toc-text">10.alias</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-%E7%94%A8%E6%88%B7%E7%9A%84%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-number">3.11.</span> <span class="toc-text">11.用户的访问控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#11-1%E8%AE%A4%E8%AF%81%E8%B4%A8%E8%AF%A2"><span class="toc-number">3.11.1.</span> <span class="toc-text">11.1认证质询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11-2%E8%AE%A4%E8%AF%81"><span class="toc-number">3.11.2.</span> <span class="toc-text">11.2认证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11-3%E5%AE%89%E5%85%A8%E5%9F%9F"><span class="toc-number">3.11.3.</span> <span class="toc-text">11.3安全域</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11-4%E7%94%A8%E6%88%B7%E7%9A%84%E8%B4%A6%E5%8F%B7%E5%92%8C%E5%AF%86%E7%A0%81"><span class="toc-number">3.11.4.</span> <span class="toc-text">11.4用户的账号和密码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-%E5%85%B1%E4%BA%AB%E5%AE%B6%E7%9B%AE%E5%BD%95"><span class="toc-number">3.12.</span> <span class="toc-text">12.共享家目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-ServerSignature"><span class="toc-number">3.13.</span> <span class="toc-text">13.ServerSignature</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-status%E9%A1%B5%E9%9D%A2"><span class="toc-number">3.14.</span> <span class="toc-text">14.status页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-httpd%E7%9A%84%E5%8E%8B%E7%BC%A9"><span class="toc-number">3.15.</span> <span class="toc-text">15.httpd的压缩</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/01/12/hello-world/" title="Hello World"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/2022/01/12/hello-world/" title="Hello World">Hello World</a><time datetime="2022-01-12T12:50:44.471Z" title="发表于 2022-01-12 12:50:44">2022-01-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/" title="Jenkins代码质量检测"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins代码质量检测"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/" title="Jenkins代码质量检测">Jenkins代码质量检测</a><time datetime="2019-05-05T10:40:00.000Z" title="发表于 2019-05-05 10:40:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/" title="Jenkins给脚本传递参数"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins给脚本传递参数"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/" title="Jenkins给脚本传递参数">Jenkins给脚本传递参数</a><time datetime="2019-05-05T10:10:00.000Z" title="发表于 2019-05-05 10:10:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E8%A7%86%E5%9B%BE/jenkins%E8%A7%86%E5%9B%BE/" title="Jenkins视图"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins视图"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E8%A7%86%E5%9B%BE/jenkins%E8%A7%86%E5%9B%BE/" title="Jenkins视图">Jenkins视图</a><time datetime="2019-05-05T10:00:00.000Z" title="发表于 2019-05-05 10:00:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/Jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/" title="Jenkins构建后关联操作"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins构建后关联操作"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/Jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/" title="Jenkins构建后关联操作">Jenkins构建后关联操作</a><time datetime="2019-05-05T09:50:00.000Z" title="发表于 2019-05-05 09:50:00">2019-05-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Masuri</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

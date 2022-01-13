@@ -1,0 +1,324 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MyLinuxOps</title><meta name="author" content="Masuri"><meta name="copyright" content="Masuri"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
+<meta property="og:title" content="MyLinuxOps">
+<meta property="og:url" content="http://www.mylinuxops.com/index.html">
+<meta property="og:site_name" content="MyLinuxOps">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:author" content="Masuri">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://www.mylinuxops.com/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MyLinuxOps',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2022-01-13 05:55:21'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">116</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/index.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">MyLinuxOps</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">MyLinuxOps</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2022/01/12/hello-world/" title="Hello World">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/01/12/hello-world/" title="Hello World">Hello World</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-01-12T12:50:44.471Z" title="发表于 2022-01-12 12:50:44">2022-01-12</time></span></div><div class="content">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Quick StartCreate a new post1$ hexo new &quot;My New Post&quot;
+
+More info: Writing
+Run server1$ hexo server
+
+More info: Server
+Generate static files1$ hexo generate
+
+More info: Generating
+Deploy to remote sites1$ hexo deploy
+
+More info: Deployment
+</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/" title="Jenkins代码质量检测">     <img class="post_bg" src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins代码质量检测"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/" title="Jenkins代码质量检测">Jenkins代码质量检测</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-05-05T10:40:00.000Z" title="发表于 2019-05-05 10:40:00">2019-05-05</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/CICD/">CICD</a></span></div><div class="content">代码质量检测官方网站：http://www.sonarqube.org/
+SonarQube是一个用于代码质量管理的开放平台，通过插件机制，SonarQube可以集成不同的测试工具，代码分析工具，以及持续集成工具，例如 Hudson/Jenkins 等。
+下载地址：https://www.sonarqube.org/downloads/
+七个维度检测代码质量复杂度分布：代码复杂度过高将难以理解
+重复代码：程序中包含大量复制、粘贴的代码而导致代码臃肿，sonar 可以展示源码中重复严重的地方
+单元测试统计：统计并展示单元测试覆盖率，开发或测试可以清楚测试代码的覆盖情况
+代码规则检查：检查代码是否符合规范
+注释率：若代码注释过少，特别是人员变动后，其他人接手比较难接手；若过多，又不利于阅读潜在的Bug：检测潜在的 bug
+结构与设计：找出循环，展示包与包、类与类之间的依赖、检查程序之间耦合度
+sonar-sever端配置配置java环境
+1234root@slave-1:~# lsjdk-8u212-linux-x64.tar.gzroot@slave-1:~# tar xf jdk-8u ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/05/05/CICD/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/" title="Jenkins给脚本传递参数">     <img class="post_bg" src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins给脚本传递参数"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/05/05/CICD/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/" title="Jenkins给脚本传递参数">Jenkins给脚本传递参数</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-05-05T10:10:00.000Z" title="发表于 2019-05-05 10:10:00">2019-05-05</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/CICD/">CICD</a></span></div><div class="content">使用选项参数传递参数新建一个任务
+
+
+
+编写脚本
+123456789101112131415161718root@master:~# vim test.sh#!/bin/bashecho $1echo $2echo $3echo &quot;-------------------&gt;&quot;if [ $1 == &quot;GROUP1&quot; ];then        IP_LIST=&quot;192.168.27.31&quot;elif [ $1 == &quot;GROUP2&quot; ];then        IP_LIST=&quot;192.168.27.32&quot;elif [ $1 == &quot;GROUPALL&quot; ];then        IP_LIST=&quot;192.168.27.32 192.168.27.31&quot;fifor node_ip in $&#123;IP_LIST&#125;;do        echo $&#123;node_ip&#125;,&quot;---------&gt;&quot; ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/05/05/CICD/jenkins%E8%A7%86%E5%9B%BE/jenkins%E8%A7%86%E5%9B%BE/" title="Jenkins视图">     <img class="post_bg" src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins视图"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/05/05/CICD/jenkins%E8%A7%86%E5%9B%BE/jenkins%E8%A7%86%E5%9B%BE/" title="Jenkins视图">Jenkins视图</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-05-05T10:00:00.000Z" title="发表于 2019-05-05 10:00:00">2019-05-05</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/CICD/">CICD</a></span></div><div class="content">视图可用于归档 job 进行分组显示，比如将一个业务的视图放在一个视图显示
+pipeline视图pipeline视图需要安装build pipeline插件
+
+创建视图
+
+
+
+列表视图列表视图使用场景比较多，用于将一个业务的job保存至一个列表视图进行分类管理，即不同业务的job放在不同的列表视图中。
+
+
+最终job1的视图中有2个任务
+
+</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/05/05/CICD/jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/Jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/" title="Jenkins构建后关联操作">     <img class="post_bg" src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins构建后关联操作"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/05/05/CICD/jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/Jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/" title="Jenkins构建后关联操作">Jenkins构建后关联操作</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-05-05T09:50:00.000Z" title="发表于 2019-05-05 09:50:00">2019-05-05</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/CICD/">CICD</a></span></div><div class="content">jenkins可以在执行构建后再进行执行相关联的操作，比如发邮件通知、构建下一个任务等等
+
+配置方法
+
+
+以下为构建后再构建其他工程为例
+
+
+
+再次执行构建任务时，当第一个任务执行完毕后会自动执行相关联的第二个任务，一般在一个大服务中使用，将每个小服务分离开，当第一个服务配置完毕后自动触发下一个服务（酌情使用）。
+
+</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/05/05/CICD/jenkins%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F/Jenkins%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2/" title="Jenkins分布式部署">     <img class="post_bg" src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins分布式部署"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/05/05/CICD/jenkins%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F/Jenkins%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2/" title="Jenkins分布式部署">Jenkins分布式部署</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-05-05T09:40:00.000Z" title="发表于 2019-05-05 09:40:00">2019-05-05</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/CICD/">CICD</a></span></div><div class="content">单台的job数量是有上线的，单台jenkins执行几十上百速度就会慢，此时就会部署一个Master多个node节点，master上配置多个任务，nodes上去执行各个任务，或者让测试环境的job执行在测试的node节点上，生产的job执行在生产的node上及那个其分离开。
+node节点在执行job时会先去gitlab上拉取代码，对其进行编译，编译完成打包后向后端web服务器去部署，master不再执行操作，只用来分配各种job。
+分布式Jenkins配置方式jenkins配置分布式前提条件
+1.确保slave的时间必须要和master的时间相同
+2.slave上的java环境需要和master上相同
+环境准备
+
+
+
+hostname
+ip
+os
+
+
+
+master
+192.168.27.12
+ubuntu 18.04.2
+
+
+slave-1
+192.168.27.13
+ubuntu 18.04.2
+
+
+slave-2
+192.168.27.14
+ubuntu 18.04.2
+
+
+在所有的服务器上进行时间同步
+1ntpdate 172.20.0.1
+配置2台slave的java环境配置j ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/05/04/CICD/jenkins%E7%9A%84pipline/jenkins%E7%9A%84pipline/" title="Jenkins的pipline">     <img class="post_bg" src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins的pipline"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/05/04/CICD/jenkins%E7%9A%84pipline/jenkins%E7%9A%84pipline/" title="Jenkins的pipline">Jenkins的pipline</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-05-04T09:30:00.000Z" title="发表于 2019-05-04 09:30:00">2019-05-04</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/CICD/">CICD</a></span></div><div class="content">pipline简介官方介绍；https://jenkins.io/2.0/
+pipline是帮助Jenkins实现CI到CD转变的重要角色，是运行在jenkins2.X版本的核心插件，简单来说Pipline就是一套运行于Jenkins上的工作流框架，将原本独立运行于单个或者多个节点的任务连接起来，实现单个任务难以完成的复杂发布流程，从而实现单个任务很难实现的复杂流程编排和任务可视化，pipline的实现方式是一套Groovy DSL，任何发布流程都可以表述为一段Groovy脚本。
+pipline语法Stage：阶段，一个pipline可以划分为若干个stage，每个stage都是一个操作，比如clone代码、代码编译、代码测试和代码部署，阶段是一个逻辑分组，可以跨多个node执行。
+Node：节点，每个node都是一个jenkins节点，可以是jenkin smaster也可以是jenkins agent，node是执行step的具体服务器。
+Step：步骤，step是jenkinspipline最基本的操作单元，从在服务器创建目录到构建容器镜像，由各类Jenkins插件提供实现，例如 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/05/04/CICD/jenkins%E8%A7%A6%E5%8F%91%E5%99%A8/Jenkins%E6%9E%84%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/" title="Jenkins构建触发器">     <img class="post_bg" src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins构建触发器"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/05/04/CICD/jenkins%E8%A7%A6%E5%8F%91%E5%99%A8/Jenkins%E6%9E%84%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/" title="Jenkins构建触发器">Jenkins构建触发器</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-05-04T09:30:00.000Z" title="发表于 2019-05-04 09:30:00">2019-05-04</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/CICD/">CICD</a></span></div><div class="content">当gitlab上代码发生变更时，jenkins自动将代码部署到服务器上，常用于测试环境
+实现方法在gitlab上创建一个新的开发分支
+
+
+在jenkins上安装插件
+
+
+插件安装完毕后需要对jenkins的配置做一些更改：
+1.允许登录用户可以做任何事情
+2.关闭跨站伪造保护
+
+
+新建一个开发分支的任务
+
+生成一个token值
+12root@jenkins:~# openssl rand -hex 122d6f3d9475277d20545a4182
+
+填入token值
+
+
+
+测试访问连接
+12#jenkins的地址、job和token拼出的连接，一旦访问此连接将触发构建root@jenkins:~# curl 192.168.27.12:8080/job/mylinu_develop/build?token=2d6f3d9475277d20545a4182
+
+url测试通过后将其写入gitlab
+
+
+在Jenkins上修改构建的脚本
+
+测试对开发分克隆
+123456789root@gitlab:~# git clone -b develop http://192.168.27.11/ ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/05/04/CICD/jenkins+gitlab/jenkins+gitlab/" title="Jenkins+Gitlab实现代码自动部署">     <img class="post_bg" src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins+Gitlab实现代码自动部署"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/05/04/CICD/jenkins+gitlab/jenkins+gitlab/" title="Jenkins+Gitlab实现代码自动部署">Jenkins+Gitlab实现代码自动部署</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-05-04T09:20:00.000Z" title="发表于 2019-05-04 09:20:00">2019-05-04</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/CICD/">CICD</a></span></div><div class="content">环境准备
+
+
+Hostname
+Server
+IP
+OS
+
+
+
+gitlab
+Gitlab
+192.168.27.11
+ubuntu 18.04.2
+
+
+jenkins
+Jenkins
+192.168.27.12
+ubuntu 18.04.2
+
+
+haproxy-1
+haproxy
+192.168.27.21
+ubuntu 18.04.2
+
+
+haproxy-2
+haproxy
+192.168.27.22
+ubuntu 18.04.2
+
+
+tomcat-1
+tomcat
+192.168.27.31
+ubuntu 18.04.2
+
+
+tomcat-2
+tomcat
+192.168.27.32
+ubuntu 18.04.2
+
+
+
+安装jdk环境分别在jenkins、tomcat-1、tomcat-2主机上安装jdk环境
+oracle官网下载jdk，上传到本地服务器
+12root@jenkins:~# lsjdk-8u212-linux-x64.tar.gz
+
+解压jdk到/usr/local/src目录下，做一个软连接
+12tar xf jdk-8u212-linux-x64.tar.gz ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/05/03/Kubernetes/Kubernetes%E5%9F%BA%E7%A1%80/Kubernetes%E5%9F%BA%E7%A1%80/" title="Kubernetes基础">     <img class="post_bg" src="/images/kubernetes.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Kubernetes基础"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/05/03/Kubernetes/Kubernetes%E5%9F%BA%E7%A1%80/Kubernetes%E5%9F%BA%E7%A1%80/" title="Kubernetes基础">Kubernetes基础</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-05-03T10:30:00.000Z" title="发表于 2019-05-03 10:30:00">2019-05-03</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/kubernetes/">kubernetes</a></span></div><div class="content">k8s是将一组主机上的内存、cpu、硬盘等资源，整合为一个大的资源池。当需要运行容器时，用户不需要指定其运行再哪个主机上，只需要向k8s的接口提出请求，然后由k8s自行调度运行到一个最适合其运行的宿主机上作为容器运行起来。用户无需再面对一个个独立的主机，只需要向k8s资源池的接口提出请求即可。
+若用户需要运行两个容器，且2个容器间需要通信，k8s则会抽象出一些组件。当一个服务容器启动时，会注册到k8s的注册中心，当第二个容器启动后要访问第一个容器时，先向k8s的注册中心查询服务，而后直接拿着查询获得的地址直接请求即可。
+当所创建的实例无法承载客户端的请求时，传统的做法是，加服务器部署服务接入负载均均衡。而k8s则为自动扩展一个容器，然后自动加入到负载均衡中。当然可以手动介入。
+k8s的自动扩容也可以为纯自动模式的，只需要在各个容器前加一个控制器用来监控控制器下面容器的数量要完全符合用户的请求。我们还可以在此控制器之前再加一层控制器，此二层控制器接入到监控系统上去，监控系统用来监控容器的CPU、内存等容量，当发现容器内资源不足时，自动指挥其一级控制器进行添加实例。当容器的CPU和内存使用 ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/#content-inner">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/#content-inner">12</a><a class="extend next" rel="next" href="/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Masuri</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">116</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/01/12/hello-world/" title="Hello World"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/2022/01/12/hello-world/" title="Hello World">Hello World</a><time datetime="2022-01-12T12:50:44.471Z" title="发表于 2022-01-12 12:50:44">2022-01-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/" title="Jenkins代码质量检测"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins代码质量检测"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/" title="Jenkins代码质量检测">Jenkins代码质量检测</a><time datetime="2019-05-05T10:40:00.000Z" title="发表于 2019-05-05 10:40:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/" title="Jenkins给脚本传递参数"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins给脚本传递参数"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/" title="Jenkins给脚本传递参数">Jenkins给脚本传递参数</a><time datetime="2019-05-05T10:10:00.000Z" title="发表于 2019-05-05 10:10:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E8%A7%86%E5%9B%BE/jenkins%E8%A7%86%E5%9B%BE/" title="Jenkins视图"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins视图"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E8%A7%86%E5%9B%BE/jenkins%E8%A7%86%E5%9B%BE/" title="Jenkins视图">Jenkins视图</a><time datetime="2019-05-05T10:00:00.000Z" title="发表于 2019-05-05 10:00:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/Jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/" title="Jenkins构建后关联操作"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins构建后关联操作"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/Jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/" title="Jenkins构建后关联操作">Jenkins构建后关联操作</a><time datetime="2019-05-05T09:50:00.000Z" title="发表于 2019-05-05 09:50:00">2019-05-05</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Ansible/"><span class="card-category-list-name">Ansible</span><span class="card-category-list-count">13</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Apache/"><span class="card-category-list-name">Apache</span><span class="card-category-list-count">8</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/CICD/"><span class="card-category-list-name">CICD</span><span class="card-category-list-count">12</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Linux%E5%9F%BA%E7%A1%80/"><span class="card-category-list-name">Linux基础</span><span class="card-category-list-count">42</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/MySQL/"><span class="card-category-list-name">MySQL</span><span class="card-category-list-count">33</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/kubernetes/"><span class="card-category-list-name">kubernetes</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"><span class="card-category-list-name">计算机基础</span><span class="card-category-list-count">6</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Ansible/" style="font-size: 1.4em; color: #99a5b6">Ansible</a> <a href="/tags/Apache/" style="font-size: 1.35em; color: #99a3b1">Apache</a> <a href="/tags/DNS/" style="font-size: 1.2em; color: #999da3">DNS</a> <a href="/tags/Jenkins/" style="font-size: 1.35em; color: #99a3b1">Jenkins</a> <a href="/tags/Linux%E5%9F%BA%E7%A1%80/" style="font-size: 1.45em; color: #99a7ba">Linux基础</a> <a href="/tags/MySQL/" style="font-size: 1.5em; color: #99a9bf">MySQL</a> <a href="/tags/OpenSSH/" style="font-size: 1.2em; color: #999da3">OpenSSH</a> <a href="/tags/OpenSSL/" style="font-size: 1.1em; color: #999">OpenSSL</a> <a href="/tags/awk/" style="font-size: 1.1em; color: #999">awk</a> <a href="/tags/gitlab/" style="font-size: 1.25em; color: #999fa7">gitlab</a> <a href="/tags/grub%E4%BF%AE%E5%A4%8D/" style="font-size: 1.25em; color: #999fa7">grub修复</a> <a href="/tags/kubernetes/" style="font-size: 1.1em; color: #999">kubernetes</a> <a href="/tags/security/" style="font-size: 1.1em; color: #999">security</a> <a href="/tags/%E7%B3%BB%E7%BB%9F%E4%BF%AE%E5%A4%8D/" style="font-size: 1.2em; color: #999da3">系统修复</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 1.25em; color: #999fa7">网络</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F/" style="font-size: 1.15em; color: #999b9e">自动化安装系统</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" style="font-size: 1.3em; color: #99a1ac">计算机基础</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/01/"><span class="card-archive-list-date">一月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/05/"><span class="card-archive-list-date">五月 2019</span><span class="card-archive-list-count">13</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/04/"><span class="card-archive-list-date">四月 2019</span><span class="card-archive-list-count">41</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/03/"><span class="card-archive-list-date">三月 2019</span><span class="card-archive-list-count">61</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">116</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2022-01-13T05:55:20.597Z"></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Masuri</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Jenkins代码质量检测 | MyLinuxOps</title><meta name="keywords" content="Jenkins"><meta name="author" content="Masuri"><meta name="copyright" content="Masuri"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="代码质量检测官方网站：http:&#x2F;&#x2F;www.sonarqube.org&#x2F; SonarQube是一个用于代码质量管理的开放平台，通过插件机制，SonarQube可以集成不同的测试工具，代码分析工具，以及持续集成工具，例如 Hudson&#x2F;Jenkins 等。 下载地址：https:&#x2F;&#x2F;www.sonarqube.org&#x2F;downloads&#x2F; 七个维度检测代码质量复杂度分布：代码复杂度过高将难以理解 重">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jenkins代码质量检测">
+<meta property="og:url" content="http://www.mylinuxops.com/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/index.html">
+<meta property="og:site_name" content="MyLinuxOps">
+<meta property="og:description" content="代码质量检测官方网站：http:&#x2F;&#x2F;www.sonarqube.org&#x2F; SonarQube是一个用于代码质量管理的开放平台，通过插件机制，SonarQube可以集成不同的测试工具，代码分析工具，以及持续集成工具，例如 Hudson&#x2F;Jenkins 等。 下载地址：https:&#x2F;&#x2F;www.sonarqube.org&#x2F;downloads&#x2F; 七个维度检测代码质量复杂度分布：代码复杂度过高将难以理解 重">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.mylinuxops.com/images/jenkins.jpg">
+<meta property="article:published_time" content="2019-05-05T10:40:00.000Z">
+<meta property="article:modified_time" content="2020-11-23T07:10:48.000Z">
+<meta property="article:author" content="Masuri">
+<meta property="article:tag" content="Jenkins">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.mylinuxops.com/images/jenkins.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://www.mylinuxops.com/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Jenkins代码质量检测',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-11-23 07:10:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">116</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/jenkins.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">MyLinuxOps</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Jenkins代码质量检测</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-05-05T10:40:00.000Z" title="发表于 2019-05-05 10:40:00">2019-05-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-11-23T07:10:48.000Z" title="更新于 2020-11-23 07:10:48">2020-11-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CICD/">CICD</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Jenkins代码质量检测"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="代码质量检测"><a href="#代码质量检测" class="headerlink" title="代码质量检测"></a>代码质量检测</h2><p>官方网站：<a target="_blank" rel="noopener" href="http://www.sonarqube.org/">http://www.sonarqube.org/</a></p>
+<p>SonarQube是一个用于代码质量管理的开放平台，通过插件机制，SonarQube可以集成不同的测试工具，代码分析工具，以及持续集成工具，例如 Hudson/Jenkins 等。</p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://www.sonarqube.org/downloads/">https://www.sonarqube.org/downloads/</a></p>
+<h3 id="七个维度检测代码质量"><a href="#七个维度检测代码质量" class="headerlink" title="七个维度检测代码质量"></a>七个维度检测代码质量</h3><p>复杂度分布：代码复杂度过高将难以理解</p>
+<p>重复代码：程序中包含大量复制、粘贴的代码而导致代码臃肿，sonar 可以展示源码中重复严重的地方</p>
+<p>单元测试统计：统计并展示单元测试覆盖率，开发或测试可以清楚测试代码的覆盖情况</p>
+<p>代码规则检查：检查代码是否符合规范</p>
+<p>注释率：若代码注释过少，特别是人员变动后，其他人接手比较难接手；若过多，又不利于阅读潜在的Bug：检测潜在的 bug</p>
+<p>结构与设计：找出循环，展示包与包、类与类之间的依赖、检查程序之间耦合度</p>
+<h2 id="sonar-sever端配置"><a href="#sonar-sever端配置" class="headerlink" title="sonar-sever端配置"></a>sonar-sever端配置</h2><p>配置java环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@slave-1:~<span class="comment"># ls</span></span><br><span class="line">jdk-8u212-linux-x64.tar.gz</span><br><span class="line">root@slave-1:~<span class="comment"># tar xf jdk-8u212-linux-x64.tar.gz -C /usr/local/src/</span></span><br><span class="line">root@slave-1:~<span class="comment"># ln -sv /usr/local/src/jdk1.8.0_212 /usr/local/jdk</span></span><br></pre></td></tr></table></figure>
+
+<p>配置环境变量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@slave-1:~<span class="comment"># vim /etc/profile</span></span><br><span class="line"><span class="built_in">export</span> HISTTIMEFORMAT=<span class="string">&quot;%F %T `whoami` &quot;</span></span><br><span class="line"><span class="built_in">export</span> LANG=<span class="string">&quot;en_US.utf-8&quot;</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/<span class="built_in">local</span>/jdk</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/jre/lib/rt.jar:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin</span><br></pre></td></tr></table></figure>
+
+<p>由于sonarqube 7.9.1LTS不再支持MySQL此处使用sonarqube 6.9lts版</p>
+<p>下载安装包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@mylinuxops:~<span class="comment"># wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-6.7.7.zip</span></span><br></pre></td></tr></table></figure>
+
+<p>创建用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@mylinuxops:~<span class="comment"># useradd -s /bin/bash -m sonarqube</span></span><br></pre></td></tr></table></figure>
+
+<p>解压</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@mylinuxops:~<span class="comment"># unzip sonarqube-6.7.7.zip -d /usr/local/src/</span></span><br></pre></td></tr></table></figure>
+
+<p>做个软连接</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@mylinuxops:~<span class="comment"># ln -sv /usr/local/src/sonarqube-6.7.7 /usr/local/sonarqube</span></span><br></pre></td></tr></table></figure>
+
+<p>修改属主属组</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@mylinuxops:~<span class="comment"># chown sonarqube.sonarqube /usr/local/src/sonarqube-6.7.7 /usr/local/sonarqube -R</span></span><br></pre></td></tr></table></figure>
+
+<p>修改内核参数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@mylinuxops:~<span class="comment"># vim /etc/sysctl.conf </span></span><br><span class="line">vm.max_map_count = 262144</span><br><span class="line">fs.file-max = 65536</span><br></pre></td></tr></table></figure>
+
+<p>开启最大限制数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@mylinuxops:~<span class="comment"># vim /etc/security/limits.conf </span></span><br><span class="line">sonarqube       -       nofile  65536</span><br><span class="line">sonarqube       -       nproc   2048</span><br></pre></td></tr></table></figure>
+
+<p>重启服务器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+<p>安装数据库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@mylinuxops:~<span class="comment"># apt install mysql-server -y</span></span><br></pre></td></tr></table></figure>
+
+<p>创建数据库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;  create database sonar default character <span class="built_in">set</span> utf8 collate utf8_general_ci;</span><br></pre></td></tr></table></figure>
+
+<p>授权用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; GRANT ALL PRIVILEGES ON sonar.* TO <span class="string">&#x27;sonar&#x27;</span>@<span class="string">&#x27;%&#x27;</span> IDENTIFIED BY <span class="string">&#x27;111111&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>测试能否连接数据库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@mylinuxops:~<span class="comment"># mysql -usonar -p111111</span></span><br></pre></td></tr></table></figure>
+
+<p>修改配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@mylinuxops:~<span class="comment"># grep &quot;^[a-Z]&quot; /usr/local/sonarqube/conf/sonar.properties</span></span><br><span class="line">sonar.jdbc.username=sonar</span><br><span class="line">sonar.jdbc.password=111111</span><br><span class="line">sonar.jdbc.url=jdbc:mysql://192.168.27.10:3306/sonar?useUnicode=<span class="literal">true</span>&amp;characterEncoding=utf8&amp;rewriteBatchedStatements=<span class="literal">true</span>&amp;useConfigs=maxPerformance&amp;useSSL=<span class="literal">false</span></span><br><span class="line">sonar.web.host=0.0.0.0</span><br><span class="line">sonar.web.port=9000</span><br></pre></td></tr></table></figure>
+
+<p>切换用户启动sonar</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@mylinuxops:~<span class="comment"># su - sonarqube</span></span><br><span class="line">sonarqube@mylinuxops:~$ /usr/<span class="built_in">local</span>/sonarqube/bin/linux-x86-64/sonar.sh start</span><br></pre></td></tr></table></figure>
+
+<p>监控日志确保sonar起来了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">root@mylinuxops:/usr/<span class="built_in">local</span>/sonarqube/logs<span class="comment"># tail -f /usr/local/sonarqube/logs/sonar.log </span></span><br><span class="line">2019.07.24 08:49:38 INFO  app[][o.s.a.p.ProcessLauncherImpl] Launch process[[key=<span class="string">&#x27;es&#x27;</span>, ipcIndex=1, logFilenamePrefix=es]] from [/usr/<span class="built_in">local</span>/src/sonarqube-6.7.7/elasticsearch]: /usr/<span class="built_in">local</span>/src/sonarqube-6.7.7/elasticsearch/bin/elasticsearch -Epath.conf=/usr/<span class="built_in">local</span>/src/sonarqube-6.7.7/temp/conf/es</span><br><span class="line">2019.07.24 08:49:38 INFO  app[][o.s.a.SchedulerImpl] Waiting <span class="keyword">for</span> Elasticsearch to be up and running</span><br><span class="line">2019.07.24 08:49:38 INFO  app[][o.e.p.PluginsService] no modules loaded</span><br><span class="line">2019.07.24 08:49:38 INFO  app[][o.e.p.PluginsService] loaded plugin [org.elasticsearch.transport.Netty4Plugin]</span><br><span class="line">2019.07.24 08:49:44 INFO  app[][o.s.a.SchedulerImpl] Process[es] is up</span><br><span class="line">2019.07.24 08:49:44 INFO  app[][o.s.a.p.ProcessLauncherImpl] Launch process[[key=<span class="string">&#x27;web&#x27;</span>, ipcIndex=2, logFilenamePrefix=web]] from [/usr/<span class="built_in">local</span>/src/sonarqube-6.7.7]: /usr/<span class="built_in">local</span>/src/jdk1.8.0_212/jre/bin/java -Djava.awt.headless=<span class="literal">true</span> -Dfile.encoding=UTF-8 -Djava.io.tmpdir=/usr/<span class="built_in">local</span>/src/sonarqube-6.7.7/temp -Xmx512m -Xms128m -XX:+HeapDumpOnOutOfMemoryError -cp ./lib/common/*:./lib/server/*:/usr/<span class="built_in">local</span>/src/sonarqube-6.7.7/lib/jdbc/mysql/mysql-connector-java-5.1.42.jar org.sonar.server.app.WebServer /usr/<span class="built_in">local</span>/src/sonarqube-6.7.7/temp/sq-process2953956436611591567properties</span><br><span class="line">2019.07.24 08:51:00 INFO  app[][o.s.a.SchedulerImpl] Process[web] is up</span><br><span class="line">2019.07.24 08:51:00 INFO  app[][o.s.a.p.ProcessLauncherImpl] Launch process[[key=<span class="string">&#x27;ce&#x27;</span>, ipcIndex=3, logFilenamePrefix=ce]] from [/usr/<span class="built_in">local</span>/src/sonarqube-6.7.7]: /usr/<span class="built_in">local</span>/src/jdk1.8.0_212/jre/bin/java -Djava.awt.headless=<span class="literal">true</span> -Dfile.encoding=UTF-8 -Djava.io.tmpdir=/usr/<span class="built_in">local</span>/src/sonarqube-6.7.7/temp -Xmx512m -Xms128m -XX:+HeapDumpOnOutOfMemoryError -cp ./lib/common/*:./lib/server/*:./lib/ce/*:/usr/<span class="built_in">local</span>/src/sonarqube-6.7.7/lib/jdbc/mysql/mysql-connector-java-5.1.42.jar org.sonar.ce.app.CeServer /usr/<span class="built_in">local</span>/src/sonarqube-6.7.7/temp/sq-process3854353664142540391properties</span><br><span class="line">2019.07.24 08:51:26 INFO  app[][o.s.a.SchedulerImpl] Process[ce] is up          <span class="comment">#确保起来</span></span><br><span class="line">2019.07.24 08:51:26 INFO  app[][o.s.a.SchedulerImpl] SonarQube is up            <span class="comment">#确保起来</span></span><br></pre></td></tr></table></figure>
+
+<p>使用浏览器登录</p>
+<p><img src="sonar1.png" alt="sonar1.png"></p>
+<p><img src="sonar2.png" alt="sonar2.png"></p>
+<p>更改语言为中文</p>
+<p><img src="sonar3.png" alt="sonar3.png"></p>
+<p>server端配置完成</p>
+<h2 id="sonar-scanner配置"><a href="#sonar-scanner配置" class="headerlink" title="sonar-scanner配置"></a>sonar-scanner配置</h2><p>sonar的扫描器需要和jenkins配置在一起</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@master:~<span class="comment"># ls</span></span><br><span class="line">sonar-scanner-cli-4.0.0.1744-linux.zip</span><br></pre></td></tr></table></figure>
+
+<p>解压文件，创建软连接</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@master:~<span class="comment"># unzip sonar-scanner-cli-4.0.0.1744-linux.zip -d /usr/local/src/</span></span><br><span class="line">root@master:~<span class="comment"># ln -sv /usr/local/src/sonar-scanner-4.0.0.1744-linux/ /usr/local/sonar-scanner</span></span><br></pre></td></tr></table></figure>
+
+<p>修改配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@master:~<span class="comment"># vim /usr/local/sonar-scanner/conf/sonar-scanner.properties </span></span><br><span class="line"><span class="comment">#----- Default SonarQube server</span></span><br><span class="line">sonar.host.url=http://192.168.27.10:9000</span><br><span class="line"></span><br><span class="line"><span class="comment">#----- Default source code encoding</span></span><br><span class="line">sonar.sourceEncoding=UTF-8</span><br></pre></td></tr></table></figure>
+
+<p>配置完毕</p>
+<h2 id="测试php"><a href="#测试php" class="headerlink" title="测试php"></a>测试php</h2><p>上传演示代码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@master:~<span class="comment"># ls</span></span><br><span class="line">sonar-examples-master.zip</span><br><span class="line">root@master:~<span class="comment"># unzip sonar-examples-master.zip </span></span><br></pre></td></tr></table></figure>
+
+<p>测试php</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@master:~<span class="comment"># cd sonar-examples-master/projects/languages/php/php-sonar-runner</span></span><br><span class="line">root@master:~/sonar-examples-master/projects/languages/php/php-sonar-runner<span class="comment"># ll</span></span><br><span class="line">total 24</span><br><span class="line">drwxr-xr-x 3 root root 4096 Jul 25  2016 ./</span><br><span class="line">drwxr-xr-x 4 root root 4096 Jul 25  2016 ../</span><br><span class="line">-rw-r--r-- 1 root root  453 Jul 25  2016 README.md</span><br><span class="line">-rw-r--r-- 1 root root  331 Jul 25  2016 sonar-project.properties       <span class="comment">#此为配置文件，在测试的代码目录下必须要有此文件</span></span><br><span class="line">drwxr-xr-x 2 root root 4096 Jul 25  2016 src/</span><br><span class="line">-rw-r--r-- 1 root root  272 Jul 25  2016 validation.txt</span><br></pre></td></tr></table></figure>
+
+<p>编辑配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">root@master:~/sonar-examples-master/projects/languages/php/php-sonar-runner<span class="comment"># vim sonar-project.properties </span></span><br><span class="line"><span class="comment"># Required metadata</span></span><br><span class="line">sonar.projectKey=org.sonarqube:php-simple-sq-scanner            </span><br><span class="line">sonar.projectName=PHP :: Simple Project :: SonarQube Scanner</span><br><span class="line">sonar.projectVersion=1.0</span><br><span class="line"><span class="comment"># Comma-separated paths to directories with sources (required)</span></span><br><span class="line">sonar.sources=src       <span class="comment">#代码的目录</span></span><br><span class="line"><span class="comment"># Language</span></span><br><span class="line">sonar.language=php      <span class="comment">#所要检测的语言</span></span><br><span class="line"><span class="comment"># Encoding of the source files</span></span><br><span class="line">sonar.sourceEncoding=UTF-8</span><br></pre></td></tr></table></figure>
+
+<p>在当前目录下执行扫描</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@master:~/sonar-examples-master/projects/languages/php/php-sonar-runner<span class="comment"># /usr/local/sonar-scanner/bin/sonar-scanner</span></span><br><span class="line"><span class="comment">#扫描完完成后会生成一个连接</span></span><br><span class="line">INFO: ANALYSIS SUCCESSFUL, you can browse http://192.168.27.10:9000/dashboard/index/org.sonarqube:php-simple-sq-scanner</span><br></pre></td></tr></table></figure>
+
+<p>使用浏览器访问就可以看到代码质量了</p>
+<p><img src="sonar4.png" alt="sonar4.png"></p>
+<h2 id="使用jenkins自动扫描代码"><a href="#使用jenkins自动扫描代码" class="headerlink" title="使用jenkins自动扫描代码"></a>使用jenkins自动扫描代码</h2><p><img src="project1.png" alt="project1.png"></p>
+<p><img src="project2.png" alt="project2.png"></p>
+<p>在项目中创建一个文件</p>
+<p><img src="project3.png" alt="project3.png"></p>
+<p>将像目录克隆到本地</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master:~<span class="comment"># git clone git@192.168.27.11:mylinuxops/python.git</span></span><br></pre></td></tr></table></figure>
+
+<p>将扫描配置文件和python代码复制到项目目录内</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@master:~<span class="comment"># cp sonar-examples-master/projects/languages/python/python-sonar-runner/sonar-project.properties python/</span></span><br><span class="line">root@master:~<span class="comment"># cp -a sonar-examples-master/projects/languages/python/python-sonar-runner/src python/</span></span><br></pre></td></tr></table></figure>
+
+<p>修改扫描配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">root@master:~/python<span class="comment"># vim sonar-project.properties </span></span><br><span class="line"><span class="comment"># Required metadata</span></span><br><span class="line">sonar.projectKey=python</span><br><span class="line">sonar.projectName=Python</span><br><span class="line">sonar.projectVersion=1.0</span><br><span class="line"><span class="comment"># Comma-separated paths to directories with sources (required)</span></span><br><span class="line">sonar.sources=src</span><br><span class="line"><span class="comment"># Language</span></span><br><span class="line">sonar.language=py</span><br><span class="line"><span class="comment"># Encoding of the source files</span></span><br><span class="line">sonar.sourceEncoding=UTF-8</span><br></pre></td></tr></table></figure>
+
+<p>将代码提交到gitlab</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@master:~/python<span class="comment"># git add ./*</span></span><br><span class="line">root@master:~/python<span class="comment"># git commit -m &quot;v2&quot;</span></span><br><span class="line">root@master:~/python<span class="comment"># git push</span></span><br></pre></td></tr></table></figure>
+
+<p>在jenkins上安装插件</p>
+<p><img src="plugin.png" alt="plugin.png"></p>
+<p>配置扫描器</p>
+<p><img src="config1.png" alt="config1.png"></p>
+<p><img src="config2.png" alt="config2.png"></p>
+<p><img src="config3.png" alt="config3.png"></p>
+<p><img src="config4.png" alt="config4.png"></p>
+<p>配置代码质量检测</p>
+<p><img src="jc1.png" alt="jc1.png"></p>
+<p>扫描器配置参数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sonar.projectKey=python</span><br><span class="line">sonar.projectName=python</span><br><span class="line">sonar.projectVersion=1.0</span><br><span class="line">sonar.sources=src</span><br><span class="line">sonar.language=py</span><br><span class="line">sonar.sourceEncoding=UTF-8</span><br></pre></td></tr></table></figure>
+
+<p><img src="jc2.png" alt="jc2.png"></p>
+<p><img src="jc3.png" alt="jc3.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Masuri</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.mylinuxops.com/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/">http://www.mylinuxops.com/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.mylinuxops.com" target="_blank">MyLinuxOps</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Jenkins/">Jenkins</a></div><div class="post_share"><div class="social-share" data-image="/images/jenkins.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/01/12/hello-world/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Hello World</div></div></a></div><div class="next-post pull-right"><a href="/2019/05/05/CICD/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/"><img class="next-cover" src="/images/jenkins.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Jenkins给脚本传递参数</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/05/04/CICD/jenkins+gitlab/jenkins+gitlab/" title="Jenkins+Gitlab实现代码自动部署"><img class="cover" src="/images/jenkins.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-04</div><div class="title">Jenkins+Gitlab实现代码自动部署</div></div></a></div><div><a href="/2019/05/05/CICD/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/" title="Jenkins给脚本传递参数"><img class="cover" src="/images/jenkins.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-05</div><div class="title">Jenkins给脚本传递参数</div></div></a></div><div><a href="/2019/05/05/CICD/jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/Jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/" title="Jenkins构建后关联操作"><img class="cover" src="/images/jenkins.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-05</div><div class="title">Jenkins构建后关联操作</div></div></a></div><div><a href="/2019/05/04/CICD/jenkins%E7%9A%84pipline/jenkins%E7%9A%84pipline/" title="Jenkins的pipline"><img class="cover" src="/images/jenkins.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-04</div><div class="title">Jenkins的pipline</div></div></a></div><div><a href="/2019/05/05/CICD/jenkins%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F/Jenkins%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2/" title="Jenkins分布式部署"><img class="cover" src="/images/jenkins.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-05</div><div class="title">Jenkins分布式部署</div></div></a></div><div><a href="/2019/05/04/CICD/jenkins%E8%A7%A6%E5%8F%91%E5%99%A8/Jenkins%E6%9E%84%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/" title="Jenkins构建触发器"><img class="cover" src="/images/jenkins.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-04</div><div class="title">Jenkins构建触发器</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Masuri</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">116</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B"><span class="toc-number">1.</span> <span class="toc-text">代码质量检测</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%83%E4%B8%AA%E7%BB%B4%E5%BA%A6%E6%A3%80%E6%B5%8B%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F"><span class="toc-number">1.1.</span> <span class="toc-text">七个维度检测代码质量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sonar-sever%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">sonar-sever端配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sonar-scanner%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">sonar-scanner配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95php"><span class="toc-number">4.</span> <span class="toc-text">测试php</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8jenkins%E8%87%AA%E5%8A%A8%E6%89%AB%E6%8F%8F%E4%BB%A3%E7%A0%81"><span class="toc-number">5.</span> <span class="toc-text">使用jenkins自动扫描代码</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/01/12/hello-world/" title="Hello World"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/2022/01/12/hello-world/" title="Hello World">Hello World</a><time datetime="2022-01-12T12:50:44.471Z" title="发表于 2022-01-12 12:50:44">2022-01-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/" title="Jenkins代码质量检测"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins代码质量检测"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/" title="Jenkins代码质量检测">Jenkins代码质量检测</a><time datetime="2019-05-05T10:40:00.000Z" title="发表于 2019-05-05 10:40:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/" title="Jenkins给脚本传递参数"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins给脚本传递参数"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/" title="Jenkins给脚本传递参数">Jenkins给脚本传递参数</a><time datetime="2019-05-05T10:10:00.000Z" title="发表于 2019-05-05 10:10:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E8%A7%86%E5%9B%BE/jenkins%E8%A7%86%E5%9B%BE/" title="Jenkins视图"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins视图"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E8%A7%86%E5%9B%BE/jenkins%E8%A7%86%E5%9B%BE/" title="Jenkins视图">Jenkins视图</a><time datetime="2019-05-05T10:00:00.000Z" title="发表于 2019-05-05 10:00:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/Jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/" title="Jenkins构建后关联操作"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins构建后关联操作"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/Jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/" title="Jenkins构建后关联操作">Jenkins构建后关联操作</a><time datetime="2019-05-05T09:50:00.000Z" title="发表于 2019-05-05 09:50:00">2019-05-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Masuri</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

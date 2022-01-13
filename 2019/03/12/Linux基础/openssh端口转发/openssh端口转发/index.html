@@ -1,0 +1,341 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SSH端口转发 | MyLinuxOps</title><meta name="keywords" content="OpenSSH"><meta name="author" content="Masuri"><meta name="copyright" content="Masuri"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="SSH端口转发SSH会自动加密和解密所有SSH客户端与服务端之间的网络数据。但是ssh还能够将其他TCP端口的网络数据通过SSH连接来转发，并自动提供了相应的加密及解密服务。这一过程也被叫做隧道，这是应为SSH为其他TCP链接提供了一个安全的通道来进行传输而得名。例如，Telnet,SMTP,LDAP这些TCP应用均能够从中得益，避免了用户名，密码以及隐私信息的明文传输。而于此同时，如果工作环境中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSH端口转发">
+<meta property="og:url" content="http://www.mylinuxops.com/2019/03/12/Linux%E5%9F%BA%E7%A1%80/openssh%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/openssh%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/index.html">
+<meta property="og:site_name" content="MyLinuxOps">
+<meta property="og:description" content="SSH端口转发SSH会自动加密和解密所有SSH客户端与服务端之间的网络数据。但是ssh还能够将其他TCP端口的网络数据通过SSH连接来转发，并自动提供了相应的加密及解密服务。这一过程也被叫做隧道，这是应为SSH为其他TCP链接提供了一个安全的通道来进行传输而得名。例如，Telnet,SMTP,LDAP这些TCP应用均能够从中得益，避免了用户名，密码以及隐私信息的明文传输。而于此同时，如果工作环境中">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.mylinuxops.com/images/openssh.gif">
+<meta property="article:published_time" content="2019-03-12T11:50:02.000Z">
+<meta property="article:modified_time" content="2020-11-20T09:45:09.000Z">
+<meta property="article:author" content="Masuri">
+<meta property="article:tag" content="OpenSSH">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.mylinuxops.com/images/openssh.gif"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://www.mylinuxops.com/2019/03/12/Linux%E5%9F%BA%E7%A1%80/openssh%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/openssh%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'SSH端口转发',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-11-20 09:45:09'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">116</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/openssh.gif')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">MyLinuxOps</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">SSH端口转发</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-03-12T11:50:02.000Z" title="发表于 2019-03-12 11:50:02">2019-03-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-11-20T09:45:09.000Z" title="更新于 2020-11-20 09:45:09">2020-11-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="SSH端口转发"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="SSH端口转发"><a href="#SSH端口转发" class="headerlink" title="SSH端口转发"></a>SSH端口转发</h2><p>SSH会自动加密和解密所有SSH客户端与服务端之间的网络数据。但是ssh还能够将其他TCP端口的网络数据通过SSH连接来转发，并自动提供了相应的加密及解密服务。这一过程也被叫做隧道，这是应为SSH为其他TCP链接提供了一个安全的通道来进行传输而得名。例如，Telnet,SMTP,LDAP这些TCP应用均能够从中得益，避免了用户名，密码以及隐私信息的明文传输。而于此同时，如果工作环境中的防火请限制了一些些网络端口的使用，但是允许SSh的连接，也能够通过将tcp端口转发来使用ssh进行通讯。</p>
+<span id="more"></span>
+
+<p>SSH端口转发能够提供两大功能：</p>
+<p>1.加密SSH Client端至SSH Server端之间的通讯数据。</p>
+<p>2.突破防火墙的限制完成一些之前无法家里的TCP连接。</p>
+<hr>
+<p>命令格式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ssh -L localport: remotehost:remotehostport sshserver</span><br><span class="line">ssh -R localport:remotehost:remotehostport sshserver</span><br><span class="line">ssh -D localport root@sshserver -fNg</span><br><span class="line"></span><br><span class="line">localport:本地端口  </span><br><span class="line">remotehost:目标主机  </span><br><span class="line">remotehostport:目标主机端口  </span><br><span class="line">sshserver:ssh服务器  </span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-f</td>
+<td align="left">后台启用</td>
+</tr>
+<tr>
+<td align="left">-N</td>
+<td align="left">不打开远程shell,处于等待状态</td>
+</tr>
+<tr>
+<td align="left">-g</td>
+<td align="left">启用网关功能</td>
+</tr>
+<tr>
+<td align="left">-L</td>
+<td align="left">本地转发</td>
+</tr>
+<tr>
+<td align="left">-R</td>
+<td align="left">远程转发</td>
+</tr>
+<tr>
+<td align="left">-D</td>
+<td align="left">动态端口转发</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="本地转发实现"><a href="#本地转发实现" class="headerlink" title="本地转发实现"></a>本地转发实现</h2><p>有A、B、C三台主机，主机C为telnet服务器且只能由主机B去连接，主机B为ssh服务器，实现坐在主机A上通过telnet服务直接去连接主机C</p>
+<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><table>
+<thead>
+<tr>
+<th align="left">主机</th>
+<th align="left">IP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">A</td>
+<td align="left">192.168.73.128</td>
+</tr>
+<tr>
+<td align="left">B</td>
+<td align="left">192.168.73.132</td>
+</tr>
+<tr>
+<td align="left">C</td>
+<td align="left">192.168.73.133</td>
+</tr>
+</tbody></table>
+<p>在主机C上安装telnet服务并启用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@hostc ~]<span class="comment"># yum install telnet-server -y</span></span><br><span class="line">[root@hostc ~]<span class="comment"># systemctl start telnet.socket </span></span><br></pre></td></tr></table></figure>
+
+<p>在主机C上将主机A加入防火墙</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@hostc ~]<span class="comment"># iptables -A INPUT -s 192.168.73.128 -j REJECT</span></span><br></pre></td></tr></table></figure>
+
+<p>环境准备完毕</p>
+<h3 id="配置本地转发"><a href="#配置本地转发" class="headerlink" title="配置本地转发"></a>配置本地转发</h3><p>在主机A上执行下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@hosta ~]<span class="comment">#  ssh -L 12345:192.168.73.133:23 192.168.73.132 -fN</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@hosta ~]<span class="comment"># telnet 127.0.0.1 12345</span></span><br><span class="line">Trying 127.0.0.1...</span><br><span class="line">Connected to 127.0.0.1.</span><br><span class="line">Escape character is <span class="string">&#x27;^]&#x27;</span>.</span><br><span class="line"></span><br><span class="line">Kernel 3.10.0-957.el7.x86_64 on an x86_64</span><br><span class="line">hostc login: masuri</span><br><span class="line">Password: </span><br><span class="line">Last login: Wed Apr 17 00:55:35 from ::ffff:192.168.73.132</span><br><span class="line">[masuri@hostc ~]$ </span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="远程转发实现"><a href="#远程转发实现" class="headerlink" title="远程转发实现"></a>远程转发实现</h2><p>主机A被防火墙阻挡无法直接访问主机B和主机C，主机B可以访问主机A和主机C，此时主机A若要访问主机C，就需要主机B先去访问主机A为其建立起通道。</p>
+<h3 id="环境准备-1"><a href="#环境准备-1" class="headerlink" title="环境准备"></a>环境准备</h3><table>
+<thead>
+<tr>
+<th align="left">主机</th>
+<th align="left">IP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">A</td>
+<td align="left">192.168.73.128</td>
+</tr>
+<tr>
+<td align="left">B</td>
+<td align="left">192.168.73.132</td>
+</tr>
+<tr>
+<td align="left">C</td>
+<td align="left">192.168.73.133</td>
+</tr>
+</tbody></table>
+<p>在主机C上将主机A加入防火墙</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@hostc ~]<span class="comment"># iptables -A INPUT -s 192.168.73.128 -j REJECT</span></span><br></pre></td></tr></table></figure>
+
+<p>在主机B上将主机A加入防火墙</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@hostb ~]<span class="comment"># iptables -A INPUT -s 192.168.73.128 -j REJECT</span></span><br></pre></td></tr></table></figure>
+
+<p>实验环境准备完毕</p>
+<h3 id="配置远程转发"><a href="#配置远程转发" class="headerlink" title="配置远程转发"></a>配置远程转发</h3><p>在主机B上去访问主机A，为其建立起通道</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@hostb ~]<span class="comment"># ssh -R 9527:192.168.73.133:23 192.168.73.128 -fN</span></span><br><span class="line">root@192.168.73.128<span class="string">&#x27;s password: </span></span><br><span class="line"><span class="string">[root@hostb ~]# </span></span><br><span class="line"><span class="string">#此时本机的9527和A主机的9527端口已经建立起连接</span></span><br></pre></td></tr></table></figure>
+
+<p>在主机A上使用telenet访问本机的9527端口来连接主机C</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@hosta ~]<span class="comment"># telnet 127.0.0.1 9527</span></span><br><span class="line">Trying 127.0.0.1...</span><br><span class="line">Connected to 127.0.0.1.</span><br><span class="line">Escape character is <span class="string">&#x27;^]&#x27;</span>.</span><br><span class="line"></span><br><span class="line">Kernel 3.10.0-957.el7.x86_64 on an x86_64</span><br><span class="line">hostc login: masuri</span><br><span class="line">Password: </span><br><span class="line">Last login: Wed Apr 17 01:01:49 from ::ffff:192.168.73.132</span><br><span class="line">[masuri@hostc ~]$ </span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="动态端口转发（适用于Linux翻墙）"><a href="#动态端口转发（适用于Linux翻墙）" class="headerlink" title="动态端口转发（适用于Linux翻墙）"></a>动态端口转发（适用于Linux翻墙）</h2><p>当访问本机的1080端口号，自动将请求发送给虚拟机，虚拟机带为转发请求去访问网站，网站接受到请求，返回页面给虚拟机，虚拟机再转发给本机。</p>
+<h3 id="环境准备-2"><a href="#环境准备-2" class="headerlink" title="环境准备"></a>环境准备</h3><p>主机A无法访问到主机C，主机A能和主机B，主机B能访问主机C</p>
+<table>
+<thead>
+<tr>
+<th align="left">主机</th>
+<th align="left">IP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">A</td>
+<td align="left">192.168.73.128</td>
+</tr>
+<tr>
+<td align="left">B</td>
+<td align="left">192.168.73.132</td>
+</tr>
+<tr>
+<td align="left">C</td>
+<td align="left">192.168.73.133</td>
+</tr>
+</tbody></table>
+<p>在主机C上将主机A加入防火墙</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@hostc ~]<span class="comment"># iptables -A INPUT -s 192.168.73.128 -j REJECT</span></span><br></pre></td></tr></table></figure>
+
+<p>在主机C上建立http服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@hostc ~]<span class="comment"># yum install httpd -y</span></span><br><span class="line">[root@hostc html]<span class="comment"># echo &quot;www.mylinuxops.com&quot; &gt; index.html</span></span><br><span class="line">[root@hostc html]<span class="comment"># systemctl start httpd</span></span><br></pre></td></tr></table></figure>
+
+<p>在主机A上访问主机C</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@hosta ~]<span class="comment"># curl 192.168.73.133</span></span><br><span class="line">curl: (7) Failed connect to 192.168.73.133:80; Connection refused</span><br></pre></td></tr></table></figure>
+
+<p>环境预备完毕</p>
+<h3 id="配置动态端口转发"><a href="#配置动态端口转发" class="headerlink" title="配置动态端口转发"></a>配置动态端口转发</h3><p>在主机A上将主机B设置为代理服务器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@hosta ~]<span class="comment"># ssh -D 1080 root@192.168.73.132 -fNg</span></span><br><span class="line">root@192.168.73.132<span class="string">&#x27;s password: </span></span><br></pre></td></tr></table></figure>
+
+<h4 id="测试-1"><a href="#测试-1" class="headerlink" title="测试"></a>测试</h4><p>在主机A使用本机的1080端口位去访问主机C的httpd服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@hosta ~]<span class="comment"># curl --socks5 127.0.0.1:1080 192.168.73.133</span></span><br><span class="line">www.mylinuxops.com</span><br></pre></td></tr></table></figure>
+
+<p>此方法可以实现翻墙，不过仅限于主机b和主机C为linux系统，以下实现当主机A为windows系统时也能访问主机C</p>
+<hr>
+<h2 id="动态端口转发（适用于windows翻墙）"><a href="#动态端口转发（适用于windows翻墙）" class="headerlink" title="动态端口转发（适用于windows翻墙）"></a>动态端口转发（适用于windows翻墙）</h2><h3 id="环境准备-3"><a href="#环境准备-3" class="headerlink" title="环境准备"></a>环境准备</h3><p>主机A无法访问到主机C，主机A能和主机B，主机B能访问主机C</p>
+<table>
+<thead>
+<tr>
+<th align="left">主机</th>
+<th align="left">IP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">A</td>
+<td align="left">192.168.73.128</td>
+</tr>
+<tr>
+<td align="left">B</td>
+<td align="left">192.168.73.132</td>
+</tr>
+<tr>
+<td align="left">C</td>
+<td align="left">192.168.73.133</td>
+</tr>
+</tbody></table>
+<p>在主机C上将主机A加入防火墙</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@hostc ~]<span class="comment"># iptables -A INPUT -s 192.168.73.128 -j REJECT</span></span><br></pre></td></tr></table></figure>
+
+<p>在主机C上建立http服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@hostc ~]<span class="comment"># yum install httpd -y</span></span><br><span class="line">[root@hostc html]<span class="comment"># echo &quot;www.mylinuxops.com&quot; &gt; index.html</span></span><br><span class="line">[root@hostc html]<span class="comment"># systemctl start httpd</span></span><br></pre></td></tr></table></figure>
+
+<p>在主机A上访问主机C</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@hosta ~]<span class="comment"># curl 192.168.73.133</span></span><br><span class="line">curl: (7) Failed connect to 192.168.73.133:80; Connection refused</span><br></pre></td></tr></table></figure>
+
+<p>环境预备完毕</p>
+<h3 id="配置动态端口转发-1"><a href="#配置动态端口转发-1" class="headerlink" title="配置动态端口转发"></a>配置动态端口转发</h3><p>在主机B上开启sshd的网关功</p>
+<p>修改/etc/ssh/sshd_config文件，将GatewayPorts项修改为yes</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@hostb ~]<span class="comment"># vim /etc/ssh/sshd_config </span></span><br><span class="line">GatewayPorts yes</span><br></pre></td></tr></table></figure>
+
+<p>在主机B上打开本地端口作为网关实现端口转发</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@hostb ~]<span class="comment"># vim /etc/ssh/sshd_config </span></span><br><span class="line">[root@hostb ~]<span class="comment"># ssh -gD 9527 localhost</span></span><br><span class="line">root@localhost<span class="string">&#x27;s password: </span></span><br><span class="line"><span class="string">Last failed login: Wed Apr 17 03:25:53 CST 2019 from 192.168.73.128 on ssh:notty</span></span><br><span class="line"><span class="string">There was 1 failed login attempt since the last successful login.</span></span><br><span class="line"><span class="string">Last login: Wed Apr 17 03:12:13 2019 from 192.168.73.1</span></span><br><span class="line"><span class="string">[root@hostb ~]#</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="测试-2"><a href="#测试-2" class="headerlink" title="测试"></a>测试</h3><p>在主机A上将主机B作为代理服务器去访问A</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@hosta ~]<span class="comment"># curl --socks5 192.168.73.132:9527 192.168.73.133 </span></span><br><span class="line">www.mylinuxops.com</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Masuri</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.mylinuxops.com/2019/03/12/Linux%E5%9F%BA%E7%A1%80/openssh%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/openssh%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/">http://www.mylinuxops.com/2019/03/12/Linux%E5%9F%BA%E7%A1%80/openssh%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/openssh%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.mylinuxops.com" target="_blank">MyLinuxOps</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/OpenSSH/">OpenSSH</a></div><div class="post_share"><div class="social-share" data-image="/images/openssh.gif" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/03/13/Linux%E5%9F%BA%E7%A1%80/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E5%92%8Cchrony/"><img class="prev-cover" src="/images/Linux.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">时间服务和chrony</div></div></a></div><div class="next-post pull-right"><a href="/2019/03/12/Linux%E5%9F%BA%E7%A1%80/sshd%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE%E5%8F%8A%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/sshd%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE%E5%8F%8A%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/"><img class="next-cover" src="/images/openssh.gif" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">sshd的配置和优化</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/03/12/Linux%E5%9F%BA%E7%A1%80/openssh/openssh/" title="ssh服务"><img class="cover" src="/images/openssh.gif" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-12</div><div class="title">ssh服务</div></div></a></div><div><a href="/2019/03/12/Linux%E5%9F%BA%E7%A1%80/sshd%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE%E5%8F%8A%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/sshd%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE%E5%8F%8A%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="sshd的配置和优化"><img class="cover" src="/images/openssh.gif" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-12</div><div class="title">sshd的配置和优化</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Masuri</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">116</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91"><span class="toc-number">1.</span> <span class="toc-text">SSH端口转发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E8%BD%AC%E5%8F%91%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">本地转发实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">2.1.</span> <span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%9C%AC%E5%9C%B0%E8%BD%AC%E5%8F%91"><span class="toc-number">2.2.</span> <span class="toc-text">配置本地转发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95"><span class="toc-number">2.3.</span> <span class="toc-text">测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E8%BD%AC%E5%8F%91%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text">远程转发实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87-1"><span class="toc-number">3.1.</span> <span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8B%E8%BD%AC%E5%8F%91"><span class="toc-number">3.2.</span> <span class="toc-text">配置远程转发</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%EF%BC%88%E9%80%82%E7%94%A8%E4%BA%8ELinux%E7%BF%BB%E5%A2%99%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">动态端口转发（适用于Linux翻墙）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87-2"><span class="toc-number">4.1.</span> <span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E5%8A%A8%E6%80%81%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91"><span class="toc-number">4.2.</span> <span class="toc-text">配置动态端口转发</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95-1"><span class="toc-number">4.2.1.</span> <span class="toc-text">测试</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%EF%BC%88%E9%80%82%E7%94%A8%E4%BA%8Ewindows%E7%BF%BB%E5%A2%99%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">动态端口转发（适用于windows翻墙）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87-3"><span class="toc-number">5.1.</span> <span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E5%8A%A8%E6%80%81%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91-1"><span class="toc-number">5.2.</span> <span class="toc-text">配置动态端口转发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95-2"><span class="toc-number">5.3.</span> <span class="toc-text">测试</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/01/12/hello-world/" title="Hello World"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/2022/01/12/hello-world/" title="Hello World">Hello World</a><time datetime="2022-01-12T12:50:44.471Z" title="发表于 2022-01-12 12:50:44">2022-01-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/" title="Jenkins代码质量检测"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins代码质量检测"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/" title="Jenkins代码质量检测">Jenkins代码质量检测</a><time datetime="2019-05-05T10:40:00.000Z" title="发表于 2019-05-05 10:40:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/" title="Jenkins给脚本传递参数"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins给脚本传递参数"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/" title="Jenkins给脚本传递参数">Jenkins给脚本传递参数</a><time datetime="2019-05-05T10:10:00.000Z" title="发表于 2019-05-05 10:10:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E8%A7%86%E5%9B%BE/jenkins%E8%A7%86%E5%9B%BE/" title="Jenkins视图"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins视图"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E8%A7%86%E5%9B%BE/jenkins%E8%A7%86%E5%9B%BE/" title="Jenkins视图">Jenkins视图</a><time datetime="2019-05-05T10:00:00.000Z" title="发表于 2019-05-05 10:00:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/Jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/" title="Jenkins构建后关联操作"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins构建后关联操作"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/Jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/" title="Jenkins构建后关联操作">Jenkins构建后关联操作</a><time datetime="2019-05-05T09:50:00.000Z" title="发表于 2019-05-05 09:50:00">2019-05-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Masuri</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

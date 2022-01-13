@@ -1,0 +1,272 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MySQL的高可用(MHA) | MyLinuxOps</title><meta name="keywords" content="MySQL"><meta name="author" content="Masuri"><meta name="copyright" content="Masuri"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="MHA:Master High Availability,对主节点进行监控，可实现自动故障转移至其他从节点；通过提升某一从节点为新的主节点，基于主从复制实现，还需要客户端配合实现，目前MHA主要支持一主二从，即一台充当master，一台充当备用master，另外一台充当从数据库，出于机器成本的考虑，淘宝进行了改造，目前淘宝TMHA已经一主一从。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL的高可用(MHA)">
+<meta property="og:url" content="http://www.mylinuxops.com/2019/04/14/MySQL/MySQL%E9%AB%98%E5%8F%AF%E7%94%A8(MHA)/MySQL%E9%AB%98%E5%8F%AF%E7%94%A8MHA/index.html">
+<meta property="og:site_name" content="MyLinuxOps">
+<meta property="og:description" content="MHA:Master High Availability,对主节点进行监控，可实现自动故障转移至其他从节点；通过提升某一从节点为新的主节点，基于主从复制实现，还需要客户端配合实现，目前MHA主要支持一主二从，即一台充当master，一台充当备用master，另外一台充当从数据库，出于机器成本的考虑，淘宝进行了改造，目前淘宝TMHA已经一主一从。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.mylinuxops.com/images/Mysql.jpg">
+<meta property="article:published_time" content="2019-04-14T06:30:02.000Z">
+<meta property="article:modified_time" content="2020-11-21T08:02:08.000Z">
+<meta property="article:author" content="Masuri">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.mylinuxops.com/images/Mysql.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://www.mylinuxops.com/2019/04/14/MySQL/MySQL%E9%AB%98%E5%8F%AF%E7%94%A8(MHA)/MySQL%E9%AB%98%E5%8F%AF%E7%94%A8MHA/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MySQL的高可用(MHA)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-11-21 08:02:08'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">116</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/Mysql.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">MyLinuxOps</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MySQL的高可用(MHA)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-04-14T06:30:02.000Z" title="发表于 2019-04-14 06:30:02">2019-04-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-11-21T08:02:08.000Z" title="更新于 2020-11-21 08:02:08">2020-11-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/MySQL/">MySQL</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="MySQL的高可用(MHA)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>MHA:Master High Availability,对主节点进行监控，可实现自动故障转移至其他从节点；通过提升某一从节点为新的主节点，基于主从复制实现，还需要客户端配合实现，目前MHA主要支持一主二从，即一台充当master，一台充当备用master，另外一台充当从数据库，出于机器成本的考虑，淘宝进行了改造，目前淘宝TMHA已经一主一从。</p>
+<span id="more"></span>
+
+<h2 id="MHA架构"><a href="#MHA架构" class="headerlink" title="MHA架构"></a>MHA架构</h2><p><img src="MHA.png" alt="MHA.png"></p>
+<h2 id="MHA的工作原理"><a href="#MHA的工作原理" class="headerlink" title="MHA的工作原理"></a>MHA的工作原理</h2><p><img src="MHA2.png" alt="MHA2.png"></p>
+<p>MHA是由一台manager服务器远程监控主服务器,当主服务器挂了提升一台从服务器作为主服务器。  </p>
+<p>当主节点挂了，manager首先要查看哪台从节点，同步的数据最多，然后提升同步最多的从节点为主节点，再将其余的MySQL服务器对他做从节点。  </p>
+<p>如果原主节点没彻底死透，manager会让新的主机通过ssh协议远程连接到原先的主节点，拉取二进制日志进行同步。如果主节死透了那就放弃。　　</p>
+<hr>
+<h2 id="MHA搭建"><a href="#MHA搭建" class="headerlink" title="MHA搭建"></a>MHA搭建</h2><h3 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h3><p>准备4台主机，管理节点1台，主节点MySQL服务器1台，从节点MySQL服务器2台<br>|主机|IP|<br>|:-|:-|<br>|Manager|192.168.73.111|<br>|Master|192.168.73.110|<br>|Slave1|192.168.73.112|<br>|Slave2|192.168.73.113|</p>
+<h3 id="二、将Manager管理节点配置为时间服务器，向所有MySQL服务器提供时间同步"><a href="#二、将Manager管理节点配置为时间服务器，向所有MySQL服务器提供时间同步" class="headerlink" title="二、将Manager管理节点配置为时间服务器，向所有MySQL服务器提供时间同步"></a>二、将Manager管理节点配置为时间服务器，向所有MySQL服务器提供时间同步</h3><p>1.安装chrony服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Manager ~]<span class="comment"># yum install -y chrony</span></span><br></pre></td></tr></table></figure>
+
+<p>2.修改chrony配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@Manager ~]<span class="comment"># vim /etc/chrony.conf</span></span><br><span class="line">server 172.22.0.1 iburst</span><br><span class="line">allow 192.168.0.0/16</span><br><span class="line"><span class="built_in">local</span> stratum 10</span><br></pre></td></tr></table></figure>
+
+<p>3.启动chrony服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Manager ~]<span class="comment"># systemctl start chronyd</span></span><br></pre></td></tr></table></figure>
+
+<p>4.将MySQL服务器与Manager服务器进行时间同步</p>
+<p>4.1在所有MySQL主机上修改配置文件并启动，并启动服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@Master ~]<span class="comment"># sed -i &#x27;/^server 0/i server 192.168.73.111 iburst&#x27; /etc/chrony.conf</span></span><br><span class="line">[root@Master ~]<span class="comment"># systemctl start chronyd</span></span><br></pre></td></tr></table></figure>
+
+<p>4.2确认时间同步</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@Master ~]<span class="comment"># chronyc sources -v</span></span><br><span class="line">210 Number of sources = 1</span><br><span class="line"></span><br><span class="line">  .-- Source mode  <span class="string">&#x27;^&#x27;</span> = server, <span class="string">&#x27;=&#x27;</span> = peer, <span class="string">&#x27;#&#x27;</span> = <span class="built_in">local</span> clock.</span><br><span class="line"> / .- Source state <span class="string">&#x27;*&#x27;</span> = current synced, <span class="string">&#x27;+&#x27;</span> = combined , <span class="string">&#x27;-&#x27;</span> = not combined,</span><br><span class="line">| /   <span class="string">&#x27;?&#x27;</span> = unreachable, <span class="string">&#x27;x&#x27;</span> = time may be <span class="keyword">in</span> error, <span class="string">&#x27;~&#x27;</span> = time too variable.</span><br><span class="line">||                                                 .- xxxx [ yyyy ] +/- zzzz</span><br><span class="line">||      Reachability register (octal) -.           |  xxxx = adjusted offset,</span><br><span class="line">||      Log2(Polling interval) --.      |          |  yyyy = measured offset,</span><br><span class="line">||                                \     |          |  zzzz = estimated error.</span><br><span class="line">||                                 |    |           \</span><br><span class="line">MS Name/IP address         Stratum Poll Reach LastRx Last sample</span><br><span class="line">===============================================================================</span><br><span class="line">^* 192.168.73.111                4   6   377    54    +25us[  +41us] +/-  105ms</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、配置ssh为的密钥认证登陆"><a href="#三、配置ssh为的密钥认证登陆" class="headerlink" title="三、配置ssh为的密钥认证登陆"></a>三、配置ssh为的密钥认证登陆</h3><p>当主节点宕机，manager会让从节点通过ssh协议去尝试连接主节点，并拉取二进制日志，所以要时用密钥的认证方式让从节点登陆到主节点拉取数据。</p>
+<p>1.在manager服务器上生成私钥文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@Manager ~]<span class="comment"># ssh-keygen</span></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/root/.ssh/id_rsa):</span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</span><br><span class="line">Enter same passphrase again:</span><br><span class="line">Your identification has been saved <span class="keyword">in</span> /root/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved <span class="keyword">in</span> /root/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:yAvC2PJUlRyAf1udlrVXzmIsUljTdUdW6X6FVpQ3Ajo root@Manager</span><br><span class="line">The key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+---[RSA 2048]----+</span></span><br><span class="line"><span class="string">|   ..ooo   ++. +%|</span></span><br><span class="line"><span class="string">|  .  .o   o oo.=*|</span></span><br><span class="line"><span class="string">|   ..    E = oo*o|</span></span><br><span class="line"><span class="string">| + ...... B o B.+|</span></span><br><span class="line"><span class="string">|o = ..ooS. . =...|</span></span><br><span class="line"><span class="string">| + . ...       ..|</span></span><br><span class="line"><span class="string">|  .   .         .|</span></span><br><span class="line"><span class="string">|                 |</span></span><br><span class="line"><span class="string">|                 |</span></span><br><span class="line"><span class="string">+----[SHA256]-----+</span></span><br></pre></td></tr></table></figure>
+
+<p>2.将公钥文件复制给自己</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Manager ~]<span class="comment"># ssh-copy-id 127.0.0.1</span></span><br></pre></td></tr></table></figure>
+
+<p>3.将整个~/.ssh目录复制给所有的MySQL主机</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Manager ~]<span class="comment"># scp -r ~/.ssh 192.168.73.110:/root</span></span><br></pre></td></tr></table></figure>
+
+<p>至此所有环境准备完毕</p>
+<h3 id="配置主从复制"><a href="#配置主从复制" class="headerlink" title="配置主从复制"></a>配置主从复制</h3><h4 id="主节点配置"><a href="#主节点配置" class="headerlink" title="主节点配置"></a>主节点配置</h4><p>1.修改配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@Master ~]<span class="comment"># vim /etc/my.cnf</span></span><br><span class="line">[mysqld]</span><br><span class="line">server-id=1</span><br><span class="line">log-bin</span><br><span class="line">binlog-format=row</span><br><span class="line">skip_name_resolve</span><br></pre></td></tr></table></figure>
+
+<p>2.启动数据库服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Master ~]<span class="comment"># systemctl start mariadb</span></span><br></pre></td></tr></table></figure>
+
+<p>3.创建主从复制账号</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Master ~]<span class="comment"># mysql -e &quot;GRANT REPLICATION SLAVE ON *.* TO &#x27;repluser&#x27;@&#x27;192.168.73.%&#x27; IDENTIFIED BY &#x27;centos&#x27;;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>4.添加mha的管理账号，让管理节点远程连接到主机用来设置主从调整</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Master ~]<span class="comment"># mysql -e &quot;GRANT ALL ON *.* TO &#x27;mhauser&#x27;@&#x27;192.168.73.%&#x27; IDENTIFIED BY &#x27;centos&#x27;;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="从节点配置"><a href="#从节点配置" class="headerlink" title="从节点配置"></a>从节点配置</h4><p>1.修改配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@Slave1 ~]<span class="comment"># vim /etc/my.cnf</span></span><br><span class="line">[mysqld]</span><br><span class="line">server-id=2</span><br><span class="line">read-only</span><br><span class="line">log-bin</span><br><span class="line">relay_log_purge=0</span><br><span class="line">skip_name_resolve</span><br></pre></td></tr></table></figure>
+
+<p>2.启动服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Slave1 ~]<span class="comment"># systemctl start mariadb</span></span><br></pre></td></tr></table></figure>
+
+<p>3.配置CHANGE MASTER TO</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; CHANGE MASTER TO MASTER_HOST=<span class="string">&#x27;192.168.73.110&#x27;</span>, MASTER_USER=<span class="string">&#x27;repluser&#x27;</span>,MASTER_PASSWORD=<span class="string">&#x27;centos&#x27;</span>,MASTER_PORT=3306,MASTER_LOG_FILE=<span class="string">&#x27;mariadb-bin.000001&#x27;</span>,MASTER_LOG_POS=245;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>4.启动线程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; START SLAVE;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>在Slave2节点上也执行相同的操作，此处步骤省略，需要注意server-id需要修改为和其他主从节点不同  </p>
+<p>5.测试  </p>
+<p>主节点导入hellodb库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Master ~]<span class="comment"># mysql &lt; hellodb_innodb.sql</span></span><br></pre></td></tr></table></figure>
+
+<p>从节点查看是否同步</p>
+<p>slave1</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@Slave1 ~]<span class="comment"># mysql -e &quot;SHOW DATABASES;&quot;</span></span><br><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| information_schema |</span><br><span class="line">| hellodb            |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">| <span class="built_in">test</span>               |</span><br><span class="line">+--------------------+</span><br></pre></td></tr></table></figure>
+
+<p>Slave2</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@Slave2 ~]<span class="comment"># mysql -e &quot;SHOW DATABASES;&quot;</span></span><br><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| information_schema |</span><br><span class="line">| hellodb            |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">| <span class="built_in">test</span>               |</span><br><span class="line">+--------------------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="二、配置管理节点及被管理节点"><a href="#二、配置管理节点及被管理节点" class="headerlink" title="二、配置管理节点及被管理节点"></a>二、配置管理节点及被管理节点</h3><p>1.在管理节上安装mha4mysql-manager、mha4mysql-node，将两个包放在同一目录下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Manager ~]<span class="comment"># yum install *.rpm -y  #这两个包有依赖管理需要一起安装</span></span><br></pre></td></tr></table></figure>
+
+<p>2.在所有被管理节点上安装mha4mysql-node</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Master ~]<span class="comment"># yum install mha4mysql-node-0.56-0.el6.noarch.rpm -y</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Slave1 ~]<span class="comment"># yum install mha4mysql-node-0.56-0.el6.noarch.rpm -y</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Slave2 ~]<span class="comment"># yum install mha4mysql-node-0.56-0.el6.noarch.rpm -y</span></span><br></pre></td></tr></table></figure>
+
+<p>3.在管理节点上创建配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@Manager ~]<span class="comment"># vim /etc/mha/aap1.conf</span></span><br><span class="line">[server default]</span><br><span class="line">user=mhauser</span><br><span class="line">password=111111</span><br><span class="line">manager_workdir=/data/mastermha/app1/</span><br><span class="line">manager_log=/data/mastermha/app1/manager.log</span><br><span class="line">remote_workdir=/data/mastermha/app1/</span><br><span class="line">ssh_user=root</span><br><span class="line">repl_user=repluser</span><br><span class="line">repl_password=111111</span><br><span class="line">ping_interval=1</span><br><span class="line"></span><br><span class="line">[server1]</span><br><span class="line">hostname=192.168.27.31</span><br><span class="line">candidate_master=1</span><br><span class="line">[server2]</span><br><span class="line">hostname=192.168.27.32</span><br><span class="line">candidate_master=1</span><br><span class="line">[server3]</span><br><span class="line">hostname=192.168.27.33</span><br><span class="line">candidate_master=1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>4.做检查</p>
+<p>4.1检查ssh连接</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Manager ~]<span class="comment"># masterha_check_ssh --conf=/etc/mha/aap1.conf</span></span><br></pre></td></tr></table></figure>
+
+<p>4.2检查主从复制</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Manager ~]<span class="comment"># masterha_check_repl --conf=/etc/mha/aap1.conf</span></span><br></pre></td></tr></table></figure>
+
+<p>5.以上两项全部成功后启动程序</p>
+<p>mha这个程序是跑在前台的，一次性的可以使用nohub或screen来解决跑在前台的问题</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Manager ~]<span class="comment"># masterha_manager --conf=/etc/mha/aap1.conf</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="三、测试"><a href="#三、测试" class="headerlink" title="三、测试"></a>三、测试</h3><p>1.在master上跑个存储过程，导入存储过程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Master ~]<span class="comment"># mysql hellodb &lt; testlog.sql</span></span><br></pre></td></tr></table></figure>
+
+<p>2.调用存储过程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; USE hellodb</span><br><span class="line">Reading table information <span class="keyword">for</span> completion of table and column names</span><br><span class="line">You can turn off this feature to get a quicker startup with -A</span><br><span class="line"></span><br><span class="line">Database changed</span><br><span class="line">MariaDB [hellodb]&gt; call pro_testlog;</span><br></pre></td></tr></table></figure>
+
+<p>3.另起一个主节点窗口将主节点断网</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Master ~]<span class="comment"># ifdown ens33</span></span><br></pre></td></tr></table></figure>
+
+<p>4.manager端完成切换退出，查看日志，查看新的主节点是哪台slave</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@Manager app1]<span class="comment"># tail /data/mastermha/app1/manager.log</span></span><br><span class="line"></span><br><span class="line">Started automated(non-interactive) failover.</span><br><span class="line">The latest slave 192.168.73.112(192.168.73.112:3306) has all relay logs <span class="keyword">for</span> recovery.</span><br><span class="line">Selected 192.168.73.112(192.168.73.112:3306) as a new master.</span><br><span class="line">192.168.73.112(192.168.73.112:3306): OK: Applying all logs succeeded.</span><br><span class="line">192.168.73.113(192.168.73.113:3306): This host has the latest relay <span class="built_in">log</span> events.</span><br><span class="line">Generating relay diff files from the latest slave succeeded.</span><br><span class="line">192.168.73.113(192.168.73.113:3306): OK: Applying all logs succeeded. Slave started, replicating from 192.168.73.112(192.168.73.112:3306)</span><br><span class="line">192.168.73.112(192.168.73.112:3306): Resetting slave info succeeded.</span><br><span class="line">Master failover to 192.168.73.112(192.168.73.112:3306) completed successfully.</span><br><span class="line"><span class="comment">#此处显示最新的主节点为192.168.73.112</span></span><br></pre></td></tr></table></figure>
+
+<p>由于从节点在配置文件中定义的为read-only，此时被提升为主能执行写操作时应为管理服务器上有管理账号，他将从节点的服务器全局变量read_only给关闭了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@Slave1 ~]<span class="comment"># mysql -e &quot;SELECT @@read_only;&quot;</span></span><br><span class="line">+-------------+</span><br><span class="line">| @@read_only |</span><br><span class="line">+-------------+</span><br><span class="line">|           0 |</span><br><span class="line">+-------------+</span><br></pre></td></tr></table></figure>
+
+<p>为了防止服务服务重启再次变为read-only，此时需要对新主节点的配置文件进行修改将read-only行注释</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">server-id=2</span><br><span class="line"><span class="comment">#read-only</span></span><br><span class="line">log-bin</span><br><span class="line">relay_log_purge=0</span><br><span class="line">skip_name_resolve</span><br></pre></td></tr></table></figure>
+
+<h3 id="四、测试新的主节点"><a href="#四、测试新的主节点" class="headerlink" title="四、测试新的主节点"></a>四、测试新的主节点</h3><p>1.对hellodb.teachers表插入数据</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Slave1 ~]<span class="comment"># mysql -e &quot;INSERT hellodb.teachers VALUES(5,&#x27;Tang San&#x27;,30,&#x27;M&#x27;);&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>2.Slave2主机上查看是否同步</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@Slave2 ~]<span class="comment"># mysql -e &quot;SELECT * FROM hellodb.teachers;&quot;</span></span><br><span class="line">+-----+---------------+-----+--------+</span><br><span class="line">| TID | Name          | Age | Gender |</span><br><span class="line">+-----+---------------+-----+--------+</span><br><span class="line">|   1 | Song Jiang    |  45 | M      |</span><br><span class="line">|   2 | Zhang Sanfeng |  94 | M      |</span><br><span class="line">|   3 | Miejue Shitai |  77 | F      |</span><br><span class="line">|   4 | Lin Chaoying  |  93 | F      |</span><br><span class="line">|   5 | Tang San      |  30 | M      |    <span class="comment">#已经同步</span></span><br><span class="line">+-----+---------------+-----+--------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="其他事项"><a href="#其他事项" class="headerlink" title="其他事项"></a>其他事项</h3><p>当原主节点被修复后，将其添加为从节点使用。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Masuri</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.mylinuxops.com/2019/04/14/MySQL/MySQL%E9%AB%98%E5%8F%AF%E7%94%A8(MHA)/MySQL%E9%AB%98%E5%8F%AF%E7%94%A8MHA/">http://www.mylinuxops.com/2019/04/14/MySQL/MySQL%E9%AB%98%E5%8F%AF%E7%94%A8(MHA)/MySQL%E9%AB%98%E5%8F%AF%E7%94%A8MHA/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.mylinuxops.com" target="_blank">MyLinuxOps</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/MySQL/">MySQL</a></div><div class="post_share"><div class="social-share" data-image="/images/Mysql.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/04/15/Httpd/Http%E5%90%84%E7%89%88%E6%9C%AC%E5%8D%8F%E8%AE%AE%E5%8C%BA%E5%88%AB/Http%E5%90%84%E7%89%88%E6%9C%AC%E5%8D%8F%E8%AE%AE%E5%8C%BA%E5%88%AB/"><img class="prev-cover" src="/images/httpd.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">http各版本协议区别</div></div></a></div><div class="next-post pull-right"><a href="/2019/04/13/MySQL/MySQL%E9%AB%98%E5%8F%AF%E7%94%A8(Galera%20Cluster)/MySQL%E9%AB%98%E5%8F%AF%E7%94%A8GC/"><img class="next-cover" src="/images/Mysql.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">MySQL高可用(Galera Cluster)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/04/10/MySQL/MySQL%E4%B8%BB%E4%B8%BB%E5%A4%8D%E5%88%B6/MySQL%E4%B8%BB%E4%B8%BB%E5%A4%8D%E5%88%B6%E5%8F%8A%E6%8E%92%E5%9D%91/" title="MySQL主主复制及相关的排坑"><img class="cover" src="/images/Mysql.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-10</div><div class="title">MySQL主主复制及相关的排坑</div></div></a></div><div><a href="/2019/04/10/MySQL/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" title="MySQL主从复制"><img class="cover" src="/images/Mysql.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-10</div><div class="title">MySQL主从复制</div></div></a></div><div><a href="/2019/04/10/MySQL/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%87%BA%E9%94%99%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%87%BA%E9%94%99%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="MySQL主从复制出错的解决方法"><img class="cover" src="/images/Mysql.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-10</div><div class="title">MySQL主从复制出错的解决方法</div></div></a></div><div><a href="/2019/04/17/MySQL/MySQL%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E8%A3%85/MySQL%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E8%A3%85/" title="Mariadb二进制安装"><img class="cover" src="/images/Mysql.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-17</div><div class="title">Mariadb二进制安装</div></div></a></div><div><a href="/2019/04/10/MySQL/MySQL%E5%8D%8A%E5%90%8C%E6%AD%A5%E5%A4%8D%E5%88%B6/MySQL%E5%8D%8A%E5%90%8C%E6%AD%A5%E5%A4%8D%E5%88%B6/" title="MySQL半同步复制"><img class="cover" src="/images/Mysql.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-10</div><div class="title">MySQL半同步复制</div></div></a></div><div><a href="/2019/04/17/MySQL/MySQL%E5%8F%98%E9%87%8F%E5%92%8C%E9%80%89%E9%A1%B9/MySQL%E5%8F%98%E9%87%8F%E5%92%8C%E9%80%89%E9%A1%B9/" title="MySQL的变量和选项"><img class="cover" src="/images/Mysql.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-17</div><div class="title">MySQL的变量和选项</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Masuri</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">116</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MHA%E6%9E%B6%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">MHA架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MHA%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">MHA的工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MHA%E6%90%AD%E5%BB%BA"><span class="toc-number">3.</span> <span class="toc-text">MHA搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">3.1.</span> <span class="toc-text">一、环境准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%B0%86Manager%E7%AE%A1%E7%90%86%E8%8A%82%E7%82%B9%E9%85%8D%E7%BD%AE%E4%B8%BA%E6%97%B6%E9%97%B4%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E5%90%91%E6%89%80%E6%9C%89MySQL%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8F%90%E4%BE%9B%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5"><span class="toc-number">3.2.</span> <span class="toc-text">二、将Manager管理节点配置为时间服务器，向所有MySQL服务器提供时间同步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E9%85%8D%E7%BD%AEssh%E4%B8%BA%E7%9A%84%E5%AF%86%E9%92%A5%E8%AE%A4%E8%AF%81%E7%99%BB%E9%99%86"><span class="toc-number">3.3.</span> <span class="toc-text">三、配置ssh为的密钥认证登陆</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6"><span class="toc-number">3.4.</span> <span class="toc-text">配置主从复制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E8%8A%82%E7%82%B9%E9%85%8D%E7%BD%AE"><span class="toc-number">3.4.1.</span> <span class="toc-text">主节点配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8E%E8%8A%82%E7%82%B9%E9%85%8D%E7%BD%AE"><span class="toc-number">3.4.2.</span> <span class="toc-text">从节点配置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86%E8%8A%82%E7%82%B9%E5%8F%8A%E8%A2%AB%E7%AE%A1%E7%90%86%E8%8A%82%E7%82%B9"><span class="toc-number">3.5.</span> <span class="toc-text">二、配置管理节点及被管理节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%B5%8B%E8%AF%95"><span class="toc-number">3.6.</span> <span class="toc-text">三、测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%B5%8B%E8%AF%95%E6%96%B0%E7%9A%84%E4%B8%BB%E8%8A%82%E7%82%B9"><span class="toc-number">3.7.</span> <span class="toc-text">四、测试新的主节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E4%BA%8B%E9%A1%B9"><span class="toc-number">3.8.</span> <span class="toc-text">其他事项</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/01/12/hello-world/" title="Hello World"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/2022/01/12/hello-world/" title="Hello World">Hello World</a><time datetime="2022-01-12T12:50:44.471Z" title="发表于 2022-01-12 12:50:44">2022-01-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/" title="Jenkins代码质量检测"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins代码质量检测"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/Jenkins%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%B5%8B/" title="Jenkins代码质量检测">Jenkins代码质量检测</a><time datetime="2019-05-05T10:40:00.000Z" title="发表于 2019-05-05 10:40:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/" title="Jenkins给脚本传递参数"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins给脚本传递参数"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/jenkins%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/" title="Jenkins给脚本传递参数">Jenkins给脚本传递参数</a><time datetime="2019-05-05T10:10:00.000Z" title="发表于 2019-05-05 10:10:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E8%A7%86%E5%9B%BE/jenkins%E8%A7%86%E5%9B%BE/" title="Jenkins视图"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins视图"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E8%A7%86%E5%9B%BE/jenkins%E8%A7%86%E5%9B%BE/" title="Jenkins视图">Jenkins视图</a><time datetime="2019-05-05T10:00:00.000Z" title="发表于 2019-05-05 10:00:00">2019-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/05/05/CICD/jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/Jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/" title="Jenkins构建后关联操作"><img src="/images/jenkins.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jenkins构建后关联操作"/></a><div class="content"><a class="title" href="/2019/05/05/CICD/jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/Jenkins%E6%9E%84%E5%BB%BA%E5%90%8E%E5%85%B3%E8%81%94%E6%93%8D%E4%BD%9C/" title="Jenkins构建后关联操作">Jenkins构建后关联操作</a><time datetime="2019-05-05T09:50:00.000Z" title="发表于 2019-05-05 09:50:00">2019-05-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Masuri</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
