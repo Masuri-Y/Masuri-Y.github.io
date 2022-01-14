@@ -53,7 +53,7 @@
   isHome: true,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2022-01-13 09:11:26'
+  postUpdate: '2022-01-14 05:34:23'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -142,147 +142,29 @@
       }
     }
     detectApple()
-    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">128</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/index.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">MyLinuxOps</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">MyLinuxOps</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/03/06/Linux%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C%E7%BB%84team/%E7%BD%91%E7%BB%9C%E7%BB%84team/" title="网络组team">     <img class="post_bg" src="/images/Linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="网络组team"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/03/06/Linux%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C%E7%BB%84team/%E7%BD%91%E7%BB%9C%E7%BB%84team/" title="网络组team">网络组team</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-03-06T05:50:27.000Z" title="发表于 2019-03-06 05:50:27">2019-03-06</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></span></div><div class="content">网络组team网络组是centos7上新出的一个技术，它的作用和bonding类似，是将多个网卡聚合在一起方法，从而实现冗错和提高吞吐量，不同于旧版中bonding技术，网路组提供更好的性能和扩展性，它是由内核驱动和teamd守护进程实现。  
-
-
-网路组可以工作在多种模式(runner)    
-12345broadcast   roundrobin     activebackup   loadbalance   lacp (implements the 802.3ad Link Aggregation Control Protocol)   
-
-
-网络组team实现准备一台CentOS7主机，网卡2块。
-创建网络组1.创建网路网
-12[root@centos7 ~]# nmcli connection add con-name team0 ifname team0 type team ipv4.method manual ipv4.addresses 192.168.172.100 config &#x27;&#123;&quot;runner&quot;:&#123;&quot ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/03/06/Linux%E5%9F%BA%E7%A1%80/%E7%BD%91%E5%8D%A1%E7%BB%91%E5%AE%9A/bonding/" title="多网卡绑定">     <img class="post_bg" src="/images/Linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="多网卡绑定"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/03/06/Linux%E5%9F%BA%E7%A1%80/%E7%BD%91%E5%8D%A1%E7%BB%91%E5%AE%9A/bonding/" title="多网卡绑定">多网卡绑定</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-03-06T05:45:27.000Z" title="发表于 2019-03-06 05:45:27">2019-03-06</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></span></div><div class="content">多网卡绑定生产环境中将多块网卡绑定同一IP地址对外提供服务，可以实现高可用或者负载均衡。直接给两块网卡设置同一IP地址是不可以的。通过bonding，虚拟一块网卡对外提供连接，物理网卡被修改为相同的MAC地址 。
-
-
-实验环境：centos7主机一台、网卡设备2块。
-此次实验通过两种方式来实现bonding，第一种为修改配置文件，第二种为命令行。
-修改配置文件实现bonding一、创建band0配置文件
-123456[root@centos7 ~]# vim /etc/sysconfig/network-scripts/ifcfg-bond0DEVICE=bond0IPADDR=192.168.172.100PREFIX=24BONDING_OPTS=&#x27;miimon=100 mode=1&#x27;
-
-二、配置第一块网卡
-1234567[root@centos7 ~]#vim /etc/sysconfig/network-scripts/ifcfg-ens33TYPE=EthernetDEVICE=ens33ONBOOT=yesMASTER=bond0SLAVE=yes
-
-三 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/03/06/Linux%E5%9F%BA%E7%A1%80/tcp%E7%9A%84%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%92%8C%E5%9B%9B%E6%AC%A1%E5%88%86%E6%89%8B/tcp%E7%9A%84%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%92%8C%E5%9B%9B%E6%AC%A1%E5%88%86%E6%89%8B/" title="TCP/IP的三次握手和四次分手">     <img class="post_bg" src="/images/Linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TCP/IP的三次握手和四次分手"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/03/06/Linux%E5%9F%BA%E7%A1%80/tcp%E7%9A%84%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%92%8C%E5%9B%9B%E6%AC%A1%E5%88%86%E6%89%8B/tcp%E7%9A%84%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%92%8C%E5%9B%9B%E6%AC%A1%E5%88%86%E6%89%8B/" title="TCP/IP的三次握手和四次分手">TCP/IP的三次握手和四次分手</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-03-06T00:38:05.000Z" title="发表于 2019-03-06 00:38:05">2019-03-06</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></span></div><div class="content">tcp连接三次握手客户端发起链接SYN置为1其余5位置为0，并发送序号seq=x，客户端状态从close变为SYN-SENT
-服务器端收到客户端的请求返回SYN=1，ACK=1，发送序号seq=y和确认序号ack=x+1，服务器状态由LISTEN变为SYN-RCVD。
-客户端收到服务器端的相应后 返回ACK=1,seq=x+1，确认序号ack=y+1,客户端状态从SYN-SENT变为ESTAB-LISHED，服务器端收到客户端的回应后状态也变为ESTAB-LISTHED双方建立链接。
-
-tcp连接断开时的四次分手建立连接后，客户端和服务器都处于ESTABLISED状态。这时，客户端发起断开连接的请求：
-
-客户端向服务器发送 FIN 数据包，进入FIN_WAIT_1状态。表示完成任务需要断开连接。
-
-服务器收到数据包后，检测到设置了 FIN 标志位，知道要断开连接，于是向客户端发送“确认包”，进入CLOSE_WAIT状态。
-
-
-注意：服务器收到请求后并不是立即断开连接，而是先向客户端发送“确认包”，告诉它我知道了，我需要准备一下才能断开连接。
-
-客户端收到“确认包”后进入FIN_WAIT ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/03/05/Linux%E5%9F%BA%E7%A1%80/%E7%BD%91%E6%A1%A5bridge/%E7%BD%91%E6%A1%A5bridge/" title="网桥Bridge">     <img class="post_bg" src="/images/Linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="网桥Bridge"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/03/05/Linux%E5%9F%BA%E7%A1%80/%E7%BD%91%E6%A1%A5bridge/%E7%BD%91%E6%A1%A5bridge/" title="网桥Bridge">网桥Bridge</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-03-05T05:00:56.000Z" title="发表于 2019-03-05 05:00:56">2019-03-05</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></span></div><div class="content">网桥Bridge网桥将两个相似的网络连接起来，并对网络数据的流通进行管理。它工作于数据链路层，不但能扩展网络的距离或范围，而且可提高网络的性能、可靠性和安全性。网络1 和网络2 通过网桥连接后，网桥接收网络1 发送的数据包，检查数据包中的地址，如果地址属于网络1 ，它就将其放弃，相反，如果是网络2 的地址，它就继续发送给网络2.这样可利用网桥隔离信息，将同一个网络号划分成多个网段（属于同一个网络号），隔离出安全网段，防止其他网段内的用户非法访问。由于网络的分段，各网段相对独立（属于同一个网络号），一个网段的故障不会影响到另一个网段的运行。
-
-
-网桥实现将一台Linux主机配置为网桥，将两台在不同了网络，ip地址却在同一网段的设备连接起来  
-实验准备准备3台虚拟机，主机A配置一块网卡，主机B配置一块网卡，主机Bridge配置2块网卡  
-主机A在vmnet2网络
-
-主机B在vmnet3网络
-
-Bridge两个口一个连接vmnet2网络，另一个连接vmnet3网络
-
-
-
-
-主机
-en33
-ens37
-
-
-
-A
-192.168.10.10
--
-
-
-B
-192.168.10.11
--
-
-
-B ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/03/05/Linux%E5%9F%BA%E7%A1%80/swap%E5%88%86%E5%8C%BA/swap%E5%88%86%E5%8C%BA/" title="swap分区">     <img class="post_bg" src="/images/Linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="swap分区"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/03/05/Linux%E5%9F%BA%E7%A1%80/swap%E5%88%86%E5%8C%BA/swap%E5%88%86%E5%8C%BA/" title="swap分区">swap分区</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-03-05T00:50:42.000Z" title="发表于 2019-03-05 00:50:42">2019-03-05</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></span></div><div class="content">swap分区swap交换分区是系统RAM的补充，Swap分区支持虚拟内存。当没有足够的RAM保存系统处理的数据时会将数据写入swap分区，当系统缺乏swap空间时，内核会因RAM内存耗尽而终止进程。配置过多swap空间会造成存储设备处于分配状态但闲置，造成浪费，过多swap空间还会掩盖内存泄露，所以swap分区可以根据物理内存的大小来分配，物理内存过小时可以设置为物理内存的2倍，随着物理内存的逐渐增大，swap的倍数可以逐渐递减。
-
-
-在实际生产中不建议使用swap分区来当内存使用，毕竟磁盘的性能要弱于内存数倍
-以下为演示swap分区的各种创建方法：
-一、将分区创建为swap1.划分分区新增一块硬盘sdb，对sdb进行分区
-12345678910111213141516171819202122232425262728293031[root@centos7 ~]# fdisk /dev/sdbWelcome to fdisk (util-linux 2.23.2).Changes will remain in memory only, until you decide to write  ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/03/05/Linux%E5%9F%BA%E7%A1%80/%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB%E8%87%B3%E9%80%BB%E8%BE%91%E5%8D%B7%E5%92%8Clvm%E5%BF%AB%E7%85%A7/%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB%E8%87%B3%E9%80%BB%E8%BE%91%E5%8D%B7%E5%92%8C%E9%80%BB%E8%BE%91%E5%8D%B7%E5%BF%AB%E7%85%A7/" title="迁移数据至逻辑卷和LVM快照">     <img class="post_bg" src="/images/Linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="迁移数据至逻辑卷和LVM快照"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/03/05/Linux%E5%9F%BA%E7%A1%80/%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB%E8%87%B3%E9%80%BB%E8%BE%91%E5%8D%B7%E5%92%8Clvm%E5%BF%AB%E7%85%A7/%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB%E8%87%B3%E9%80%BB%E8%BE%91%E5%8D%B7%E5%92%8C%E9%80%BB%E8%BE%91%E5%8D%B7%E5%BF%AB%E7%85%A7/" title="迁移数据至逻辑卷和LVM快照">迁移数据至逻辑卷和LVM快照</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-03-05T00:44:42.000Z" title="发表于 2019-03-05 00:44:42">2019-03-05</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></span></div><div class="content">迁移数据至逻辑卷和LVM快照在生产中又有可能遇到数据需要从原先的磁盘中迁移到逻辑卷中，此时就会涉及到数据的迁移，以下将演示如何将叔叔从一个磁盘上迁移到逻辑卷中以及如何对逻辑卷创建快照，恢复快照。
-
-
-迁移数据至逻辑卷1.首先创建一个逻辑卷
-1234567[root@centos7 ~]# pvcreate /dev/sd&#123;b,c&#125;  Physical volume &quot;/dev/sdb&quot; successfully created.  Physical volume &quot;/dev/sdc&quot; successfully created.[root@centos7 ~]# vgcreate testvg /dev/sd&#123;b,c&#125;  Volume group &quot;testvg&quot; successfully created[root@centos7 ~]# lvcreate -n testlv -L 5G testvg   Logical volume &quot;testlv&quot; created. ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/03/05/Linux%E5%9F%BA%E7%A1%80/LVM%E9%80%BB%E8%BE%91%E5%8D%B7%E5%92%8C%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/LVM%E9%80%BB%E8%BE%91%E5%8D%B7%E5%92%8C%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" title="LVM逻辑卷和文件系统">     <img class="post_bg" src="/images/Linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LVM逻辑卷和文件系统"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/03/05/Linux%E5%9F%BA%E7%A1%80/LVM%E9%80%BB%E8%BE%91%E5%8D%B7%E5%92%8C%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/LVM%E9%80%BB%E8%BE%91%E5%8D%B7%E5%92%8C%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" title="LVM逻辑卷和文件系统">LVM逻辑卷和文件系统</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-03-05T00:38:05.000Z" title="发表于 2019-03-05 00:38:05">2019-03-05</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></span></div><div class="content">LVM逻辑卷和文件系统逻辑卷的组成是，集成各种空间组合成物理卷，然后集合物理卷组合成一个卷组，然后在卷组上创建逻辑卷。
-所以要创建逻辑卷首先需要创建物理卷，然后组合物理卷创建卷组，最后创建可以使用的逻辑卷。
-  
-
-
-逻辑卷创建方式以下为逻辑卷的创建方式
-实验环境：1.一个mbr分区的5G空间(sdb1)2.一个gpt分区的5G空间(sdc1)3.一个未分区的磁盘(sdd)  
-创建实验环境1.建立一个mbr分区的5G空间(sdb1)
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758[root@centos7 ~]# fdisk /dev/sdbWelcome to fdisk (util-linux 2.23.2).Changes will remain in memory only, until you decide to write them.Be careful before using the write com ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/03/04/Linux%E5%9F%BA%E7%A1%80/fstab%E6%8E%92%E9%94%99/fstab%E6%8E%92%E9%94%99/" title="fstab排错">     <img class="post_bg" src="/images/Linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="fstab排错"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/03/04/Linux%E5%9F%BA%E7%A1%80/fstab%E6%8E%92%E9%94%99/fstab%E6%8E%92%E9%94%99/" title="fstab排错">fstab排错</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-03-04T14:04:47.000Z" title="发表于 2019-03-04 14:04:47">2019-03-04</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></span></div><div class="content">Fstab排错fstab文件中所配置的挂载设备出现配置出错时将导致系统无法启动，以下分别演示centos6 和centos7挂载出错时的修复方法
-
-
-一、CentOS6环境1.创建错误环境
-1234567891011121314151617[root@centos6 ~]# vim /etc/fstab## /etc/fstab# Created by anaconda on Tue Mar  5 13:07:05 2019## Accessible filesystems, by reference, are maintained under &#x27;/dev/disk&#x27;# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info#UUID=3fa49288-1c40-4e74-ad2c-a32fefedf20f /                       ext4    defaults        1 1UUID=5f0da078-420b-be5b-95ce5a8a2e ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/03/04/Linux%E5%9F%BA%E7%A1%80/%E6%96%87%E6%9C%AC%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed/%E6%96%87%E6%9C%AC%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed/" title="文本三剑客之sed">     <img class="post_bg" src="/images/Linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="文本三剑客之sed"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/03/04/Linux%E5%9F%BA%E7%A1%80/%E6%96%87%E6%9C%AC%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed/%E6%96%87%E6%9C%AC%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed/" title="文本三剑客之sed">文本三剑客之sed</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-03-04T13:47:24.000Z" title="发表于 2019-03-04 13:47:24">2019-03-04</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></span></div><div class="content">文本三剑客之sedsed是一种流编辑器，它一次处理一行内容。处理时，把当前处理的行存储在临时缓冲区中，称为“模式空间”（pattern space），接着用sed命令处理缓冲区中的内容，处理完成后，把缓冲区的内容送往屏幕。然后读入下行，执行下一个循环。如果没有使诸如‘D’的特殊命令，那会在两个循环之间清空模式空间，但不会清空保留空间。这样不断重复，直到文件末尾。文件内容并没有改变，除非你使用重定向存储输出。
-
-
-
-sed命令格式1sed [OPTION]... &#x27;script&#x27; [input-file]...
-
-sed命令的常用option
-
-
-option
-说明
-
-
-
--n
-不输出模式空间内容到屏幕，即不自动打印
-
-
--e
-多点编辑
-
-
--f /PATH/SCRIPT_FILE
-从指定文件中读取编辑脚本
-
-
--r
-支持扩展正则表达式
-
-
--i.xxx
-备份源文件并编辑，xxx可以时任意字符为源文件备份的后缀
-
-
-script部分sed的scripte部分由地址定界+编辑命令组成
-地址定界
-
-
-地址定界
-example
-说明
-
-
-
-不给地址
-空
-对全文进行处理
-
-
- ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/03/04/Linux%E5%9F%BA%E7%A1%80/Linux%E6%96%87%E4%BB%B6%E7%9A%84%E6%9F%A5%E6%89%BE/Linux%E6%96%87%E4%BB%B6%E7%9A%84%E6%9F%A5%E6%89%BE/" title="Linux文件的查找">     <img class="post_bg" src="/images/Linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux文件的查找"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/03/04/Linux%E5%9F%BA%E7%A1%80/Linux%E6%96%87%E4%BB%B6%E7%9A%84%E6%9F%A5%E6%89%BE/Linux%E6%96%87%E4%BB%B6%E7%9A%84%E6%9F%A5%E6%89%BE/" title="Linux文件的查找">Linux文件的查找</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-03-04T13:45:24.000Z" title="发表于 2019-03-04 13:45:24">2019-03-04</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></span></div><div class="content">Linux文件查找在windows中文件的查找可以通过资源管理器进行查找，在Linux中则需要使用命令行进行查找，命令行中的查找命令有2种locate和find
-
-
-
-locatelocate 命令查找的是数据库文件并非实时查找需要updatedb更新数据库文件。
-命令语法：
-1locate [OPTION]... PATTERN...
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">155</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/index.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">MyLinuxOps</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">MyLinuxOps</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/03/16/Ansible/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B9%8BAnsible--4/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B9%8BAnsible--4/" title="自动化运维之Ansible（四）">     <img class="post_bg" src="/images/Ansible.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="自动化运维之Ansible（四）"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/03/16/Ansible/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B9%8BAnsible--4/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B9%8BAnsible--4/" title="自动化运维之Ansible（四）">自动化运维之Ansible（四）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-03-16T14:38:02.000Z" title="发表于 2019-03-16 14:38:02">2019-03-16</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Ansible/">Ansible</a></span></div><div class="content">ansible的playbookansible-playbook为ansible的脚本，其是由yaml语言构成，这种语言对格式的要求非常高。
+
+
+yaml语言的格式要求
+在单一档案中，可以用连续三个连字号(—)区分多个档案，另外，还有选择性的连续三个点号_(…)来表示档案的结尾  
+此行开始正常写playbook的内容，一般建议写明该playbook的功能
+使用#注释代码  
+缩进必须统一的，不能空格和tab混用  
+缩进的级别也必须是一致的，同样的缩进代表同样的级别，程序判别配置的级别是通过缩进结合换行来实现的  
+YAML文件内容是区分大小写的，k/v的值均需大小写敏感  
+多个k/v可以同行写也可以换行写，同行使用，分割  
+v可以是个字符串，也可以是另一个列表  
+一个完整的代码块功能需最少元素包括name和task  
+一个name只能包括一个task  
+YAML文件扩展名通常为yaml或yml
+
+示例：
+123456789[root@ansible data]# vim hello.yaml---#hello world  - host: webserver    rem ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/03/16/Ansible/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B9%8BAnsible--3/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B9%8BAnsible%EF%BC%88%E4%B8%89%EF%BC%89/" title="自动化运维之Ansible（三）">     <img class="post_bg" src="/images/Ansible.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="自动化运维之Ansible（三）"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/03/16/Ansible/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B9%8BAnsible--3/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B9%8BAnsible%EF%BC%88%E4%B8%89%EF%BC%89/" title="自动化运维之Ansible（三）">自动化运维之Ansible（三）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-03-16T13:38:02.000Z" title="发表于 2019-03-16 13:38:02">2019-03-16</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Ansible/">Ansible</a></span></div><div class="content">自动化运维之Ansible（三）Ansible系列命令ansible有许多的命令，ansible、ansible-doc、ansible-playbook、ansible-vault、ansible-console、ansible-galaxy、ansible-pull，以下以较常用的几个命令做详细的说明。
+
+
+ansible-doc命令ansible-doc用来显示ansible中各种模块的简要帮助信息
+语法：
+1ansible-doc [-l|-F|-s] [options] [-t &lt;plugin type&gt; ] [plugin]
 
 
 
@@ -292,37 +174,178 @@ locatelocate 命令查找的是数据库文件并非实时查找需要updatedb�
 
 
 
--i
-不区分大小写
+-l
+列出可用模块
 
 
--n N
-只列举前N个匹配项目
+-a
+显示所有模块的文档
 
 
--r
-使用基本正则表达式
+-s
+显示指定模块的playbook片段
 
 
 示例：
-123456[root@centos7 etc]# locate -n 5 .conf/etc/GeoIP.conf/etc/GeoIP.conf.default/etc/asound.conf/etc/brltty.conf/etc/chrony.conf
+123456#列出所有模块[root@localhost ~]# ansible-doc -l#查看指定模块的用法[root@localhost ~]# ansible-doc ping#查看指定模块的简单用法[root@localhost ~]# ansible-doc -s ping
+
+ansible命令 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/03/16/Ansible/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B9%8BAnsible--8/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B9%8BAnsible%EF%BC%88%E5%85%AB%EF%BC%89/" title="自动化运维之Ansible（八）">     <img class="post_bg" src="/images/Ansible.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="自动化运维之Ansible（八）"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/03/16/Ansible/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B9%8BAnsible--8/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B9%8BAnsible%EF%BC%88%E5%85%AB%EF%BC%89/" title="自动化运维之Ansible（八）">自动化运维之Ansible（八）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-03-16T13:38:02.000Z" title="发表于 2019-03-16 13:38:02">2019-03-16</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Ansible/">Ansible</a></span></div><div class="content">ansible的模板template在某些环境下可能会出现这种情况，比如主机A配置文件中的某个值为1，主机B配置文件中此值为2，现在需要将此值在现有的基础上再加上2，此时ansible的模板就发挥其作用了，template可以根据模块文件动态生成相对应的配置文件。
+template的格式要求template对文件的存放和命名有要求，template文件必须存放在templates目录下，并且以.j2后缀命名。  
+yaml文件需要和templates目录平级，目录结构如下。
 
 
-findfind命令不同于locate是实时查找文件，通过遍历路径来查找文件
-命令语法：
-1find [-H] [-L] [-P] [-D debugopts] [-Olevel] [path...] [expression]
+123456[root@ansible data]# tree yaml/yaml/├── hello.yaml├── httpd.yaml└── templates    └── test.conf.j2
 
-常用选项类型
-根据属主、属组查找：
+template的使用方法准备环境此处以nginx为例，编写playbook为主机列表中的主机安装nginx  
+1234567891011[root@ansible ~]# vim nginx.yml---#install nginx- hosts: webserver  remote_user: ro ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/03/16/Ansible/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B9%8BAnsible--2/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B9%8BAnsible%EF%BC%88%E4%BA%8C%EF%BC%89/" title="自动化运维之Ansible（二）">     <img class="post_bg" src="/images/Ansible.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="自动化运维之Ansible（二）"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/03/16/Ansible/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B9%8BAnsible--2/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B9%8BAnsible%EF%BC%88%E4%BA%8C%EF%BC%89/" title="自动化运维之Ansible（二）">自动化运维之Ansible（二）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-03-16T12:38:02.000Z" title="发表于 2019-03-16 12:38:02">2019-03-16</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Ansible/">Ansible</a></span></div><div class="content">自动化运维之Ansible（二）本文将讲述ansible的各种安装方式以及Ansible的配置文件
 
 
+Ansible的安装ansible可以通过多种方法进行安装，yum、编译、pip和git，都能安装ansible以下演示ansible的各种安装方式
+yum安装ansible安装最简单的方法可以使用rpm包进行安装，因为ansible已经被收入到的EPEL源中，在配置好yum源后就可以使用yum命令直接安装
+1234#配置EPEL源[root@localhost ~]# yum install epel-release -y#安装ansible[root@localhost ~]# yum install ansible -y
 
- ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/10/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/#content-inner">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/#content-inner">12</a><a class="page-number" href="/page/13/#content-inner">13</a><a class="extend next" rel="next" href="/page/12/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Masuri</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">128</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/01/12/hello-world/" title="Hello World"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/2022/01/12/hello-world/" title="Hello World">Hello World</a><time datetime="2022-01-12T12:50:44.471Z" title="发表于 2022-01-12 12:50:44">2022-01-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/06/10/Docker/docker%E7%9A%84%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C/docker%E7%9A%84%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C/" title="docker的镜像与制作"><img src="/images/docker.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="docker的镜像与制作"/></a><div class="content"><a class="title" href="/2019/06/10/Docker/docker%E7%9A%84%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C/docker%E7%9A%84%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C/" title="docker的镜像与制作">docker的镜像与制作</a><time datetime="2019-06-10T07:55:02.000Z" title="发表于 2019-06-10 07:55:02">2019-06-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/06/10/Docker/docker-harbor/docker-harbor/" title="Docker Harbor"><img src="/images/docker.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Docker Harbor"/></a><div class="content"><a class="title" href="/2019/06/10/Docker/docker-harbor/docker-harbor/" title="Docker Harbor">Docker Harbor</a><time datetime="2019-06-10T06:55:02.000Z" title="发表于 2019-06-10 06:55:02">2019-06-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/06/10/Docker/docker%E5%AD%98%E5%82%A8%E5%8D%B7/docker%E5%AD%98%E5%82%A8%E5%8D%B7/" title="Docker存储卷"><img src="/images/docker.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Docker存储卷"/></a><div class="content"><a class="title" href="/2019/06/10/Docker/docker%E5%AD%98%E5%82%A8%E5%8D%B7/docker%E5%AD%98%E5%82%A8%E5%8D%B7/" title="Docker存储卷">Docker存储卷</a><time datetime="2019-06-10T06:55:02.000Z" title="发表于 2019-06-10 06:55:02">2019-06-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2019/06/10/Docker/docker%E9%95%9C%E5%83%8F/docker%E7%9A%84%E9%95%9C%E5%83%8F/" title="docker的镜像管理"><img src="/images/docker.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="docker的镜像管理"/></a><div class="content"><a class="title" href="/2019/06/10/Docker/docker%E9%95%9C%E5%83%8F/docker%E7%9A%84%E9%95%9C%E5%83%8F/" title="docker的镜像管理">docker的镜像管理</a><time datetime="2019-06-10T06:51:02.000Z" title="发表于 2019-06-10 06:51:02">2019-06-10</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+编译安装编译安装ansible时需要先下载ansible的源码包，然后对其进行进行编译安装。
+1234567891011121314#下载源码包[root@localhost ~]# wget https://releases.ansible.com/ansible/ansible-latest.tar.gz#安装编译所需的包组[root@localhost ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/03/16/Ansible/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B9%8BAnsible--1/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B9%8BAnsible--1/" title="自动化运维之Ansible（一）">     <img class="post_bg" src="/images/Ansible.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="自动化运维之Ansible（一）"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/03/16/Ansible/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B9%8BAnsible--1/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B9%8BAnsible--1/" title="自动化运维之Ansible（一）">自动化运维之Ansible（一）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-03-16T11:38:02.000Z" title="发表于 2019-03-16 11:38:02">2019-03-16</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Ansible/">Ansible</a></span></div><div class="content">自动化运维之Ansible（一）工作中经常会面临到机器非常多，所接触到的主机可能是成百上千台以上，所以在管理那么多主机时必须要使用自动化管理工具对其进行管理，此时如果使用手工进行管理将是非常的费时费力的。
+
+
+自动化运维应用场景自动化运维工具的应用场景通常会涉及到以下几种环境：
+文件传输：比如将某软件的配置文件在某台服务器上配置完成，配置完成后要将其配置文件传送到其他的所有服务器上去，让其他的服务器上的软件也实现相同功能。
+应用部署：比如说在某些服务器上安装一个数据库、一个web服务器软件或者缓存服务器的软件，对一批服务器进行批量的部署软件
+配置管理：软件部署完毕后还需要对软件的配置文件进行批量的配置和管理，对配置文件进行批量的修改。
+任务流编排：类似于编写脚本，对任务的顺序进行编排，人工手动执行过于麻烦
+常用自动化运维工具Ansible：红帽公司的员工所研发，后来被红帽公司收购。使用python编写，ansible是无代理的，无代理表示安装ansible的机器可以对成千上万台机器进行管理，而被管理的软件无需安装客户端就可以被ansible管理，这主要是因为ansible是基于ssh- ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/03/14/Linux%E5%9F%BA%E7%A1%80/%E5%AE%9E%E7%8E%B0Internet-dns%E6%9E%B6%E6%9E%84/%E5%AE%9E%E7%8E%B0Internet-dns%E6%9E%B6%E6%9E%84/" title="互联网DNS架构的实现">     <img class="post_bg" src="/images/Linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="互联网DNS架构的实现"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/03/14/Linux%E5%9F%BA%E7%A1%80/%E5%AE%9E%E7%8E%B0Internet-dns%E6%9E%B6%E6%9E%84/%E5%AE%9E%E7%8E%B0Internet-dns%E6%9E%B6%E6%9E%84/" title="互联网DNS架构的实现">互联网DNS架构的实现</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-03-14T13:38:02.000Z" title="发表于 2019-03-14 13:38:02">2019-03-14</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></span></div><div class="content">互联网DNS架构的实现互联网中dns的架构为下图所示，当本地的DNS服务器无法解析域名时就会向互联网上的dns服务器去迭代查询，直到找到相应的服务器位置。
+
+
+
+以下为具体的实现方式
+环境准备
+
+
+主机
+OS
+IP
+
+
+
+www
+centos6
+192.168.73.2
+
+
+client
+centos6
+192.168.73.3
+
+
+mylinuxopsdns1
+centos7
+192.168.73.10
+
+
+mylinuxopsdns2
+centos7
+192.168.73.20
+
+
+comdns
+centos7
+192.168.73.30
+
+
+rootdns
+centos7
+192.168.73.40
+
+
+ldns
+centos7
+192.168.73.50
+
+
+
+一、在www主机上部署httpd服务1.启动httpd服务1234[root@www ~]# service httpd startStarting httpd: httpd: apr_sockaddr_info_get() failed for wwwhttpd: Could not reliably determin ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/03/14/Linux%E5%9F%BA%E7%A1%80/DNS%E8%BD%AC%E5%8F%91/DNS%E8%BD%AC%E5%8F%91/" title="DNS转发">     <img class="post_bg" src="/images/Linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DNS转发"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/03/14/Linux%E5%9F%BA%E7%A1%80/DNS%E8%BD%AC%E5%8F%91/DNS%E8%BD%AC%E5%8F%91/" title="DNS转发">DNS转发</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-03-14T11:40:02.000Z" title="发表于 2019-03-14 11:40:02">2019-03-14</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></span></div><div class="content">DNS转发dns转发分为2种，全局转发和特定区域转发。
+全局转发是对非本机所负责解析区域的请求，全部转发给指定的服务器。
+特定区域转发是仅转发对特定的区域的请求，比全局转发优先级高。
+转发分为2种模式：first和only  
+first模式：先到本地DNS查找，若本地dns查找不到记录，去其他的dns服务器查找，若其他dns服务器也没有，直接去根服务器查找   
+only模式：先到本地DNS查找，若本地dns查找不到记录，去其他的dns服务器查找，若其他dns服务器也没有，直接放弃。
+
+
+
+全局转发的only模式准备客户机一台，dns服务器两台，将dns1服务器的转发地址者设置为dns2，dns1有两个网卡一个是内网，一个是外网，dns2只有一个连接内网的网卡
+
+
+
+主机
+ip
+
+
+
+client
+192.168.73.120
+
+
+dns1
+192.168.73.10    172.22.145.220
+
+
+dns2
+192.168.73.30
+
+
+分别在dns1、dns2上配置dns服务  
+在dns2上部署配置dns
+123456789101112[root@dns2 ~]# y ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/03/14/Linux%E5%9F%BA%E7%A1%80/DNS%E6%9C%8D%E5%8A%A1/DNS%E6%9C%8D%E5%8A%A1/" title="DNS服务">     <img class="post_bg" src="/images/Linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DNS服务"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/03/14/Linux%E5%9F%BA%E7%A1%80/DNS%E6%9C%8D%E5%8A%A1/DNS%E6%9C%8D%E5%8A%A1/" title="DNS服务">DNS服务</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-03-14T11:38:02.000Z" title="发表于 2019-03-14 11:38:02">2019-03-14</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></span></div><div class="content">DNS服务DNS全称为Domain Name Service 应用层协议，其架构为C/S架构，在tcp和udp的53号端口。
+DNS的实现是BIND(Bekerley Internat Name Domain)
+DNS的作用是把域名解析为ip地址，在本地的/etc/hosts文件也能做到域名解析的作用，但不方便管理，只适合小型的企业环境和集群的环境中使用。
+
+
+DNS解析DNS的查询类型分为两种：递归查询和迭代查询
+递归查询：当主机去访问网络中的dns服务器时，其查询的类型为递归查询
+迭代查询：当网路中的服务器向dns服务查询FQDN时，dns服务器会从先去向根服务器查询，根服务器会传回一个顶级域所在的位置，然后dns服务器再向顶级域进行查询，顶级域再传回一个二级域的地址，dns服务器再去向二级域查询，最后获得所要查询的FQDN对应的主机的ip地址。这个过程为迭代查询
+名称服务器：用来解析本域内的名称的主机，全世界共有13组根服务器。
+Bind的相关配置文件1234/etc/named.conf			#服务器的配置文件/var/named				#DNS数据库路径/usr/lib/sy ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/03/13/Linux%E5%9F%BA%E7%A1%80/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E5%92%8Cchrony/" title="时间服务和chrony">     <img class="post_bg" src="/images/Linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="时间服务和chrony"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/03/13/Linux%E5%9F%BA%E7%A1%80/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E5%92%8Cchrony/" title="时间服务和chrony">时间服务和chrony</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-03-13T11:38:02.000Z" title="发表于 2019-03-13 11:38:02">2019-03-13</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></span></div><div class="content">时间服务和chrony多主机协作工作时，各个主机的时间同步很总要，时间不一致会造成很多重要应用的故障，如：加密协议，日志，集群等，利用NTP协议使网络中的各个计算机时间达到同步。目前NTP协议属于运维基础架构中必备的基本服务之一。
+
+
+时间同步实现：ntp,chronyntp将系统时间和世界协调时UTC同步，精度在局域网内可达到0.1ms，在互联网上绝大多数的地方精度可以达到1-50ms。目前CentOS6上所使用的就是ntp服务。
+chrony为CentOS7上所使用的时间服务，其同步的速度比ntp更快。
+
+ntp服务的部署主机A从互联网上的主机同步时间并作为局域网内的时间服务器使用，主机B自动去向主机A同步时间
+环境准备准备A、B、两台主机
+
+
+
+主机
+系统
+ip
+
+
+
+A
+CentOS6
+192.168.73.137
+
+
+B
+CentOS6
+192.168.73.136
+
+
+将主机B的时间调慢
+1234[root@HostB ~]# date -s &quot;-10 days&quot;Sun Apr  7 10:50:51 CST 2019[root@HostB ~]# da ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/03/12/Linux%E5%9F%BA%E7%A1%80/openssh%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/openssh%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/" title="SSH端口转发">     <img class="post_bg" src="/images/openssh.gif" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SSH端口转发"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/03/12/Linux%E5%9F%BA%E7%A1%80/openssh%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/openssh%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/" title="SSH端口转发">SSH端口转发</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-03-12T11:50:02.000Z" title="发表于 2019-03-12 11:50:02">2019-03-12</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></span></div><div class="content">SSH端口转发SSH会自动加密和解密所有SSH客户端与服务端之间的网络数据。但是ssh还能够将其他TCP端口的网络数据通过SSH连接来转发，并自动提供了相应的加密及解密服务。这一过程也被叫做隧道，这是应为SSH为其他TCP链接提供了一个安全的通道来进行传输而得名。例如，Telnet,SMTP,LDAP这些TCP应用均能够从中得益，避免了用户名，密码以及隐私信息的明文传输。而于此同时，如果工作环境中的防火请限制了一些些网络端口的使用，但是允许SSh的连接，也能够通过将tcp端口转发来使用ssh进行通讯。
+
+
+SSH端口转发能够提供两大功能：
+1.加密SSH Client端至SSH Server端之间的通讯数据。
+2.突破防火墙的限制完成一些之前无法家里的TCP连接。
+
+命令格式：
+12345678ssh -L localport: remotehost:remotehostport sshserverssh -R localport:remotehost:remotehostport sshserverssh -D localport root@sshserver -fNglocalpo ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/10/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/#content-inner">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/#content-inner">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/#content-inner">16</a><a class="extend next" rel="next" href="/page/12/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Masuri</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">155</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/07/05/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/Service%E8%B5%84%E6%BA%90/07Headless%20Service/Headless%20Service/" title="Headless Service"><img src="/images/kubernetes.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Headless Service"/></a><div class="content"><a class="title" href="/2021/07/05/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/Service%E8%B5%84%E6%BA%90/07Headless%20Service/Headless%20Service/" title="Headless Service">Headless Service</a><time datetime="2021-07-05T08:30:00.000Z" title="发表于 2021-07-05 08:30:00">2021-07-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/05/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/Service%E8%B5%84%E6%BA%90/08ExternalName/ExternalName/" title="ExternalName"><img src="/images/kubernetes.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ExternalName"/></a><div class="content"><a class="title" href="/2021/07/05/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/Service%E8%B5%84%E6%BA%90/08ExternalName/ExternalName/" title="ExternalName">ExternalName</a><time datetime="2021-07-05T08:30:00.000Z" title="发表于 2021-07-05 08:30:00">2021-07-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/04/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/Service%E8%B5%84%E6%BA%90/06Service%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0/Service%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0/" title="Service的服务注册和服务发现"><img src="/images/kubernetes.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Service的服务注册和服务发现"/></a><div class="content"><a class="title" href="/2021/07/04/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/Service%E8%B5%84%E6%BA%90/06Service%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0/Service%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0/" title="Service的服务注册和服务发现">Service的服务注册和服务发现</a><time datetime="2021-07-04T18:30:00.000Z" title="发表于 2021-07-04 18:30:00">2021-07-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/04/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/Service%E8%B5%84%E6%BA%90/02Endpoint%E8%B5%84%E6%BA%90/Endpoint%E8%B5%84%E6%BA%90/" title="Endpoint资源"><img src="/images/kubernetes.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Endpoint资源"/></a><div class="content"><a class="title" href="/2021/07/04/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/Service%E8%B5%84%E6%BA%90/02Endpoint%E8%B5%84%E6%BA%90/Endpoint%E8%B5%84%E6%BA%90/" title="Endpoint资源">Endpoint资源</a><time datetime="2021-07-04T17:30:00.000Z" title="发表于 2021-07-04 17:30:00">2021-07-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/04/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/Service%E8%B5%84%E6%BA%90/05ipvs%E7%B1%BB%E5%9E%8BService/ipvs%E7%B1%BB%E5%9E%8BService/" title="ipvs类型Service"><img src="/images/kubernetes.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ipvs类型Service"/></a><div class="content"><a class="title" href="/2021/07/04/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/Service%E8%B5%84%E6%BA%90/05ipvs%E7%B1%BB%E5%9E%8BService/ipvs%E7%B1%BB%E5%9E%8BService/" title="ipvs类型Service">ipvs类型Service</a><time datetime="2021-07-04T17:30:00.000Z" title="发表于 2021-07-04 17:30:00">2021-07-04</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
             <i class="fas fa-folder-open"></i>
             <span>分类</span>
             <a class="card-more-btn" href="/categories/" title="查看更多">
     <i class="fas fa-angle-right"></i></a>
             </div>
             <ul class="card-category-list" id="aside-cat-list">
-            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Ansible/"><span class="card-category-list-name">Ansible</span><span class="card-category-list-count">13</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Apache/"><span class="card-category-list-name">Apache</span><span class="card-category-list-count">8</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/CICD/"><span class="card-category-list-name">CICD</span><span class="card-category-list-count">12</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Docker/"><span class="card-category-list-name">Docker</span><span class="card-category-list-count">10</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Linux%E5%9F%BA%E7%A1%80/"><span class="card-category-list-name">Linux基础</span><span class="card-category-list-count">42</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/MySQL/"><span class="card-category-list-name">MySQL</span><span class="card-category-list-count">33</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/hexo/"><span class="card-category-list-name">hexo</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/kubernetes/"><span class="card-category-list-name">kubernetes</span><span class="card-category-list-count">1</span></a></li>
-            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Ansible/" style="font-size: 1.41em; color: #99a5b7">Ansible</a> <a href="/tags/Apache/" style="font-size: 1.32em; color: #99a2ae">Apache</a> <a href="/tags/DNS/" style="font-size: 1.19em; color: #999da1">DNS</a> <a href="/tags/Docker/" style="font-size: 1.37em; color: #99a4b2">Docker</a> <a href="/tags/Jenkins/" style="font-size: 1.32em; color: #99a2ae">Jenkins</a> <a href="/tags/Linux%E5%9F%BA%E7%A1%80/" style="font-size: 1.46em; color: #99a7bb">Linux基础</a> <a href="/tags/MySQL/" style="font-size: 1.5em; color: #99a9bf">MySQL</a> <a href="/tags/OpenSSH/" style="font-size: 1.19em; color: #999da1">OpenSSH</a> <a href="/tags/OpenSSL/" style="font-size: 1.1em; color: #999">OpenSSL</a> <a href="/tags/awk/" style="font-size: 1.1em; color: #999">awk</a> <a href="/tags/gitlab/" style="font-size: 1.23em; color: #999ea6">gitlab</a> <a href="/tags/grub%E4%BF%AE%E5%A4%8D/" style="font-size: 1.23em; color: #999ea6">grub修复</a> <a href="/tags/hexo/" style="font-size: 1.14em; color: #999b9d">hexo</a> <a href="/tags/kubernetes/" style="font-size: 1.1em; color: #999">kubernetes</a> <a href="/tags/security/" style="font-size: 1.1em; color: #999">security</a> <a href="/tags/%E7%B3%BB%E7%BB%9F%E4%BF%AE%E5%A4%8D/" style="font-size: 1.19em; color: #999da1">系统修复</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 1.23em; color: #999ea6">网络</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F/" style="font-size: 1.14em; color: #999b9d">自动化安装系统</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" style="font-size: 1.28em; color: #99a0aa">计算机基础</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/01/"><span class="card-archive-list-date">一月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/06/"><span class="card-archive-list-date">六月 2019</span><span class="card-archive-list-count">10</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/05/"><span class="card-archive-list-date">五月 2019</span><span class="card-archive-list-count">13</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/04/"><span class="card-archive-list-date">四月 2019</span><span class="card-archive-list-count">41</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/03/"><span class="card-archive-list-date">三月 2019</span><span class="card-archive-list-count">61</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/01/"><span class="card-archive-list-date">一月 2019</span><span class="card-archive-list-count">2</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">128</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2022-01-13T09:11:25.588Z"></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Masuri</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Ansible/"><span class="card-category-list-name">Ansible</span><span class="card-category-list-count">13</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Apache/"><span class="card-category-list-name">Apache</span><span class="card-category-list-count">8</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/CICD/"><span class="card-category-list-name">CICD</span><span class="card-category-list-count">12</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Docker/"><span class="card-category-list-name">Docker</span><span class="card-category-list-count">10</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Linux%E5%9F%BA%E7%A1%80/"><span class="card-category-list-name">Linux基础</span><span class="card-category-list-count">42</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/MySQL/"><span class="card-category-list-name">MySQL</span><span class="card-category-list-count">33</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/hexo/"><span class="card-category-list-name">hexo</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/kubernetes/"><span class="card-category-list-name">kubernetes</span><span class="card-category-list-count">29</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Ansible/" style="font-size: 1.38em; color: #99a4b4">Ansible</a> <a href="/tags/Apache/" style="font-size: 1.3em; color: #99a1ac">Apache</a> <a href="/tags/DNS/" style="font-size: 1.18em; color: #999ca1">DNS</a> <a href="/tags/Docker/" style="font-size: 1.34em; color: #99a3b0">Docker</a> <a href="/tags/Jenkins/" style="font-size: 1.3em; color: #99a1ac">Jenkins</a> <a href="/tags/Linux%E5%9F%BA%E7%A1%80/" style="font-size: 1.42em; color: #99a6b7">Linux基础</a> <a href="/tags/MySQL/" style="font-size: 1.5em; color: #99a9bf">MySQL</a> <a href="/tags/OpenSSH/" style="font-size: 1.18em; color: #999ca1">OpenSSH</a> <a href="/tags/OpenSSL/" style="font-size: 1.1em; color: #999">OpenSSL</a> <a href="/tags/awk/" style="font-size: 1.1em; color: #999">awk</a> <a href="/tags/gitlab/" style="font-size: 1.22em; color: #999ea4">gitlab</a> <a href="/tags/grub%E4%BF%AE%E5%A4%8D/" style="font-size: 1.22em; color: #999ea4">grub修复</a> <a href="/tags/hexo/" style="font-size: 1.14em; color: #999b9d">hexo</a> <a href="/tags/kubernetes/" style="font-size: 1.46em; color: #99a7bb">kubernetes</a> <a href="/tags/security/" style="font-size: 1.1em; color: #999">security</a> <a href="/tags/%E7%B3%BB%E7%BB%9F%E4%BF%AE%E5%A4%8D/" style="font-size: 1.18em; color: #999ca1">系统修复</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 1.22em; color: #999ea4">网络</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F/" style="font-size: 1.14em; color: #999b9d">自动化安装系统</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" style="font-size: 1.26em; color: #999fa8">计算机基础</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/07/"><span class="card-archive-list-date">七月 2021</span><span class="card-archive-list-count">29</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/06/"><span class="card-archive-list-date">六月 2019</span><span class="card-archive-list-count">10</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/05/"><span class="card-archive-list-date">五月 2019</span><span class="card-archive-list-count">12</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/04/"><span class="card-archive-list-date">四月 2019</span><span class="card-archive-list-count">41</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/03/"><span class="card-archive-list-date">三月 2019</span><span class="card-archive-list-count">61</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/01/"><span class="card-archive-list-date">一月 2019</span><span class="card-archive-list-count">2</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">155</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2022-01-14T05:34:22.417Z"></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Masuri</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kubernetes集群部署 | MyLinuxOps</title><meta name="keywords" content="kubernetes"><meta name="author" content="Masuri"><meta name="copyright" content="Masuri"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="k8s基本部署要求 每个节点的时间必须同步。 要求各节点的防火墙必须关闭 禁用swap设备，k8s要求必须关闭swap，除非安装时强行忽略此错误 确保所有节点的ID为唯一的。  准备工作一个Master节点，三个Worker节点.    HostName IP    k8s-master01 172.16.11.71   k8s-node01 172.16.11.81   k8s-node02 1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes集群部署">
+<meta property="og:url" content="http://www.mylinuxops.com/2021/07/03/Kubernetes/Kubernetes%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/Kubernetes%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/index.html">
+<meta property="og:site_name" content="MyLinuxOps">
+<meta property="og:description" content="k8s基本部署要求 每个节点的时间必须同步。 要求各节点的防火墙必须关闭 禁用swap设备，k8s要求必须关闭swap，除非安装时强行忽略此错误 确保所有节点的ID为唯一的。  准备工作一个Master节点，三个Worker节点.    HostName IP    k8s-master01 172.16.11.71   k8s-node01 172.16.11.81   k8s-node02 1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.mylinuxops.com/images/kubernetes.jpg">
+<meta property="article:published_time" content="2021-07-03T12:30:00.000Z">
+<meta property="article:modified_time" content="2022-01-14T05:33:56.727Z">
+<meta property="article:author" content="Masuri">
+<meta property="article:tag" content="kubernetes">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.mylinuxops.com/images/kubernetes.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://www.mylinuxops.com/2021/07/03/Kubernetes/Kubernetes%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/Kubernetes%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Kubernetes集群部署',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-14 05:33:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">155</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/kubernetes.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">MyLinuxOps</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Kubernetes集群部署</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-03T12:30:00.000Z" title="发表于 2021-07-03 12:30:00">2021-07-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-14T05:33:56.727Z" title="更新于 2022-01-14 05:33:56">2022-01-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/kubernetes/">kubernetes</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Kubernetes集群部署"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="k8s基本部署要求"><a href="#k8s基本部署要求" class="headerlink" title="k8s基本部署要求"></a>k8s基本部署要求</h3><ol>
+<li>每个节点的时间必须同步。</li>
+<li>要求各节点的防火墙必须关闭</li>
+<li>禁用swap设备，k8s要求必须关闭swap，除非安装时强行忽略此错误</li>
+<li>确保所有节点的ID为唯一的。</li>
+</ol>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>一个Master节点，三个Worker节点.</p>
+<table>
+<thead>
+<tr>
+<th>HostName</th>
+<th>IP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>k8s-master01</td>
+<td>172.16.11.71</td>
+</tr>
+<tr>
+<td>k8s-node01</td>
+<td>172.16.11.81</td>
+</tr>
+<tr>
+<td>k8s-node02</td>
+<td>172.16.11.82</td>
+</tr>
+<tr>
+<td>k8s-node03</td>
+<td>172.16.11.83</td>
+</tr>
+</tbody></table>
+<h3 id="部署Docker"><a href="#部署Docker" class="headerlink" title="部署Docker"></a>部署Docker</h3><p>kubeadm部署k8s要求所有主机上预先安装有docker环境。</p>
+<h4 id="安装Docker服务"><a href="#安装Docker服务" class="headerlink" title="安装Docker服务"></a>安装Docker服务</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun</span><br></pre></td></tr></table></figure>
+
+<h4 id="启动docker并设置为开机启动"><a href="#启动docker并设置为开机启动" class="headerlink" title="启动docker并设置为开机启动"></a>启动docker并设置为开机启动</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start docker &amp;&amp; systemctl <span class="built_in">enable</span> docker</span><br></pre></td></tr></table></figure>
+
+<p>注意：若IPtables规则在安装docker前没有清除，可以在安装完docker后清除规则然后重启docker服务。</p>
+<h4 id="修改cgoupfs为systemd"><a href="#修改cgoupfs为systemd" class="headerlink" title="修改cgoupfs为systemd"></a>修改cgoupfs为systemd</h4><p>默认安装docker的cgroup dirve为cgroupfs ，需要将其改为systemd</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt; <span class="string">EOF &gt;&gt; /etc/docker/daemon.json</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">  &quot;registry-mirrors&quot;: [&quot;https://gy97ij1m.mirror.aliyuncs.com&quot;],</span></span><br><span class="line"><span class="string">  &quot;exec-opts&quot;: [&quot;native.cgroupdriver=systemd&quot;]</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="重启docker服务"><a href="#重启docker服务" class="headerlink" title="重启docker服务"></a>重启docker服务</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+<h3 id="部署k8s"><a href="#部署k8s" class="headerlink" title="部署k8s"></a>部署k8s</h3><p>部署k8s要求在各节点上部署以下组件：</p>
+<ul>
+<li>master：kube-apiserver，kube-controller-manager，kube-scheduler，etcd</li>
+<li>worker：kubelet，kube-proxy，docker</li>
+</ul>
+<p>但是本次是以k8s官方提供的kubeadm来进行部署，kubeadm将每一个组件运行为pod的方式来部署，因此在master节点上也需要部署docker和kubelet。</p>
+<p>所以每个节点都需要部署docker，kubelet，kubeadm。主节点上还需要部署kubectl。</p>
+<h4 id="配置阿里云k8s源"><a href="#配置阿里云k8s源" class="headerlink" title="配置阿里云k8s源"></a>配置阿里云k8s源</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">apt-get update &amp;&amp; apt-get install -y apt-transport-https</span><br><span class="line">curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add - </span><br><span class="line">cat &lt;&lt;<span class="string">EOF &gt;/etc/apt/sources.list.d/kubernetes.list</span></span><br><span class="line"><span class="string">deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看所有版本的kubeadm"><a href="#查看所有版本的kubeadm" class="headerlink" title="查看所有版本的kubeadm"></a>查看所有版本的kubeadm</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-cache madison kubeadm</span><br></pre></td></tr></table></figure>
+
+<h4 id="选择出所要安装的版本，并安装"><a href="#选择出所要安装的版本，并安装" class="headerlink" title="选择出所要安装的版本，并安装"></a>选择出所要安装的版本，并安装</h4><p>在所有节点上安装kubeadm、kubectl、kubelet</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 本次安装选择1.21.1-00版本进行安装</span></span><br><span class="line">apt-get install kubeadm=1.21.2-00 kubectl=1.21.2-00 kubelet=1.21.2-00 -y</span><br><span class="line"><span class="comment"># 设置为开机启动</span></span><br><span class="line">systemctl <span class="built_in">enable</span> kubelet</span><br></pre></td></tr></table></figure>
+
+<h4 id="初始化控制平面节点"><a href="#初始化控制平面节点" class="headerlink" title="初始化控制平面节点"></a>初始化控制平面节点</h4><p>安装完kubeadm后需要先对初始化集群的控制平面，但是在初始化之前，需要将所有节点注册到DNS中，确保主机名能被DNS解析，此处使用hosts文件直接做解析。</p>
+<h5 id="修改hosts文件"><a href="#修改hosts文件" class="headerlink" title="修改hosts文件"></a>修改hosts文件</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt; <span class="string">EOF &gt;&gt; /etc/hosts</span></span><br><span class="line"><span class="string">172.16.11.71 k8s-master01 kube-api</span></span><br><span class="line"><span class="string">172.16.11.81 k8s-node01</span></span><br><span class="line"><span class="string">172.16.11.82 k8s-node02</span></span><br><span class="line"><span class="string">172.16.11.83 k8s-node03</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="初始化控制平面"><a href="#初始化控制平面" class="headerlink" title="初始化控制平面"></a>初始化控制平面</h5><p>使用kubeadm init初始化集群。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init --apiserver-advertise-address=172.16.11.71 \</span><br><span class="line">             --control-plane-endpoint=kube-api \</span><br><span class="line">             --kubernetes-version=v1.21.2 \</span><br><span class="line">             --pod-network-cidr=10.244.0.0/16 \</span><br><span class="line">             --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers</span><br><span class="line"></span><br><span class="line"><span class="comment"># --image-repository:为指定镜像仓库</span></span><br><span class="line"><span class="comment"># --kubernetes-version:指定k8s的版本，版本需要和kubeadm版本一致</span></span><br><span class="line"><span class="comment"># --control-plane-endpoint:用来告诉所有客户端链接控制端时使用什么主机名。</span></span><br><span class="line"><span class="comment"># --apiserver-advertise-address:指定apiserver的地址和端口，端口不指定默认为6443</span></span><br><span class="line"><span class="comment"># --pod-network-cidr:用来指定哪段网络地址用来给容器内pod的网段地址。</span></span><br><span class="line"><span class="comment"># 不同的网络地址，其默认的地址也不一样。</span></span><br><span class="line"><span class="comment"># flannl: 默认10.244.0.0/16</span></span><br><span class="line"><span class="comment"># calico: 默认192.168.0.0/16</span></span><br></pre></td></tr></table></figure>
+
+<p>初始化集群会做很多步骤：</p>
+<ol>
+<li>preflight: 进行预检测，如果检测不通过操作将终止。</li>
+<li>生成各种证书，每个组件相互间通信使用https进行。</li>
+<li>生成kubeconfig配置文件。</li>
+<li>启动kubelet。</li>
+<li>创建控制平面。</li>
+<li>上传配置</li>
+<li>上传证书</li>
+<li>生成引导令牌，以方便其他节点加入。</li>
+</ol>
+<h5 id="初始化控制平面后会生成以下信息"><a href="#初始化控制平面后会生成以下信息" class="headerlink" title="初始化控制平面后会生成以下信息"></a>初始化控制平面后会生成以下信息</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Your Kubernetes control-plane has initialized successfully!</span><br><span class="line"></span><br><span class="line">To start using your cluster, you need to run the following as a regular user:</span><br><span class="line"></span><br><span class="line">  mkdir -p <span class="variable">$HOME</span>/.kube</span><br><span class="line">  sudo cp -i /etc/kubernetes/admin.conf <span class="variable">$HOME</span>/.kube/config</span><br><span class="line">  sudo chown $(id -u):$(id -g) <span class="variable">$HOME</span>/.kube/config</span><br><span class="line"></span><br><span class="line">Alternatively, <span class="keyword">if</span> you are the root user, you can run:</span><br><span class="line"></span><br><span class="line">  <span class="built_in">export</span> KUBECONFIG=/etc/kubernetes/admin.conf</span><br><span class="line"></span><br><span class="line">You should now deploy a pod network to the cluster.</span><br><span class="line">Run <span class="string">&quot;kubectl apply -f [podnetwork].yaml&quot;</span> with one of the options listed at:</span><br><span class="line">  https://kubernetes.io/docs/concepts/cluster-administration/addons/</span><br><span class="line"></span><br><span class="line">You can now join any number of control-plane nodes by copying certificate authorities</span><br><span class="line">and service account keys on each node and <span class="keyword">then</span> running the following as root:</span><br><span class="line"><span class="comment"># 此为添加控制平面的命令</span></span><br><span class="line">  kubeadm join kube-api:6443 --token 4oo3c2.ur24gwcotgi9pwt8 \</span><br><span class="line">        --discovery-token-ca-cert-hash sha256:0a2facf32492adf109c3eb0d45fa03e27b080298e3ae7ee4ef7063052c8cd626 \</span><br><span class="line">        --control-plane</span><br><span class="line"></span><br><span class="line">Then you can join any number of worker nodes by running the following on each as root:</span><br><span class="line"><span class="comment"># 此为添加worker节点的命令</span></span><br><span class="line">kubeadm join kube-api:6443 --token 4oo3c2.ur24gwcotgi9pwt8 \</span><br><span class="line">        --discovery-token-ca-cert-hash sha256:0a2facf32492adf109c3eb0d45fa03e27b080298e3ae7ee4ef7063052c8cd626</span><br></pre></td></tr></table></figure>
+
+<h5 id="按照所生成的提示信息操作"><a href="#按照所生成的提示信息操作" class="headerlink" title="按照所生成的提示信息操作"></a>按照所生成的提示信息操作</h5><p>在用户家目录下创建出config</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p <span class="variable">$HOME</span>/.kube</span><br><span class="line">sudo cp -i /etc/kubernetes/admin.conf <span class="variable">$HOME</span>/.kube/config</span><br><span class="line">sudo chown $(id -u):$(id -g) <span class="variable">$HOME</span>/.kube/config</span><br></pre></td></tr></table></figure>
+
+<p>安装flannel网络插件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml</span><br></pre></td></tr></table></figure>
+
+<p>使用令牌将各work节点加入到k8s集群中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubeadm join kube-api:6443 --token 4oo3c2.ur24gwcotgi9pwt8 \</span><br><span class="line">        --discovery-token-ca-cert-hash sha256:0a2facf32492adf109c3eb0d45fa03e27b080298e3ae7ee4ef7063052c8cd626</span><br></pre></td></tr></table></figure>
+
+<p>查看各节点状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-master01:~<span class="comment"># kubectl  get nodes</span></span><br><span class="line">NAME           STATUS   ROLES                  AGE     VERSION</span><br><span class="line">k8s-master01   Ready    control-plane,master   17m     v1.21.1</span><br><span class="line">k8s-node01     Ready    &lt;none&gt;                 2m51s   v1.21.1</span><br><span class="line">k8s-node02     Ready    &lt;none&gt;                 2m46s   v1.21.1</span><br><span class="line">k8s-node03     Ready    &lt;none&gt;                 2m43s   v1.21.1</span><br><span class="line"><span class="comment"># 各节点STATUS状态均为Ready，k8s节点部署完毕。</span></span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Masuri</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.mylinuxops.com/2021/07/03/Kubernetes/Kubernetes%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/Kubernetes%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/">http://www.mylinuxops.com/2021/07/03/Kubernetes/Kubernetes%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/Kubernetes%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.mylinuxops.com" target="_blank">MyLinuxOps</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/kubernetes/">kubernetes</a></div><div class="post_share"><div class="social-share" data-image="/images/kubernetes.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/07/03/Kubernetes/Kubernetes%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/Kubernetes%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/"><img class="prev-cover" src="/images/kubernetes.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Kubernetes基本概念</div></div></a></div><div class="next-post pull-right"><a href="/2021/07/03/Kubernetes/Kubernetes%E9%9B%86%E7%BE%A4%E7%9A%84%E9%83%A8%E7%BD%B2%E5%92%8C%E8%BF%90%E8%A1%8C/Kubernetes%E9%9B%86%E7%BE%A4%E7%9A%84%E9%83%A8%E7%BD%B2%E5%92%8C%E8%BF%90%E8%A1%8C/"><img class="next-cover" src="/images/kubernetes.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Kubernetes集群的部署和运行</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/07/03/Kubernetes/Kubernetes%E5%9F%BA%E7%A1%80/Kubernetes%E5%9F%BA%E7%A1%80/" title="Kubernetes基础"><img class="cover" src="/images/kubernetes.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-03</div><div class="title">Kubernetes基础</div></div></a></div><div><a href="/2021/07/03/Kubernetes/Kubernetes%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/Kubernetes%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" title="Kubernetes基本概念"><img class="cover" src="/images/kubernetes.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-03</div><div class="title">Kubernetes基本概念</div></div></a></div><div><a href="/2021/07/03/Kubernetes/Kubernetes%E6%A0%87%E7%AD%BE%E5%92%8C%E6%A0%87%E7%AD%BE%E9%80%89%E6%8B%A9%E5%99%A8/Kubernetes%E6%A0%87%E7%AD%BE%E5%92%8C%E6%A0%87%E7%AD%BE%E9%80%89%E6%8B%A9%E5%99%A8/" title="Kubernetes标签和标签选择器"><img class="cover" src="/images/kubernetes.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-03</div><div class="title">Kubernetes标签和标签选择器</div></div></a></div><div><a href="/2021/07/03/Kubernetes/Kubernetes%E9%9B%86%E7%BE%A4%E7%9A%84%E9%83%A8%E7%BD%B2%E5%92%8C%E8%BF%90%E8%A1%8C/Kubernetes%E9%9B%86%E7%BE%A4%E7%9A%84%E9%83%A8%E7%BD%B2%E5%92%8C%E8%BF%90%E8%A1%8C/" title="Kubernetes集群的部署和运行"><img class="cover" src="/images/kubernetes.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-03</div><div class="title">Kubernetes集群的部署和运行</div></div></a></div><div><a href="/2021/07/03/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/CRD%E8%B5%84%E6%BA%90/CRD%E8%B5%84%E6%BA%90/" title="CRD资源"><img class="cover" src="/images/kubernetes.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-03</div><div class="title">CRD资源</div></div></a></div><div><a href="/2021/07/03/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/Namespace%E8%B5%84%E6%BA%90/Namespace%E8%B5%84%E6%BA%90/" title="Namespace资源"><img class="cover" src="/images/kubernetes.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-03</div><div class="title">Namespace资源</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Masuri</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">155</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#k8s%E5%9F%BA%E6%9C%AC%E9%83%A8%E7%BD%B2%E8%A6%81%E6%B1%82"><span class="toc-number">1.</span> <span class="toc-text">k8s基本部署要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2Docker"><span class="toc-number">3.</span> <span class="toc-text">部署Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Docker%E6%9C%8D%E5%8A%A1"><span class="toc-number">3.1.</span> <span class="toc-text">安装Docker服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8docker%E5%B9%B6%E8%AE%BE%E7%BD%AE%E4%B8%BA%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8"><span class="toc-number">3.2.</span> <span class="toc-text">启动docker并设置为开机启动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9cgoupfs%E4%B8%BAsystemd"><span class="toc-number">3.3.</span> <span class="toc-text">修改cgoupfs为systemd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E5%90%AFdocker%E6%9C%8D%E5%8A%A1"><span class="toc-number">3.4.</span> <span class="toc-text">重启docker服务</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2k8s"><span class="toc-number">4.</span> <span class="toc-text">部署k8s</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E9%98%BF%E9%87%8C%E4%BA%91k8s%E6%BA%90"><span class="toc-number">4.1.</span> <span class="toc-text">配置阿里云k8s源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E7%89%88%E6%9C%AC%E7%9A%84kubeadm"><span class="toc-number">4.2.</span> <span class="toc-text">查看所有版本的kubeadm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E5%87%BA%E6%89%80%E8%A6%81%E5%AE%89%E8%A3%85%E7%9A%84%E7%89%88%E6%9C%AC%EF%BC%8C%E5%B9%B6%E5%AE%89%E8%A3%85"><span class="toc-number">4.3.</span> <span class="toc-text">选择出所要安装的版本，并安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8E%A7%E5%88%B6%E5%B9%B3%E9%9D%A2%E8%8A%82%E7%82%B9"><span class="toc-number">4.4.</span> <span class="toc-text">初始化控制平面节点</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9hosts%E6%96%87%E4%BB%B6"><span class="toc-number">4.4.1.</span> <span class="toc-text">修改hosts文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8E%A7%E5%88%B6%E5%B9%B3%E9%9D%A2"><span class="toc-number">4.4.2.</span> <span class="toc-text">初始化控制平面</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8E%A7%E5%88%B6%E5%B9%B3%E9%9D%A2%E5%90%8E%E4%BC%9A%E7%94%9F%E6%88%90%E4%BB%A5%E4%B8%8B%E4%BF%A1%E6%81%AF"><span class="toc-number">4.4.3.</span> <span class="toc-text">初始化控制平面后会生成以下信息</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8C%89%E7%85%A7%E6%89%80%E7%94%9F%E6%88%90%E7%9A%84%E6%8F%90%E7%A4%BA%E4%BF%A1%E6%81%AF%E6%93%8D%E4%BD%9C"><span class="toc-number">4.4.4.</span> <span class="toc-text">按照所生成的提示信息操作</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/07/05/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/Service%E8%B5%84%E6%BA%90/07Headless%20Service/Headless%20Service/" title="Headless Service"><img src="/images/kubernetes.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Headless Service"/></a><div class="content"><a class="title" href="/2021/07/05/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/Service%E8%B5%84%E6%BA%90/07Headless%20Service/Headless%20Service/" title="Headless Service">Headless Service</a><time datetime="2021-07-05T08:30:00.000Z" title="发表于 2021-07-05 08:30:00">2021-07-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/05/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/Service%E8%B5%84%E6%BA%90/08ExternalName/ExternalName/" title="ExternalName"><img src="/images/kubernetes.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ExternalName"/></a><div class="content"><a class="title" href="/2021/07/05/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/Service%E8%B5%84%E6%BA%90/08ExternalName/ExternalName/" title="ExternalName">ExternalName</a><time datetime="2021-07-05T08:30:00.000Z" title="发表于 2021-07-05 08:30:00">2021-07-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/04/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/Service%E8%B5%84%E6%BA%90/06Service%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0/Service%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0/" title="Service的服务注册和服务发现"><img src="/images/kubernetes.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Service的服务注册和服务发现"/></a><div class="content"><a class="title" href="/2021/07/04/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/Service%E8%B5%84%E6%BA%90/06Service%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0/Service%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0/" title="Service的服务注册和服务发现">Service的服务注册和服务发现</a><time datetime="2021-07-04T18:30:00.000Z" title="发表于 2021-07-04 18:30:00">2021-07-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/04/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/Service%E8%B5%84%E6%BA%90/02Endpoint%E8%B5%84%E6%BA%90/Endpoint%E8%B5%84%E6%BA%90/" title="Endpoint资源"><img src="/images/kubernetes.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Endpoint资源"/></a><div class="content"><a class="title" href="/2021/07/04/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/Service%E8%B5%84%E6%BA%90/02Endpoint%E8%B5%84%E6%BA%90/Endpoint%E8%B5%84%E6%BA%90/" title="Endpoint资源">Endpoint资源</a><time datetime="2021-07-04T17:30:00.000Z" title="发表于 2021-07-04 17:30:00">2021-07-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/04/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/Service%E8%B5%84%E6%BA%90/05ipvs%E7%B1%BB%E5%9E%8BService/ipvs%E7%B1%BB%E5%9E%8BService/" title="ipvs类型Service"><img src="/images/kubernetes.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ipvs类型Service"/></a><div class="content"><a class="title" href="/2021/07/04/Kubernetes/Kubernetes%E8%B5%84%E6%BA%90/Service%E8%B5%84%E6%BA%90/05ipvs%E7%B1%BB%E5%9E%8BService/ipvs%E7%B1%BB%E5%9E%8BService/" title="ipvs类型Service">ipvs类型Service</a><time datetime="2021-07-04T17:30:00.000Z" title="发表于 2021-07-04 17:30:00">2021-07-04</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Masuri</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
