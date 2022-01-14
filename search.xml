@@ -12059,6 +12059,8 @@
 ]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>CRD</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -12180,6 +12182,8 @@
 ]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>Kubernetes资源</category>
+        <category>NameSpace</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -12216,6 +12220,8 @@
 ]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Node</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -12277,6 +12283,8 @@
 ]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Pod</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -12296,6 +12304,8 @@
 ]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Pod</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -12331,6 +12341,8 @@
 ]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Pod</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -12365,6 +12377,8 @@
 ]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Pod</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -12387,6 +12401,8 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@k8s-master01:~/yaml/chapter01<span class="comment"># curl k8s-node03:10080</span></span><br><span class="line">iKubernetes demoapp v1.0 !! ClientIP: 172.16.11.71, ServerName: mypod-with-ports, ServerIP: 10.244.3.13!</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Pod</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -12463,6 +12479,8 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 监听端口为80</span></span><br><span class="line">root@k8s-master01:~/yaml/chapter04<span class="comment"># kubectl exec securitycontext-sysctls-demo -- ss -tnl</span></span><br><span class="line">State    Recv-Q   Send-Q     Local Address:Port     Peer Address:Port  Process</span><br><span class="line">LISTEN   0        128              0.0.0.0:80            0.0.0.0:*              </span><br><span class="line"></span><br><span class="line"><span class="comment"># 用户为1001</span></span><br><span class="line">root@k8s-master01:~/yaml/chapter04<span class="comment"># kubectl exec securitycontext-sysctls-demo -- ps aux</span></span><br><span class="line">PID   USER     TIME  COMMAND</span><br><span class="line">    1 1001      0:00 python3 /usr/<span class="built_in">local</span>/bin/demo.py</span><br><span class="line">   15 1001      0:00 ps aux</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Pod</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -12486,6 +12504,8 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入容器验证iptables规则</span></span><br><span class="line">root@k8s-master01:~/yaml/chapter04<span class="comment"># kubectl exec lifecycle-demo -- iptables -t nat -nvL</span></span><br><span class="line">Chain PREROUTING (policy ACCEPT 53 packets, 3180 bytes)</span><br><span class="line"> pkts bytes target     prot opt <span class="keyword">in</span>     out     <span class="built_in">source</span>               destination</span><br><span class="line">    0     0 REDIRECT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:8080 redir ports 80</span><br><span class="line"></span><br><span class="line">Chain INPUT (policy ACCEPT 53 packets, 3180 bytes)</span><br><span class="line"> pkts bytes target     prot opt <span class="keyword">in</span>     out     <span class="built_in">source</span>               destination</span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)</span><br><span class="line"> pkts bytes target     prot opt <span class="keyword">in</span>     out     <span class="built_in">source</span>               destination</span><br><span class="line"></span><br><span class="line">Chain POSTROUTING (policy ACCEPT 0 packets, 0 bytes)</span><br><span class="line"> pkts bytes target     prot opt <span class="keyword">in</span>     out     <span class="built_in">source</span>               destination</span><br><span class="line"> </span><br><span class="line"> <span class="comment"># 访问8080端口测试</span></span><br><span class="line">root@k8s-master01:~/yaml/chapter04<span class="comment"># curl 10.244.2.22:8080</span></span><br><span class="line">iKubernetes demoapp v1.0 !! ClientIP: 10.244.0.0, ServerName: lifecycle-demo, ServerIP: 10.244.2.22!</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Pod</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -12509,6 +12529,8 @@
 ]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Pod</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -12534,6 +12556,8 @@
 ]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Pod</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -12586,6 +12610,8 @@
 ]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Pod</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -12638,6 +12664,8 @@
 ]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Pod</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -12651,6 +12679,8 @@
 ]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Pod</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -12753,6 +12783,8 @@
 ]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Service</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -12793,6 +12825,8 @@
 ]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Service</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -12858,6 +12892,8 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@k8s-master01:~/yaml/chapter04<span class="comment"># curl 10.244.1.23/readyz</span></span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将readyz的值改为FAIL</span></span><br><span class="line">root@k8s-master01:~/yaml/chapter04<span class="comment"># curl -XPOST -d &#x27;readyz=FAIL&#x27; 10.244.1.23/readyz</span></span><br><span class="line">root@k8s-master01:~/yaml/chapter04<span class="comment"># curl 10.244.1.23/readyz</span></span><br><span class="line">FAIL</span><br><span class="line"></span><br><span class="line"><span class="comment"># ready失败变为0，此时会从service后端服务中删除</span></span><br><span class="line">root@k8s-master01:~/yaml/chapter04<span class="comment"># kubectl get pods readiness-httpget-demo -o wide</span></span><br><span class="line">NAME                     READY   STATUS    RESTARTS   AGE     IP            NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">readiness-httpget-demo   0/1     Running   0          4m26s   10.244.1.23   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Pod</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -12875,6 +12911,8 @@
 ]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Service</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -12914,6 +12952,8 @@
 ]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Service</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -12949,6 +12989,8 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@k8s-master01:~<span class="comment"># iptables -t nat -S </span></span><br><span class="line">-P PREROUTING ACCEPT</span><br><span class="line">-P INPUT ACCEPT</span><br><span class="line">-P OUTPUT ACCEPT</span><br><span class="line">-P POSTROUTING ACCEPT</span><br><span class="line">-N DOCKER</span><br><span class="line">-N KUBE-FIREWALL</span><br><span class="line">-N KUBE-KUBELET-CANARY</span><br><span class="line">-N KUBE-LOAD-BALANCER</span><br><span class="line">-N KUBE-MARK-DROP</span><br><span class="line">-N KUBE-MARK-MASQ</span><br><span class="line">-N KUBE-NODE-PORT</span><br><span class="line">-N KUBE-POSTROUTING</span><br><span class="line">-N KUBE-SERVICES</span><br><span class="line">-A PREROUTING -m comment --comment <span class="string">&quot;kubernetes service portals&quot;</span> -j KUBE-SERVICES</span><br><span class="line">-A PREROUTING -m addrtype --dst-type LOCAL -j DOCKER</span><br><span class="line">-A OUTPUT -m comment --comment <span class="string">&quot;kubernetes service portals&quot;</span> -j KUBE-SERVICES</span><br><span class="line">-A OUTPUT ! -d 127.0.0.0/8 -m addrtype --dst-type LOCAL -j DOCKER</span><br><span class="line">-A POSTROUTING -m comment --comment <span class="string">&quot;kubernetes postrouting rules&quot;</span> -j KUBE-POSTROUTING</span><br><span class="line">-A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE</span><br><span class="line">-A POSTROUTING -s 10.244.0.0/16 -d 10.244.0.0/16 -j RETURN</span><br><span class="line">-A POSTROUTING -s 10.244.0.0/16 ! -d 224.0.0.0/4 -j MASQUERADE --random-fully</span><br><span class="line">-A POSTROUTING ! -s 10.244.0.0/16 -d 10.244.0.0/24 -j RETURN</span><br><span class="line">-A POSTROUTING ! -s 10.244.0.0/16 -d 10.244.0.0/16 -j MASQUERADE --random-fully</span><br><span class="line">-A DOCKER -i docker0 -j RETURN</span><br><span class="line">-A KUBE-FIREWALL -j KUBE-MARK-DROP</span><br><span class="line">-A KUBE-LOAD-BALANCER -j KUBE-MARK-MASQ</span><br><span class="line">-A KUBE-MARK-DROP -j MARK --set-xmark 0x8000/0x8000</span><br><span class="line">-A KUBE-MARK-MASQ -j MARK --set-xmark 0x4000/0x4000</span><br><span class="line">-A KUBE-NODE-PORT -p tcp -m comment --comment <span class="string">&quot;Kubernetes nodeport TCP port for masquerade purpose&quot;</span> -m <span class="built_in">set</span> --match-set KUBE-NODE-PORT-TCP dst -j KUBE-MARK-MASQ</span><br><span class="line">-A KUBE-POSTROUTING -m comment --comment <span class="string">&quot;Kubernetes endpoints dst ip:port, source ip for solving hairpin purpose&quot;</span> -m <span class="built_in">set</span> --match-set KUBE-LOOP-BACK dst,dst,src -j MASQUERADE</span><br><span class="line">-A KUBE-POSTROUTING -m mark ! --mark 0x4000/0x4000 -j RETURN</span><br><span class="line">-A KUBE-POSTROUTING -j MARK --set-xmark 0x4000/0x0</span><br><span class="line">-A KUBE-POSTROUTING -m comment --comment <span class="string">&quot;kubernetes service traffic requiring SNAT&quot;</span> -j MASQUERADE --random-fully</span><br><span class="line">-A KUBE-SERVICES ! -s 10.244.0.0/16 -m comment --comment <span class="string">&quot;Kubernetes service cluster ip + port for masquerade purpose&quot;</span> -m <span class="built_in">set</span> --match-set KUBE-CLUSTER-IP dst,dst -j KUBE-MARK-MASQ</span><br><span class="line">-A KUBE-SERVICES -m comment --comment <span class="string">&quot;Kubernetes service external ip + port for masquerade and filter purpose&quot;</span> -m <span class="built_in">set</span> --match-set KUBE-EXTERNAL-IP dst,dst -j KUBE-MARK-MASQ</span><br><span class="line">-A KUBE-SERVICES -m comment --comment <span class="string">&quot;Kubernetes service external ip + port for masquerade and filter purpose&quot;</span> -m <span class="built_in">set</span> --match-set KUBE-EXTERNAL-IP dst,dst -m physdev ! --physdev-is-in -m addrtype ! --src-type LOCAL -j ACCEPT</span><br><span class="line">-A KUBE-SERVICES -m comment --comment <span class="string">&quot;Kubernetes service external ip + port for masquerade and filter purpose&quot;</span> -m <span class="built_in">set</span> --match-set KUBE-EXTERNAL-IP dst,dst -m addrtype --dst-type LOCAL -j ACCEPT</span><br><span class="line">-A KUBE-SERVICES -m addrtype --dst-type LOCAL -j KUBE-NODE-PORT</span><br><span class="line">-A KUBE-SERVICES -m <span class="built_in">set</span> --match-set KUBE-CLUSTER-IP dst,dst -j ACCEPT</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Service</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -13001,6 +13043,8 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@k8s-master01:~<span class="comment"># kubectl edit cm coredns -n kube-system</span></span><br><span class="line"><span class="comment"># Please edit the object below. Lines beginning with a &#x27;#&#x27; will be ignored,</span></span><br><span class="line"><span class="comment"># and an empty file will abort the edit. If an error occurs while saving this file will be</span></span><br><span class="line"><span class="comment"># reopened with the relevant failures.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">apiVersion: v1</span><br><span class="line">data:</span><br><span class="line">  Corefile: |</span><br><span class="line">    .:53 &#123;</span><br><span class="line">        errors           <span class="comment"># 表示将错误日志发往标准输出</span></span><br><span class="line">        health &#123;         <span class="comment"># 做健康状态检测</span></span><br><span class="line">           lameduck 5s</span><br><span class="line">        &#125;</span><br><span class="line">        ready            <span class="comment"># 所有状态就绪后才能报告自身为健康</span></span><br><span class="line">        kubernetes cluster.local in-addr.arpa ip6.arpa &#123;     <span class="comment"># 集群解析区域</span></span><br><span class="line">           pods insecure</span><br><span class="line">           fallthrough in-addr.arpa ip6.arpa</span><br><span class="line">           ttl 30</span><br><span class="line">        &#125;</span><br><span class="line">        prometheus :9153                   <span class="comment"># 向外输出prometheus兼容的指标数据</span></span><br><span class="line">        forward . /etc/resolv.conf &#123;			 <span class="comment"># 前向转发，若pod dns无法解析，就调用宿主机的/etc/resolv.conf文件中的dns服务器进行解析。</span></span><br><span class="line">           max_concurrent 1000</span><br><span class="line">        &#125;</span><br><span class="line"> <span class="comment">#       forward . 223.6.6.6 223.5.5.5 &#123;         # 可以自己指定公网上的dns服务器地址</span></span><br><span class="line"> <span class="comment">#          max_concurrect 1000</span></span><br><span class="line"> <span class="comment">#          except mylinuxops.com.                # 排除某个域名，不需要外网dns解析</span></span><br><span class="line"> <span class="comment">#       &#125;</span></span><br><span class="line"> <span class="comment">#       forward mylinuxops.com. 43.123.45.22     # 使用forward 对排除的域名进行单独解析</span></span><br><span class="line"> <span class="comment">#                                                 一个配置段中只能出现一个forward . 否则将冲突。</span></span><br><span class="line">        cache 30</span><br><span class="line">        loop</span><br><span class="line">        reload                    <span class="comment"># 修改后自动重载</span></span><br><span class="line">        loadbalance								<span class="comment"># 若某个记录后有多条A记录，他会在多个A记录中轮询</span></span><br><span class="line">    &#125;</span><br><span class="line">kind: ConfigMap</span><br><span class="line">metadata:</span><br><span class="line">  creationTimestamp: <span class="string">&quot;2021-06-28T10:53:46Z&quot;</span></span><br><span class="line">  name: coredns</span><br><span class="line">  namespace: kube-system</span><br><span class="line">  resourceVersion: <span class="string">&quot;264&quot;</span></span><br><span class="line">  uid: a7bb8e7b-90f1-416f-bbcc-111f715a0171</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Service</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -13041,6 +13085,8 @@
 ]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Service</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
@@ -13062,6 +13108,8 @@
 ]]></content>
       <categories>
         <category>kubernetes</category>
+        <category>kubernetes资源</category>
+        <category>Service</category>
       </categories>
       <tags>
         <tag>kubernetes</tag>
