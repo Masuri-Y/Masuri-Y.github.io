@@ -1,0 +1,191 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>应用编排 | MyLinuxOPS</title><meta name="keywords" content="kubernetes"><meta name="author" content="Masuri"><meta name="copyright" content="Masuri"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="当在k8s管理大量的应用时，这些应用之间存在大量的关系，紧密关系可以将其组织在同一个Pod中进行，而非紧密关系的应用之间则需要借助服务注册和服务发现将其关联起来，在K8s中实现服务注册和服务发现功能是由CoreDNS来实现的。 有时候各种应用之间存在各种复杂的关系，这时候就需要借助Service来实现应用的管理。 应用编排的核心所谓应用编排的核心就是应用的部署，扩展，更新，回滚  部署：在k8s中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="应用编排">
+<meta property="og:url" content="http://www.mylinuxops.com/2021/07/08/Kubernetes/04Kubernetes%E6%8E%A7%E5%88%B6%E5%99%A8/01%E5%BA%94%E7%94%A8%E7%BC%96%E6%8E%92/%E5%BA%94%E7%94%A8%E7%BC%96%E6%8E%92/index.html">
+<meta property="og:site_name" content="MyLinuxOPS">
+<meta property="og:description" content="当在k8s管理大量的应用时，这些应用之间存在大量的关系，紧密关系可以将其组织在同一个Pod中进行，而非紧密关系的应用之间则需要借助服务注册和服务发现将其关联起来，在K8s中实现服务注册和服务发现功能是由CoreDNS来实现的。 有时候各种应用之间存在各种复杂的关系，这时候就需要借助Service来实现应用的管理。 应用编排的核心所谓应用编排的核心就是应用的部署，扩展，更新，回滚  部署：在k8s中">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.mylinuxops.com/images/kubernetes.jpg">
+<meta property="article:published_time" content="2021-07-08T08:30:00.000Z">
+<meta property="article:modified_time" content="2022-01-17T08:33:20.629Z">
+<meta property="article:author" content="Masuri">
+<meta property="article:tag" content="kubernetes">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.mylinuxops.com/images/kubernetes.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://www.mylinuxops.com/2021/07/08/Kubernetes/04Kubernetes%E6%8E%A7%E5%88%B6%E5%99%A8/01%E5%BA%94%E7%94%A8%E7%BC%96%E6%8E%92/%E5%BA%94%E7%94%A8%E7%BC%96%E6%8E%92/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '应用编排',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-17 08:33:20'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">213</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">30</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/kubernetes.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">MyLinuxOPS</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">应用编排</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-08T08:30:00.000Z" title="发表于 2021-07-08 08:30:00">2021-07-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-17T08:33:20.629Z" title="更新于 2022-01-17 08:33:20">2022-01-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/kubernetes/">kubernetes</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/kubernetes/kubernetes%E6%8E%A7%E5%88%B6%E5%99%A8/">kubernetes控制器</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="应用编排"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>当在k8s管理大量的应用时，这些应用之间存在大量的关系，紧密关系可以将其组织在同一个Pod中进行，而非紧密关系的应用之间则需要借助服务注册和服务发现将其关联起来，在K8s中实现服务注册和服务发现功能是由CoreDNS来实现的。</p>
+<p>有时候各种应用之间存在各种复杂的关系，这时候就需要借助Service来实现应用的管理。</p>
+<h3 id="应用编排的核心"><a href="#应用编排的核心" class="headerlink" title="应用编排的核心"></a>应用编排的核心</h3><p>所谓应用编排的核心就是应用的部署，扩展，更新，回滚</p>
+<ul>
+<li>部署：在k8s中应用部署是由应用清单来定义的。</li>
+<li>扩展：应用部署的核心还有扩展，扩展就是扩容，扩容又两种方法垂直扩容和横向扩容。在k8s中垂直扩容是指调大pod的资源限制。而横向扩容则是指多扩展几个pod副本。</li>
+<li>更新：在如今敏捷开发的环境下，更新的速度将是非常快，我们要随时迭代旧的版本。</li>
+<li>回滚：当更新后应用出现Bug时，则需要将版本进行回滚。<br>之前部署的Pod都是裸Pod其不具备应用的扩展，更新，回滚的能力。而k8s上还有一种资源称之为控制器</li>
+</ul>
+<h3 id="控制器"><a href="#控制器" class="headerlink" title="控制器"></a>控制器</h3><p>K8S上有各种控制器，有的用来控制节点，有的用来控制名称空间，还有一种用来管理Pod的成为Pod控制器。</p>
+<p>整个K8S是由控制平面和数据平面组成：</p>
+<ul>
+<li>控制平面：指的是K8S-Master节点上的控制组件</li>
+<li>APIServer</li>
+<li>Controller Manager</li>
+<li>Scheduler</li>
+<li>数据平面：主要指运行应用的Pod的节点。</li>
+</ul>
+<h4 id="Pod控制器"><a href="#Pod控制器" class="headerlink" title="Pod控制器"></a>Pod控制器</h4><p>专用于编排以Pod形式运行的应用的控制器，统称为Pod控制器。</p>
+<h3 id="控制器的工作逻辑"><a href="#控制器的工作逻辑" class="headerlink" title="控制器的工作逻辑"></a>控制器的工作逻辑</h3><p><code>API Server</code>是一种有着特殊功能的<code>DB</code>，支持资源的<code>Watch</code>和<code>Notify</code>。同时又将底层<code>ETCD</code>存储做了定义和限制，定义了存储的方案。</p>
+<p><code>Controller</code>是真正让用户存进<code>API-Server</code>所对应的实体。<code>Controller</code>是用来将<code>API-Server</code>中的数据项，在对应的集群中创建出实体来。</p>
+<p>用户向<code>API-Server</code>中插入一个资源，而于此同时k8s上有多种资源控制器，每一种资源控制器专门监视着<code>API-Server</code>上与自己类型相关的资源的变动，一旦<code>API-Server</code>发生变，动控制器中的一段代码会更具用户所插入的资源将其创建为实体，实体创建完毕后其会立即将实际状态存回<code>API-Server</code>上的<code>Status</code>字段中，随后<code>Controller</code>会不断的去监控比对，实例上的status字段和资源清单中的spec字段是否一致。如果不一致则会再次执行代码，改变状态将结果存回<code>API server</code>，然后再次比对，此过程将不断循环，直到用户的期望状态和实际状态相同。</p>
+<p>在此过程中kubelet不断的监控自身节点上的pod，一旦pod状态发生改变，其会将pod的status存回<code>API-Server</code>中。而后<code>Controller</code>会发现pod发生变化，再次执行其内部的代码使其不断逼近用户的期望状态。</p>
+<h4 id="controller的监控时长"><a href="#controller的监控时长" class="headerlink" title="controller的监控时长"></a>controller的监控时长</h4><p>在一个较大Service环境的k8s中，为了防止APIServer被controller的监控请求所淹没，所以默认的Controller loop监控时长为5分钟。</p>
+<p>但是5分钟的时间太长，所以APIServer要对Controller做通知。</p>
+<h4 id="负责应用编排的控制器"><a href="#负责应用编排的控制器" class="headerlink" title="负责应用编排的控制器"></a>负责应用编排的控制器</h4><p>负责应用编排的控制器有以下几个：</p>
+<ul>
+<li>ReplicationController：早期的Pod控制器，已经被废除。</li>
+<li>ReplicaSet：副本集，用来管理一组Pod的相同副本。</li>
+<li>Deployment：部署，其不直接管理Pod而是借助于ReplicaSet来管理Pod；最常用的无状态应用控制器；</li>
+<li>DaemonSet：守护进程集，用于确保在每个节点上仅运行某个应用的一个Pod副本</li>
+<li>StatefulSet：功能类似于Deployment，但StatefulSet专用于编排有状态应用；</li>
+<li>Job：有终止期限的作业式任务，而非一直处于运行状态的服务进程；</li>
+<li>CronJob：周期性作业任务。</li>
+</ul>
+<h4 id="控制器定义格式"><a href="#控制器定义格式" class="headerlink" title="控制器定义格式"></a>控制器定义格式</h4><p>定义要素：</p>
+<ul>
+<li>标签选择器：用标签选择器来定义被关联到的pod</li>
+<li>期望的副本数：</li>
+<li>pod模板</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Masuri</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.mylinuxops.com/2021/07/08/Kubernetes/04Kubernetes%E6%8E%A7%E5%88%B6%E5%99%A8/01%E5%BA%94%E7%94%A8%E7%BC%96%E6%8E%92/%E5%BA%94%E7%94%A8%E7%BC%96%E6%8E%92/">http://www.mylinuxops.com/2021/07/08/Kubernetes/04Kubernetes%E6%8E%A7%E5%88%B6%E5%99%A8/01%E5%BA%94%E7%94%A8%E7%BC%96%E6%8E%92/%E5%BA%94%E7%94%A8%E7%BC%96%E6%8E%92/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.mylinuxops.com" target="_blank">MyLinuxOPS</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/kubernetes/">kubernetes</a></div><div class="post_share"><div class="social-share" data-image="/images/kubernetes.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/07/08/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/%E4%BD%BF%E7%94%A8%E5%8F%98%E9%87%8F%E5%AE%9E%E7%8E%B0%E8%B5%84%E6%BA%90%E6%B8%85%E5%8D%95%E5%A4%8D%E7%94%A8/%E4%BD%BF%E7%94%A8%E5%8F%98%E9%87%8F%E5%AE%9E%E7%8E%B0%E8%B5%84%E6%BA%90%E6%B8%85%E5%8D%95%E5%A4%8D%E7%94%A8/"><img class="prev-cover" src="/images/kubernetes.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">使用变量实现资源清单复用</div></div></a></div><div class="next-post pull-right"><a href="/2021/07/08/Kubernetes/04Kubernetes%E6%8E%A7%E5%88%B6%E5%99%A8/02ReplicaSet/ReplicaSet/"><img class="next-cover" src="/images/kubernetes.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">ReplicaSet</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/07/03/Kubernetes/01Kubernetes%E5%9F%BA%E7%A1%80/01Kubernetes%E5%9F%BA%E7%A1%80/Kubernetes%E5%9F%BA%E7%A1%80/" title="Kubernetes基础"><img class="cover" src="/images/kubernetes.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-03</div><div class="title">Kubernetes基础</div></div></a></div><div><a href="/2021/07/03/Kubernetes/01Kubernetes%E5%9F%BA%E7%A1%80/02Kubernetes%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/Kubernetes%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" title="Kubernetes基本概念"><img class="cover" src="/images/kubernetes.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-03</div><div class="title">Kubernetes基本概念</div></div></a></div><div><a href="/2021/07/03/Kubernetes/01Kubernetes%E5%9F%BA%E7%A1%80/03Kubernetes%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/Kubernetes%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/" title="Kubernetes集群部署"><img class="cover" src="/images/kubernetes.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-03</div><div class="title">Kubernetes集群部署</div></div></a></div><div><a href="/2021/07/03/Kubernetes/01Kubernetes%E5%9F%BA%E7%A1%80/05Kubernetes%E6%A0%87%E7%AD%BE%E5%92%8C%E6%A0%87%E7%AD%BE%E9%80%89%E6%8B%A9%E5%99%A8/Kubernetes%E6%A0%87%E7%AD%BE%E5%92%8C%E6%A0%87%E7%AD%BE%E9%80%89%E6%8B%A9%E5%99%A8/" title="Kubernetes标签和标签选择器"><img class="cover" src="/images/kubernetes.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-03</div><div class="title">Kubernetes标签和标签选择器</div></div></a></div><div><a href="/2021/07/03/Kubernetes/01Kubernetes%E5%9F%BA%E7%A1%80/04Kubernetes%E9%9B%86%E7%BE%A4%E7%9A%84%E9%83%A8%E7%BD%B2%E5%92%8C%E8%BF%90%E8%A1%8C/Kubernetes%E9%9B%86%E7%BE%A4%E7%9A%84%E9%83%A8%E7%BD%B2%E5%92%8C%E8%BF%90%E8%A1%8C/" title="Kubernetes集群的部署和运行"><img class="cover" src="/images/kubernetes.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-03</div><div class="title">Kubernetes集群的部署和运行</div></div></a></div><div><a href="/2021/07/03/Kubernetes/02Kubernetes%E8%B5%84%E6%BA%90/01Namespace%E8%B5%84%E6%BA%90/Namespace%E8%B5%84%E6%BA%90/" title="Namespace资源"><img class="cover" src="/images/kubernetes.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-03</div><div class="title">Namespace资源</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Masuri</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">213</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">30</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E7%BC%96%E6%8E%92%E7%9A%84%E6%A0%B8%E5%BF%83"><span class="toc-number">1.</span> <span class="toc-text">应用编排的核心</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">控制器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Pod%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-number">2.1.</span> <span class="toc-text">Pod控制器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E9%80%BB%E8%BE%91"><span class="toc-number">3.</span> <span class="toc-text">控制器的工作逻辑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#controller%E7%9A%84%E7%9B%91%E6%8E%A7%E6%97%B6%E9%95%BF"><span class="toc-number">3.1.</span> <span class="toc-text">controller的监控时长</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B4%9F%E8%B4%A3%E5%BA%94%E7%94%A8%E7%BC%96%E6%8E%92%E7%9A%84%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-number">3.2.</span> <span class="toc-text">负责应用编排的控制器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E5%AE%9A%E4%B9%89%E6%A0%BC%E5%BC%8F"><span class="toc-number">3.3.</span> <span class="toc-text">控制器定义格式</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/10/08/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/kubeadm%E5%8A%A0%E8%8A%82%E7%82%B9%E6%8A%A5%E9%94%99/kubeadm%E5%8A%A0%E8%8A%82%E7%82%B9%E6%8A%A5%E9%94%99/" title="使用变量实现资源清单复用"><img src="/images/kubernetes.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用变量实现资源清单复用"/></a><div class="content"><a class="title" href="/2021/10/08/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/kubeadm%E5%8A%A0%E8%8A%82%E7%82%B9%E6%8A%A5%E9%94%99/kubeadm%E5%8A%A0%E8%8A%82%E7%82%B9%E6%8A%A5%E9%94%99/" title="使用变量实现资源清单复用">使用变量实现资源清单复用</a><time datetime="2021-10-08T10:30:00.000Z" title="发表于 2021-10-08 10:30:00">2021-10-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/15/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/%E6%9B%B4%E6%94%B9%E9%BB%98%E8%AE%A4%E5%AD%98%E5%82%A8%E7%B1%BB/%E6%9B%B4%E6%94%B9%E9%BB%98%E8%AE%A4%E5%AD%98%E5%82%A8%E7%B1%BB/" title="更改默认存储类"><img src="/images/kubernetes.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="更改默认存储类"/></a><div class="content"><a class="title" href="/2021/09/15/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/%E6%9B%B4%E6%94%B9%E9%BB%98%E8%AE%A4%E5%AD%98%E5%82%A8%E7%B1%BB/%E6%9B%B4%E6%94%B9%E9%BB%98%E8%AE%A4%E5%AD%98%E5%82%A8%E7%B1%BB/" title="更改默认存储类">更改默认存储类</a><time datetime="2021-09-15T08:30:00.000Z" title="发表于 2021-09-15 08:30:00">2021-09-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/10/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/%E4%BD%BF%E7%94%A8JsonPath%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E4%BF%A1%E6%81%AF/%E4%BD%BF%E7%94%A8JsonPath%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E4%BF%A1%E6%81%AF/" title="使用JsonPath获取资源信息"><img src="/images/kubernetes.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用JsonPath获取资源信息"/></a><div class="content"><a class="title" href="/2021/09/10/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/%E4%BD%BF%E7%94%A8JsonPath%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E4%BF%A1%E6%81%AF/%E4%BD%BF%E7%94%A8JsonPath%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E4%BF%A1%E6%81%AF/" title="使用JsonPath获取资源信息">使用JsonPath获取资源信息</a><time datetime="2021-09-10T14:30:00.000Z" title="发表于 2021-09-10 14:30:00">2021-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/10/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/%E4%BD%BF%E7%94%A8Go%E6%A8%A1%E6%9D%BF%E8%BE%93%E5%87%BA%E5%AD%97%E6%AE%B5/%E4%BD%BF%E7%94%A8Go%E6%A8%A1%E6%9D%BF%E8%BE%93%E5%87%BA%E5%AD%97%E6%AE%B5/" title="使用Go模板输出字段"><img src="/images/kubernetes.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用Go模板输出字段"/></a><div class="content"><a class="title" href="/2021/09/10/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/%E4%BD%BF%E7%94%A8Go%E6%A8%A1%E6%9D%BF%E8%BE%93%E5%87%BA%E5%AD%97%E6%AE%B5/%E4%BD%BF%E7%94%A8Go%E6%A8%A1%E6%9D%BF%E8%BE%93%E5%87%BA%E5%AD%97%E6%AE%B5/" title="使用Go模板输出字段">使用Go模板输出字段</a><time datetime="2021-09-10T12:30:00.000Z" title="发表于 2021-09-10 12:30:00">2021-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/10/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/URL%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E5%AE%8C%E6%95%B4%E6%A0%BC%E5%BC%8F/URL%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E5%AE%8C%E6%95%B4%E6%A0%BC%E5%BC%8F/" title="URL获取资源完整格式"><img src="/images/kubernetes.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="URL获取资源完整格式"/></a><div class="content"><a class="title" href="/2021/09/10/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/URL%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E5%AE%8C%E6%95%B4%E6%A0%BC%E5%BC%8F/URL%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E5%AE%8C%E6%95%B4%E6%A0%BC%E5%BC%8F/" title="URL获取资源完整格式">URL获取资源完整格式</a><time datetime="2021-09-10T10:30:00.000Z" title="发表于 2021-09-10 10:30:00">2021-09-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Masuri</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

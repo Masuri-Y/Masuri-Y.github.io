@@ -1,0 +1,180 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>k8s网络 | MyLinuxOPS</title><meta name="keywords" content="kubernetes"><meta name="author" content="Masuri"><meta name="copyright" content="Masuri"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="k8s主要存在四种类型的网络通信：  C-to-C：发生在Pod内部，借助于lo实现； Pod-to-Pod：Pod间的通信，k8s自身并未解决该该类通信，而是借助于CNI接口，交给第三方解决方案；CNI之前的接口叫kubenet； Service-to-Pod：借助于kube-proxy生成的iptables或ipvs规则完成；   ExternalClients-to-Service：引入集群">
+<meta property="og:type" content="article">
+<meta property="og:title" content="k8s网络">
+<meta property="og:url" content="http://www.mylinuxops.com/2021/07/18/Kubernetes/06Kubernetes%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/01k8s%E7%BD%91%E7%BB%9C/k8s%E7%BD%91%E7%BB%9C/index.html">
+<meta property="og:site_name" content="MyLinuxOPS">
+<meta property="og:description" content="k8s主要存在四种类型的网络通信：  C-to-C：发生在Pod内部，借助于lo实现； Pod-to-Pod：Pod间的通信，k8s自身并未解决该该类通信，而是借助于CNI接口，交给第三方解决方案；CNI之前的接口叫kubenet； Service-to-Pod：借助于kube-proxy生成的iptables或ipvs规则完成；   ExternalClients-to-Service：引入集群">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.mylinuxops.com/images/kubernetes.jpg">
+<meta property="article:published_time" content="2021-07-18T08:30:00.000Z">
+<meta property="article:modified_time" content="2022-01-17T08:33:20.261Z">
+<meta property="article:author" content="Masuri">
+<meta property="article:tag" content="kubernetes">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.mylinuxops.com/images/kubernetes.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://www.mylinuxops.com/2021/07/18/Kubernetes/06Kubernetes%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/01k8s%E7%BD%91%E7%BB%9C/k8s%E7%BD%91%E7%BB%9C/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'k8s网络',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-17 08:33:20'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">213</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">30</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/kubernetes.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">MyLinuxOPS</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">k8s网络</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-18T08:30:00.000Z" title="发表于 2021-07-18 08:30:00">2021-07-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-17T08:33:20.261Z" title="更新于 2022-01-17 08:33:20">2022-01-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/kubernetes/">kubernetes</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/kubernetes/kubernetes%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/">kubernetes网络插件</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="k8s网络"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>k8s主要存在四种类型的网络通信：</p>
+<ul>
+<li><code>C-to-C</code>：发生在Pod内部，借助于lo实现；</li>
+<li><code>Pod-to-Pod</code>：Pod间的通信，k8s自身并未解决该该类通信，而是借助于CNI接口，交给第三方解决方案；CNI之前的接口叫<code>kubenet</code>；</li>
+<li><code>Service-to-Pod</code>：借助于<code>kube-proxy</code>生成的iptables或ipvs规则完成；  </li>
+<li><code>ExternalClients-to-Service</code>：引入集群外部流量，hostPort、hostNetwork、nodeport/service、loadbalancer/service、externalIP/service、Ingress；</li>
+</ul>
+<p>k8s通过<code>CNI</code>接口将<code>Pod-to-Pod</code>间的通信交由第三方网络的原因在于，跨节点的容器间通信不能存粹的物理桥接，这样会造成一个网段内挤入太多的物理节点。这样会产生网络风暴，所以必须将其进行隔离。</p>
+<p>隔离的方法就是把每一个节点及其背后的Pod作为一个小的网络来使用。而此时跨节点的Pod通信就变为了如何去突破Pod所在的节点的边界。也就是如何去实现跨节点的Pod间的路由。</p>
+<h3 id="Pod跨界点通信解决方法"><a href="#Pod跨界点通信解决方法" class="headerlink" title="Pod跨界点通信解决方法"></a>Pod跨界点通信解决方法</h3><p>要构建出一个跨节点通信的POD网络需要解决以下两个问题：</p>
+<h4 id="构建出虚拟网络，方法有两种："><a href="#构建出虚拟网络，方法有两种：" class="headerlink" title="构建出虚拟网络，方法有两种："></a>构建出虚拟网络，方法有两种：</h4><ul>
+<li>Overlay Network：叠加网络，覆盖网络</li>
+<li>Underlay Network：承载网络</li>
+</ul>
+<h4 id="将容器接入构建出的虚拟网络，而容器或pod接入网络方法有以下三种："><a href="#将容器接入构建出的虚拟网络，而容器或pod接入网络方法有以下三种：" class="headerlink" title="将容器接入构建出的虚拟网络，而容器或pod接入网络方法有以下三种："></a>将容器接入构建出的虚拟网络，而容器或pod接入网络方法有以下三种：</h4><ul>
+<li>使用虚拟网桥：在宿主机上使用虚拟网桥如Docker0、CNI0。每一个pod都创建一个虚拟网卡，一半在桥上，一般在Pod自身内部来完成，而后借助宿主机网卡到达网络外部。</li>
+<li>多路复用：所谓多路复用是指将一块物理网卡在内核中模拟出MACVLAN或IPVLAN将其作为交换机来使用。这里的VLAN是指单个主机或多个主机上的多个pod组织在一个VLAN中。此时就不需要网桥，只需要一个内核级的VLAN功能即能实现。</li>
+<li>硬件交换：这种称之为单根网络，一块物理网卡能被多个内核或多个容器共同使用，硬件自身支持虚拟功能。这要求硬件的支持。</li>
+</ul>
+<p><img src="img1.png"></p>
+<h3 id="Overlay-Network"><a href="#Overlay-Network" class="headerlink" title="Overlay Network"></a>Overlay Network</h3><p><img src="img2.png"></p>
+<p>上图为叠加网路功能的示意，将pod接入网络的方式就是虚拟网桥cni0，而每一个虚拟网桥上的pod都虚拟出一对网卡，一半在pod内部一半在cni0上。</p>
+<p>而网络构建方式是在每一个节点上再创建一个专用隧道接口（<code>tunnel device</code>），节点内部的pod通信无需通过隧道直接可以通信，而跨界点的pod通信需要将报文通过cni0后发送给隧道入口设备，由隧道入口设备在其报文上加上隧道报文封装后通过物理网卡发送给对端的隧道设备，对端的隧道设备卸载隧道封装后交给cni0，cni0再交后端Pod。</p>
+<p>可以理解为在每一个节点上分别加了一个专用的隧道设备后，从而能够构建出一个跨界点<br>的隧道网路，这就是所谓的叠加网路。</p>
+<h4 id="Tunnel协议"><a href="#Tunnel协议" class="headerlink" title="Tunnel协议"></a>Tunnel协议</h4><p>目前最常用的Tunnel协议有以下两种：</p>
+<ul>
+<li>VxLAN：把每一个宿主机背后的网络当成局域网。其可以借助于VxLAN网络标识和交换功能，将一个LAN的功能交换到另外一个LAN中，但是VLAN所支持的虚拟网络是有限的（4095个），在一个超过4095节点的网络中VLAN就无法使用了，所以就出现了VxLAN协议，其支持65535个网络。</li>
+<li>IPIP：在IP报文中封装了IP报文。其开销比VxLAN小，但是其安全性弱于VxLAN。</li>
+<li>GRE：通用路由封装。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Masuri</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.mylinuxops.com/2021/07/18/Kubernetes/06Kubernetes%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/01k8s%E7%BD%91%E7%BB%9C/k8s%E7%BD%91%E7%BB%9C/">http://www.mylinuxops.com/2021/07/18/Kubernetes/06Kubernetes%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/01k8s%E7%BD%91%E7%BB%9C/k8s%E7%BD%91%E7%BB%9C/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.mylinuxops.com" target="_blank">MyLinuxOPS</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/kubernetes/">kubernetes</a></div><div class="post_share"><div class="social-share" data-image="/images/kubernetes.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/07/18/Kubernetes/06Kubernetes%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6/02flannel%E6%8F%92%E4%BB%B6/flannel%E6%8F%92%E4%BB%B6/"><img class="prev-cover" src="/images/kubernetes.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">flannel插件</div></div></a></div><div class="next-post pull-right"><a href="/2021/07/16/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/dashboard%20admin-user/dashboard%20admin-user/"><img class="next-cover" src="/images/kubernetes.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">dashboard admin-user</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/07/03/Kubernetes/01Kubernetes%E5%9F%BA%E7%A1%80/01Kubernetes%E5%9F%BA%E7%A1%80/Kubernetes%E5%9F%BA%E7%A1%80/" title="Kubernetes基础"><img class="cover" src="/images/kubernetes.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-03</div><div class="title">Kubernetes基础</div></div></a></div><div><a href="/2021/07/03/Kubernetes/01Kubernetes%E5%9F%BA%E7%A1%80/02Kubernetes%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/Kubernetes%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" title="Kubernetes基本概念"><img class="cover" src="/images/kubernetes.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-03</div><div class="title">Kubernetes基本概念</div></div></a></div><div><a href="/2021/07/03/Kubernetes/01Kubernetes%E5%9F%BA%E7%A1%80/03Kubernetes%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/Kubernetes%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/" title="Kubernetes集群部署"><img class="cover" src="/images/kubernetes.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-03</div><div class="title">Kubernetes集群部署</div></div></a></div><div><a href="/2021/07/03/Kubernetes/01Kubernetes%E5%9F%BA%E7%A1%80/05Kubernetes%E6%A0%87%E7%AD%BE%E5%92%8C%E6%A0%87%E7%AD%BE%E9%80%89%E6%8B%A9%E5%99%A8/Kubernetes%E6%A0%87%E7%AD%BE%E5%92%8C%E6%A0%87%E7%AD%BE%E9%80%89%E6%8B%A9%E5%99%A8/" title="Kubernetes标签和标签选择器"><img class="cover" src="/images/kubernetes.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-03</div><div class="title">Kubernetes标签和标签选择器</div></div></a></div><div><a href="/2021/07/03/Kubernetes/01Kubernetes%E5%9F%BA%E7%A1%80/04Kubernetes%E9%9B%86%E7%BE%A4%E7%9A%84%E9%83%A8%E7%BD%B2%E5%92%8C%E8%BF%90%E8%A1%8C/Kubernetes%E9%9B%86%E7%BE%A4%E7%9A%84%E9%83%A8%E7%BD%B2%E5%92%8C%E8%BF%90%E8%A1%8C/" title="Kubernetes集群的部署和运行"><img class="cover" src="/images/kubernetes.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-03</div><div class="title">Kubernetes集群的部署和运行</div></div></a></div><div><a href="/2021/07/03/Kubernetes/02Kubernetes%E8%B5%84%E6%BA%90/01Namespace%E8%B5%84%E6%BA%90/Namespace%E8%B5%84%E6%BA%90/" title="Namespace资源"><img class="cover" src="/images/kubernetes.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-03</div><div class="title">Namespace资源</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Masuri</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">213</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">30</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Pod%E8%B7%A8%E7%95%8C%E7%82%B9%E9%80%9A%E4%BF%A1%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">Pod跨界点通信解决方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E5%87%BA%E8%99%9A%E6%8B%9F%E7%BD%91%E7%BB%9C%EF%BC%8C%E6%96%B9%E6%B3%95%E6%9C%89%E4%B8%A4%E7%A7%8D%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">构建出虚拟网络，方法有两种：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%86%E5%AE%B9%E5%99%A8%E6%8E%A5%E5%85%A5%E6%9E%84%E5%BB%BA%E5%87%BA%E7%9A%84%E8%99%9A%E6%8B%9F%E7%BD%91%E7%BB%9C%EF%BC%8C%E8%80%8C%E5%AE%B9%E5%99%A8%E6%88%96pod%E6%8E%A5%E5%85%A5%E7%BD%91%E7%BB%9C%E6%96%B9%E6%B3%95%E6%9C%89%E4%BB%A5%E4%B8%8B%E4%B8%89%E7%A7%8D%EF%BC%9A"><span class="toc-number">1.2.</span> <span class="toc-text">将容器接入构建出的虚拟网络，而容器或pod接入网络方法有以下三种：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Overlay-Network"><span class="toc-number">2.</span> <span class="toc-text">Overlay Network</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Tunnel%E5%8D%8F%E8%AE%AE"><span class="toc-number">2.1.</span> <span class="toc-text">Tunnel协议</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/10/08/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/kubeadm%E5%8A%A0%E8%8A%82%E7%82%B9%E6%8A%A5%E9%94%99/kubeadm%E5%8A%A0%E8%8A%82%E7%82%B9%E6%8A%A5%E9%94%99/" title="使用变量实现资源清单复用"><img src="/images/kubernetes.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用变量实现资源清单复用"/></a><div class="content"><a class="title" href="/2021/10/08/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/kubeadm%E5%8A%A0%E8%8A%82%E7%82%B9%E6%8A%A5%E9%94%99/kubeadm%E5%8A%A0%E8%8A%82%E7%82%B9%E6%8A%A5%E9%94%99/" title="使用变量实现资源清单复用">使用变量实现资源清单复用</a><time datetime="2021-10-08T10:30:00.000Z" title="发表于 2021-10-08 10:30:00">2021-10-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/15/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/%E6%9B%B4%E6%94%B9%E9%BB%98%E8%AE%A4%E5%AD%98%E5%82%A8%E7%B1%BB/%E6%9B%B4%E6%94%B9%E9%BB%98%E8%AE%A4%E5%AD%98%E5%82%A8%E7%B1%BB/" title="更改默认存储类"><img src="/images/kubernetes.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="更改默认存储类"/></a><div class="content"><a class="title" href="/2021/09/15/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/%E6%9B%B4%E6%94%B9%E9%BB%98%E8%AE%A4%E5%AD%98%E5%82%A8%E7%B1%BB/%E6%9B%B4%E6%94%B9%E9%BB%98%E8%AE%A4%E5%AD%98%E5%82%A8%E7%B1%BB/" title="更改默认存储类">更改默认存储类</a><time datetime="2021-09-15T08:30:00.000Z" title="发表于 2021-09-15 08:30:00">2021-09-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/10/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/%E4%BD%BF%E7%94%A8JsonPath%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E4%BF%A1%E6%81%AF/%E4%BD%BF%E7%94%A8JsonPath%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E4%BF%A1%E6%81%AF/" title="使用JsonPath获取资源信息"><img src="/images/kubernetes.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用JsonPath获取资源信息"/></a><div class="content"><a class="title" href="/2021/09/10/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/%E4%BD%BF%E7%94%A8JsonPath%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E4%BF%A1%E6%81%AF/%E4%BD%BF%E7%94%A8JsonPath%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E4%BF%A1%E6%81%AF/" title="使用JsonPath获取资源信息">使用JsonPath获取资源信息</a><time datetime="2021-09-10T14:30:00.000Z" title="发表于 2021-09-10 14:30:00">2021-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/10/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/%E4%BD%BF%E7%94%A8Go%E6%A8%A1%E6%9D%BF%E8%BE%93%E5%87%BA%E5%AD%97%E6%AE%B5/%E4%BD%BF%E7%94%A8Go%E6%A8%A1%E6%9D%BF%E8%BE%93%E5%87%BA%E5%AD%97%E6%AE%B5/" title="使用Go模板输出字段"><img src="/images/kubernetes.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用Go模板输出字段"/></a><div class="content"><a class="title" href="/2021/09/10/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/%E4%BD%BF%E7%94%A8Go%E6%A8%A1%E6%9D%BF%E8%BE%93%E5%87%BA%E5%AD%97%E6%AE%B5/%E4%BD%BF%E7%94%A8Go%E6%A8%A1%E6%9D%BF%E8%BE%93%E5%87%BA%E5%AD%97%E6%AE%B5/" title="使用Go模板输出字段">使用Go模板输出字段</a><time datetime="2021-09-10T12:30:00.000Z" title="发表于 2021-09-10 12:30:00">2021-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/10/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/URL%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E5%AE%8C%E6%95%B4%E6%A0%BC%E5%BC%8F/URL%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E5%AE%8C%E6%95%B4%E6%A0%BC%E5%BC%8F/" title="URL获取资源完整格式"><img src="/images/kubernetes.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="URL获取资源完整格式"/></a><div class="content"><a class="title" href="/2021/09/10/Kubernetes/%E5%A4%87%E5%BF%98%E5%BD%95/URL%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E5%AE%8C%E6%95%B4%E6%A0%BC%E5%BC%8F/URL%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E5%AE%8C%E6%95%B4%E6%A0%BC%E5%BC%8F/" title="URL获取资源完整格式">URL获取资源完整格式</a><time datetime="2021-09-10T10:30:00.000Z" title="发表于 2021-09-10 10:30:00">2021-09-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Masuri</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
